@@ -101,12 +101,12 @@ p {
 }
 
 /* Clases de escala tipográfica (mapean a los estilos de Figma) */
-.h-xxl { font-size: var(--fs-h-xxl); line-height: var(--lh-tight); font-weight: var(--fw-extrabold); }
-.h-xl  { font-size: var(--fs-h-xl);  line-height: var(--lh-tight); font-weight: var(--fw-bold); }
-.h-l   { font-size: var(--fs-h-l);   line-height: var(--lh-tight); font-weight: var(--fw-bold); }
-.h-m   { font-size: var(--fs-h-m);   line-height: var(--lh-heading); font-weight: var(--fw-bold); }
+.h-xxl { font-size: var(--fs-h-xxl); line-height: var(--lh-tight); font-weight: var(--fw-bold); letter-spacing: -0.02em; }
+.h-xl  { font-size: var(--fs-h-xl);  line-height: var(--lh-tight); font-weight: var(--fw-semibold); letter-spacing: -0.015em; }
+.h-l   { font-size: var(--fs-h-l);   line-height: var(--lh-tight); font-weight: var(--fw-semibold); letter-spacing: -0.01em; }
+.h-m   { font-size: var(--fs-h-m);   line-height: var(--lh-heading); font-weight: var(--fw-semibold); }
 .h-s   { font-size: var(--fs-h-s);   line-height: var(--lh-snug); font-weight: var(--fw-semibold); }
-.h-xs  { font-size: var(--fs-h-xs);  line-height: var(--lh-snug); font-weight: var(--fw-semibold); }
+.h-xs  { font-size: var(--fs-h-xs);  line-height: var(--lh-snug); font-weight: var(--fw-medium); }
 
 .text-l { font-size: var(--fs-text-l); }
 .text-m { font-size: var(--fs-text-m); }
@@ -178,11 +178,12 @@ p {
   align-items: center;
   justify-content: center;
   gap: var(--space-3);
-  padding: 0.75rem 1.5rem;
-  min-height: 45px;
-  border-radius: var(--radius-pill);
-  font-size: var(--fs-text-r);
-  font-weight: var(--fw-semibold);
+  padding: 0.6rem 1.35rem;
+  min-height: 42px;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-text-s);
+  font-weight: var(--fw-medium);
+  letter-spacing: 0.01em;
   line-height: 1;
   background: var(--btn-bg);
   color: var(--btn-fg);
@@ -194,7 +195,7 @@ p {
 .btn:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--shadow-accent); }
 .btn:active { transform: translateY(0); }
 
-.btn--lg { padding: 0.9rem 2rem; min-height: 52px; font-size: var(--fs-text-m); }
+.btn--lg { padding: 0.75rem 1.75rem; min-height: 48px; font-size: var(--fs-text-r); }
 
 .btn--ghost {
   --btn-bg: transparent;
