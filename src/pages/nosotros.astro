@@ -2,15 +2,16 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import UiIcon from '../components/UiIcon.astro';
 import { certifications, homologations } from '../data/site';
 
 const values = [
-  { title: 'Seguridad', tagline: 'Primero', desc: 'La seguridad es nuestra prioridad en cada actividad y decisión. Protegemos a las personas, promoviendo una cultura preventiva y responsable orientada al cero daño.' },
-  { title: 'Integridad', tagline: 'Siempre', desc: 'Actuamos con honestidad, transparencia y coherencia en todo momento. Cumplimos nuestros compromisos y hacemos lo correcto, generando confianza con clientes y colaboradores.' },
-  { title: 'Innovación', tagline: 'Que genere valor', desc: 'Impulsamos soluciones que integran tecnología, digitalización e inteligencia artificial para resolver desafíos reales y generar valor sostenible en las operaciones de nuestros clientes.' },
-  { title: 'Enfoque al cliente', tagline: 'Soluciones que transforman', desc: 'Entendemos las necesidades de nuestros clientes para entregar soluciones confiables, eficientes y de alto impacto, mejorando su productividad y competitividad.' },
-  { title: 'Excelencia', tagline: 'En todo lo que hacemos', desc: 'Trabajamos con disciplina, calidad y mejora continua para superar expectativas y entregar servicios de alto nivel en cada proyecto y operación.' },
-  { title: 'Actitud', tagline: 'Trabajo en equipo', desc: 'Trabajamos juntos para crear una cultura basada en la confianza y el respeto.' },
+  { icon: 'shield', title: 'Seguridad', tagline: 'Primero', desc: 'La seguridad es nuestra prioridad en cada actividad y decisión. Protegemos a las personas, promoviendo una cultura preventiva y responsable orientada al cero daño.' },
+  { icon: 'check-circle', title: 'Integridad', tagline: 'Siempre', desc: 'Actuamos con honestidad, transparencia y coherencia en todo momento. Cumplimos nuestros compromisos y hacemos lo correcto, generando confianza con clientes y colaboradores.' },
+  { icon: 'spark', title: 'Innovación', tagline: 'Que genere valor', desc: 'Impulsamos soluciones que integran tecnología, digitalización e inteligencia artificial para resolver desafíos reales y generar valor sostenible en las operaciones de nuestros clientes.' },
+  { icon: 'target', title: 'Enfoque al cliente', tagline: 'Soluciones que transforman', desc: 'Entendemos las necesidades de nuestros clientes para entregar soluciones confiables, eficientes y de alto impacto, mejorando su productividad y competitividad.' },
+  { icon: 'spark', title: 'Excelencia', tagline: 'En todo lo que hacemos', desc: 'Trabajamos con disciplina, calidad y mejora continua para superar expectativas y entregar servicios de alto nivel en cada proyecto y operación.' },
+  { icon: 'user', title: 'Actitud', tagline: 'Trabajo en equipo', desc: 'Trabajamos juntos para crear una cultura basada en la confianza y el respeto.' },
 ];
 
 const policies = [
@@ -47,9 +48,9 @@ const policies = [
           operacionales y contribuir al crecimiento eficiente y seguro de las organizaciones.
         </p>
       </div>
-      <div class="about-intro__media" data-reveal>
+      <figure class="about-intro__media zoom-img" data-reveal>
         <ImagePlaceholder label="Equipo Relengcorp / instalaciones" ratio="4/3" tone="dark" />
-      </div>
+      </figure>
     </div>
   </section>
 
@@ -92,6 +93,7 @@ const policies = [
       <div class="values-grid">
         {values.map((v) => (
           <article class="value-card" data-reveal>
+            <span class="value-card__icon"><UiIcon name={v.icon} size={26} /></span>
             <h3 class="value-card__title h-xs">{v.title}<span class="value-card__tag">{v.tagline}</span></h3>
             <p class="text-s">{v.desc}</p>
           </article>
@@ -161,7 +163,17 @@ const policies = [
 
   .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
   .value-card { padding: var(--space-7); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); border-top: 3px solid var(--accent); transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .value-card:hover { box-shadow: var(--shadow-4); transform: translateY(-4px); }
+  .value-card:hover { box-shadow: var(--shadow-5); transform: translateY(-6px); }
+  .value-card__icon {
+    display: grid; place-items: center;
+    width: 52px; height: 52px;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: var(--space-5);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .value-card:hover .value-card__icon { background: var(--accent); color: #fff; transform: scale(1.08) rotate(-4deg); }
   .value-card__title { display: flex; flex-direction: column; gap: 2px; margin-bottom: var(--space-4); }
   .value-card__tag { font-size: var(--fs-text-s); font-weight: var(--fw-medium); color: var(--accent); }
 

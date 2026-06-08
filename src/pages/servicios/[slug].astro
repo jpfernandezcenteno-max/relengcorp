@@ -1,9 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ContactForm from '../../components/ContactForm.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import ServiceIcon from '../../components/ServiceIcon.astro';
 import UiIcon from '../../components/UiIcon.astro';
-import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import ContactCTASection from '../../components/sections/ContactCTASection.astro';
+import CertificacionesSection from '../../components/sections/CertificacionesSection.astro';
 import { services, site } from '../../data/site';
 
 export function getStaticPaths() {
@@ -14,26 +15,28 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
-const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+const brochureUrl = '/brochures/relengcorp-brochure.pdf';
 
-// Iconos y colores rotativos para los grupos de alcance del servicio
-const groupIcons = ['shield', 'gear', 'chart', 'layers', 'target', 'cube', 'wrench', 'document'];
-const groupColors = [
-  'var(--celeste-500)',
-  'var(--morado-500)',
-  'var(--azul-500)',
-  'var(--celeste-700)',
+// Stats del hero. PLACEHOLDER: confirmar cifras reales por servicio con el cliente.
+const stats = [
+  { value: '300+', label: 'Servicios realizados' },
+  { value: '5', label: 'En ejecución' },
 ];
 
-// Beneficios con iconografía
+// Beneficios (4, como el Figma). Contenido real de Relengcorp.
 const benefits = [
-  { icon: 'target', text: 'Reducción de riesgos operacionales y paradas no planificadas.' },
-  { icon: 'chart', text: 'Mayor disponibilidad y vida útil de los activos críticos.' },
-  { icon: 'spark', text: 'Inteligencia aplicada: datos convertidos en decisiones accionables.' },
-  { icon: 'user', text: 'Acompañamiento de especialistas con experiencia en faena.' },
+  { title: 'Reducción de riesgos', text: 'Menos paradas no planificadas y mayor seguridad en la operación.' },
+  { title: 'Mayor disponibilidad', text: 'Más vida útil y continuidad operacional de tus activos críticos.' },
+  { title: 'Inteligencia aplicada', text: 'Convertimos datos de condición en decisiones accionables.' },
+  { title: 'Especialistas en faena', text: 'Acompañamiento experto con experiencia comprobada en terreno.' },
 ];
 
-// Schema.org Service para SEO
+// Características técnicas: aplanamos los items de los grupos del servicio.
+const features = service.groups.flatMap((g) => g.items).slice(0, 6);
+
+// PLACEHOLDER: logos reales de clientes.
+const clients = Array.from({ length: 6 }, (_, i) => `Cliente ${i + 1}`);
+
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -46,238 +49,243 @@ const schema = {
 ---
 
 <BaseLayout title={service.title} description={service.short} schema={schema}>
-  <!-- HERO claro en dos columnas: (izq) título/icono/descripción + formulario · (der) imagen -->
+  <!-- ===== HERO oscuro: captura de email + stats + imagen ===== -->
   <section class="svc-hero">
-    <div class="svc-hero__glow" aria-hidden="true"></div>
+    <div class="svc-hero__bg" aria-hidden="true"><div class="svc-hero__glow"></div></div>
     <div class="container svc-hero__grid">
-      <!-- Columna izquierda -->
-      <div class="svc-hero__left">
-        <p class="eyebrow" data-reveal>Servicios especializados</p>
+      <div class="svc-hero__content">
         <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="svc-hero__intro" data-reveal>{service.intro}</p>
+        <p class="eyebrow" data-reveal>Pide un diagnóstico gratuito</p>
 
-        <div class="svc-hero__form" data-reveal>
-          <ContactForm
-            variant="service"
-            serviceName={service.title}
-            title="Descarga el brochure"
-            description="Déjanos tus datos y recibe el brochure de este servicio. Un especialista te contactará."
-            submitLabel="Descargar brochure"
-            compact
-          />
-        </div>
+        <form class="svc-capture" data-capture data-brochure={brochureUrl} novalidate data-reveal>
+          <div class="svc-capture__row">
+            <label for="svc-email" class="sr-only">Correo electrónico</label>
+            <input type="email" id="svc-email" name="email" placeholder="Ingresa tu email" required autocomplete="email" />
+            <button type="submit" class="btn">Contactar</button>
+          </div>
+          <p class="svc-capture__error" data-error></p>
+          <p class="svc-capture__success" data-success hidden>✓ ¡Gracias! Tu brochure se está descargando y un especialista te contactará.</p>
+        </form>
+
+        <p class="svc-hero__intro text-m" data-reveal>{service.intro}</p>
+
+        <dl class="svc-stats" data-reveal>
+          {stats.map((s) => (
+            <div class="svc-stat">
+              <dt class="svc-stat__value">{s.value}</dt>
+              <dd class="svc-stat__label text-s">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      <!-- Columna derecha: imagen -->
-      <div class="svc-hero__right" data-reveal>
-        <figure class="zoom-img svc-hero__media">
-          <ImagePlaceholder label={`${service.title} en operación`} ratio="3/4" tone="dark" />
-        </figure>
-        <ul class="svc-badges">
-          <li><span class="svc-badges__icon"><UiIcon name="download" size={20} /></span>Brochure en PDF</li>
-          <li><span class="svc-badges__icon"><UiIcon name="clock" size={20} /></span>Respuesta en 24 h</li>
-          <li><span class="svc-badges__icon"><UiIcon name="user" size={20} /></span>Especialista asignado</li>
-        </ul>
-      </div>
+      <figure class="svc-hero__media zoom-img" data-reveal>
+        <ImagePlaceholder label={`${service.title} en operación`} ratio="1/1" tone="dark" />
+      </figure>
     </div>
   </section>
 
-  <!-- DETALLE: grupos de servicios con iconografía -->
-  <section class="section svc-detail">
+  <!-- ===== NUESTROS CLIENTES ===== -->
+  <section class="section section--tight svc-clients">
     <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="eyebrow">Alcance del servicio</p>
-        <h2 class="h-l">¿Qué incluye {service.title}?</h2>
+      <div class="section-head section-head--center" data-reveal>
+        <h2 class="h-m">Nuestros clientes</h2>
+        <p class="text-m">
+          Empresas líderes del sector minero e industrial confían en Relengcorp para maximizar
+          la disponibilidad y confiabilidad de sus activos críticos.
+        </p>
       </div>
+      <ul class="svc-clients__logos" data-reveal>
+        {clients.map((c) => <li class="svc-client-logo">{c}</li>)}
+      </ul>
+    </div>
+  </section>
 
-      <div class="svc-groups">
-        {service.groups.map((group, i) => (
-          <div class="svc-group" data-reveal style={`--gc:${groupColors[i % groupColors.length]}`}>
-            <span class="svc-group__icon"><UiIcon name={groupIcons[i % groupIcons.length]} size={26} /></span>
-            <h3 class="svc-group__name h-xs">{group.name}</h3>
-            <ul class="svc-group__list">
-              {group.items.map((item) => (
-                <li>
-                  <UiIcon name="check" size={18} />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+  <!-- ===== BENEFICIOS (grid 2x2) ===== -->
+  <section class="section svc-benefits">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <p class="eyebrow eyebrow--center">Ventajas para tu operación</p>
+        <h2 class="h-l">Beneficios que te harán estar un paso adelante</h2>
+      </div>
+      <div class="svc-benefits__grid">
+        {benefits.map((b) => (
+          <article class="svc-benefit-card" data-reveal>
+            <span class="svc-benefit-card__icon"><UiIcon name="check-circle" size={24} /></span>
+            <p><strong>{b.title}:</strong> {b.text}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- BENEFICIOS + imagen grande -->
-  <section class="section svc-benefit">
-    <div class="container svc-benefit__grid">
-      <figure class="svc-benefit__media zoom-img" data-reveal>
-        <ImagePlaceholder label={`${service.title} — resultados en faena`} ratio="4/3" tone="dark" />
-      </figure>
-      <div class="svc-benefit__text" data-reveal>
-        <p class="eyebrow">Por qué Relengcorp</p>
-        <h2 class="h-m">Confiabilidad que se traduce en continuidad operacional</h2>
-        <ul class="svc-benefit__list">
-          {benefits.map((b) => (
-            <li>
-              <span class="svc-benefit__icon"><UiIcon name={b.icon} size={22} /></span>
-              <span>{b.text}</span>
-            </li>
+  <!-- ===== CARACTERÍSTICAS TÉCNICAS ===== -->
+  <section class="section svc-features">
+    <div class="container svc-features__grid">
+      <div class="svc-features__text" data-reveal>
+        <h2 class="h-l">Características técnicas</h2>
+        <p class="text-m">{service.intro}</p>
+        <ul class="svc-features__list">
+          {features.map((f) => (
+            <li><UiIcon name="check" size={18} /><span>{f}</span></li>
           ))}
         </ul>
         <a href="/contacto" class="btn btn--lg">Conversemos sobre tu operación</a>
       </div>
+      <figure class="svc-features__media zoom-img" data-reveal>
+        <ImagePlaceholder label={`${service.title} — detalle técnico`} ratio="4/5" tone="dark" />
+      </figure>
     </div>
   </section>
 
-  <!-- OTROS SERVICIOS -->
-  <section class="section svc-others">
+  <!-- ===== GALERÍA ===== -->
+  <section class="section section--tight svc-gallery">
     <div class="container">
-      <div class="section-head section-head--center" data-reveal>
-        <p class="eyebrow eyebrow--center">Sigue explorando</p>
-        <h2 class="h-l">Otros servicios especializados</h2>
-      </div>
-      <div class="svc-others__grid">
-        {others.map((s) => (
-          <a href={`/servicios/${s.slug}`} class="svc-others__card" data-reveal>
-            <span class="svc-others__icon"><ServiceIcon slug={s.slug} /></span>
-            <h3 class="h-xs">{s.title}</h3>
-            <p class="text-s">{s.short}</p>
-            <span class="link-arrow text-s">Ver servicio
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
-          </a>
+      <div class="svc-gallery__grid">
+        {[1, 2, 3].map((n) => (
+          <figure class="zoom-img" data-reveal>
+            <ImagePlaceholder label={`${service.title} — foto ${n}`} ratio="4/3" tone="dark" />
+          </figure>
         ))}
       </div>
     </div>
   </section>
+
+  <!-- ===== FORMULARIO + CERTIFICACIONES (reutilizados del Home) ===== -->
+  <ContactCTASection />
+  <CertificacionesSection />
 </BaseLayout>
 
 <style>
-  /* ===== Utilidad: zoom de imagen al hover ===== */
-  .zoom-img { overflow: hidden; border-radius: var(--radius-lg); margin: 0; }
-  .zoom-img > :global(*) { transition: transform var(--dur-slow) var(--ease-out); }
-  .zoom-img:hover > :global(*) { transform: scale(1.05); }
-
-  /* ===== HERO claro en dos columnas ===== */
+  /* ===== HERO oscuro ===== */
   .svc-hero {
     position: relative;
-    background: var(--bg-base);
-    color: var(--text-body);
+    background: var(--gradient-hero);
+    color: var(--text-on-dark);
     padding-top: calc(var(--header-h) + var(--space-9));
     padding-bottom: var(--space-10);
     overflow: hidden;
     isolation: isolate;
   }
-  .svc-hero__glow {
-    position: absolute;
-    top: -40%; right: -10%;
-    width: 55%; height: 150%;
-    background: radial-gradient(60% 60% at 70% 30%, rgba(0,172,229,0.12) 0%, transparent 70%);
-    z-index: -1;
-  }
-  .svc-hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: start; }
-  .svc-hero__left { display: flex; flex-direction: column; gap: var(--space-5); }
-  .svc-hero__left h1 { color: var(--text-strong); }
-  .svc-hero__intro { color: var(--text-body); font-size: var(--fs-text-r); max-width: 52ch; }
-  .svc-hero__form { margin-top: var(--space-3); max-width: 480px; }
+  .svc-hero__bg { position: absolute; inset: 0; z-index: -1; }
+  .svc-hero__glow { position: absolute; top: -20%; left: -10%; width: 60%; height: 130%; background: var(--gradient-glow); }
+  .svc-hero__grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: var(--space-10); align-items: center; }
+  .svc-hero__content { display: flex; flex-direction: column; gap: var(--space-5); max-width: 580px; }
+  .svc-hero__content h1 { color: #fff; }
+  .svc-hero .eyebrow { color: var(--celeste-300); margin-top: calc(var(--space-2) * -1); }
+  .svc-hero__intro { color: var(--azul-100); }
 
-  /* Columna derecha: imagen (sticky para acompañar el formulario) */
-  .svc-hero__right { display: flex; flex-direction: column; gap: var(--space-6); position: sticky; top: calc(var(--header-h) + var(--space-6)); }
-  .svc-hero__media { flex: 1; min-height: 560px; box-shadow: var(--shadow-5); }
-  .svc-hero__media :global(.ph) { height: 100%; }
-  .svc-badges { display: flex; flex-wrap: wrap; gap: var(--space-4); }
-  .svc-badges li {
-    display: inline-flex; align-items: center; gap: var(--space-3);
-    padding: var(--space-3) var(--space-5);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    font-size: var(--fs-text-s);
-    font-weight: var(--fw-semibold);
-    color: var(--text-strong);
-    background: var(--surface);
-    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  /* Captura de email */
+  .svc-capture { display: flex; flex-direction: column; gap: var(--space-3); }
+  .svc-capture__row { display: flex; gap: var(--space-3); background: #fff; padding: 6px; border-radius: var(--radius-pill); max-width: 460px; }
+  .svc-capture__row input {
+    flex: 1; border: none; background: transparent;
+    padding: 0.6rem 1rem; color: var(--text-strong);
+    min-width: 0;
   }
-  .svc-badges li:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
-  .svc-badges__icon { color: var(--accent); display: inline-flex; }
+  .svc-capture__row input:focus { outline: none; }
+  .svc-capture__row .btn { white-space: nowrap; }
+  .svc-capture__error { color: #ff9b9b; font-size: var(--fs-text-xs); min-height: 1em; }
+  .svc-capture__success { color: var(--celeste-300); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
 
-  /* ===== DETALLE GRUPOS ===== */
-  .svc-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
-  .svc-group {
-    --gc: var(--accent);
+  /* Stats */
+  .svc-stats { display: flex; gap: var(--space-8); margin-top: var(--space-4); }
+  .svc-stat { display: flex; flex-direction: column; gap: 2px; position: relative; padding-right: var(--space-8); }
+  .svc-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border-dark); }
+  .svc-stat__value { font-size: var(--fs-h-m); font-weight: var(--fw-extrabold); color: var(--celeste-400); line-height: 1; }
+  .svc-stat__label { color: var(--azul-100); }
+
+  .svc-hero__media { box-shadow: var(--shadow-6); }
+
+  /* ===== CLIENTES ===== */
+  .svc-clients__logos { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); margin-top: var(--space-7); }
+  .svc-client-logo {
+    display: grid; place-items: center;
+    height: 64px; min-width: 150px; padding-inline: var(--space-6);
+    border: 1px solid var(--border); border-radius: var(--radius-md);
+    color: var(--neutro-300); font-weight: var(--fw-bold); letter-spacing: var(--tracking-wide);
+    filter: grayscale(1);
+    transition: filter var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .svc-client-logo:hover { filter: grayscale(0); color: var(--accent); box-shadow: var(--shadow-3); }
+
+  /* ===== BENEFICIOS ===== */
+  .svc-benefits__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
+  .svc-benefit-card {
+    display: flex; gap: var(--space-4); align-items: flex-start;
     padding: var(--space-7);
-    border: 1px solid var(--border);
-    border-top: 3px solid var(--gc);
-    border-radius: var(--radius-lg);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
     background: var(--surface);
-    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   }
-  .svc-group:hover { box-shadow: var(--shadow-5); transform: translateY(-6px); }
-  .svc-group__icon {
-    display: grid; place-items: center;
-    width: 52px; height: 52px;
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--gc) 14%, white);
-    color: var(--gc);
-    margin-bottom: var(--space-5);
-    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
-  }
-  .svc-group:hover .svc-group__icon { background: var(--gc); color: #fff; transform: scale(1.08) rotate(-4deg); }
-  .svc-group__name { color: var(--gc); margin-bottom: var(--space-5); }
-  .svc-group__list svg { color: var(--gc) !important; }
-  .svc-group__list { display: flex; flex-direction: column; gap: var(--space-4); }
-  .svc-group__list li { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--text-body); }
-  .svc-group__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .svc-benefit-card:hover { box-shadow: var(--shadow-5); transform: translateY(-4px); border-color: transparent; }
+  .svc-benefit-card__icon { color: var(--accent); flex-shrink: 0; display: inline-flex; margin-top: 2px; }
+  .svc-benefit-card p { color: var(--text-body); }
+  .svc-benefit-card strong { color: var(--text-strong); }
 
-  /* ===== BENEFICIO ===== */
-  .svc-benefit { background: var(--bg-subtle); }
-  .svc-benefit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
-  .svc-benefit__media { min-height: 440px; box-shadow: var(--shadow-4); }
-  .svc-benefit__media :global(.ph) { height: 100%; }
-  .svc-benefit__text { display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
-  .svc-benefit__list { display: flex; flex-direction: column; gap: var(--space-5); }
-  .svc-benefit__list li { display: flex; gap: var(--space-4); align-items: flex-start; color: var(--text-body); }
-  .svc-benefit__icon {
-    display: grid; place-items: center;
-    width: 44px; height: 44px; flex-shrink: 0;
-    border-radius: var(--radius-md);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--accent);
-    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
-  }
-  .svc-benefit__list li:hover .svc-benefit__icon { background: var(--accent); color: #fff; }
+  /* ===== CARACTERÍSTICAS ===== */
+  .svc-features { background: var(--bg-subtle); }
+  .svc-features__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .svc-features__text { display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
+  .svc-features__list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-5); width: 100%; }
+  .svc-features__list li { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--text-body); font-size: var(--fs-text-s); }
+  .svc-features__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
+  .svc-features__media { min-height: 440px; box-shadow: var(--shadow-4); }
+  .svc-features__media :global(.ph) { height: 100%; }
 
-  /* ===== OTROS SERVICIOS (claro) ===== */
-  .svc-others__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .svc-others__card {
-    display: flex; flex-direction: column; gap: var(--space-3);
-    padding: var(--space-7);
-    border-radius: var(--radius-lg);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
-  }
-  .svc-others__card:hover { transform: translateY(-6px); box-shadow: var(--shadow-5); border-color: transparent; }
-  .svc-others__card h3 { color: var(--text-strong); }
-  .svc-others__card p { color: var(--text-body); flex: 1; }
-  .svc-others__icon {
-    display: grid; place-items: center;
-    width: 52px; height: 52px;
-    border-radius: var(--radius-md);
-    background: var(--accent-soft);
-    color: var(--accent);
-    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
-  }
-  .svc-others__card:hover .svc-others__icon { background: var(--accent); color: #fff; transform: scale(1.08) rotate(-4deg); }
+  /* ===== GALERÍA ===== */
+  .svc-gallery__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
+  .svc-gallery__grid .zoom-img { box-shadow: var(--shadow-3); }
 
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
-    .svc-hero__grid, .svc-benefit__grid { grid-template-columns: 1fr; }
-    .svc-groups, .svc-others__grid { grid-template-columns: 1fr; }
-    .svc-benefit__media { order: -1; min-height: 320px; }
-    .svc-hero__right { position: static; order: -1; }
-    .svc-hero__media { min-height: 360px; }
+    .svc-hero__grid, .svc-features__grid { grid-template-columns: 1fr; }
+    .svc-hero__media { order: -1; max-width: 460px; }
+    .svc-benefits__grid { grid-template-columns: 1fr; }
+    .svc-features__media { order: -1; min-height: 320px; }
+  }
+  @media (max-width: 620px) {
+    .svc-features__list { grid-template-columns: 1fr; }
+    .svc-gallery__grid { grid-template-columns: 1fr; }
+    .svc-stats { gap: var(--space-6); }
+  }
+  @media (max-width: 480px) {
+    .svc-capture__row { flex-direction: column; background: transparent; padding: 0; }
+    .svc-capture__row input { background: #fff; border-radius: var(--radius-pill); }
   }
 </style>
+
+<script>
+  // Captura de email del hero -> valida, descarga brochure, confirma.
+  // TODO(backend): enviar lead a comercial@relengcorp.com al definir hosting.
+  document.querySelectorAll<HTMLFormElement>('[data-capture]').forEach((form) => {
+    const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+    const error = form.querySelector<HTMLElement>('[data-error]');
+    const success = form.querySelector<HTMLElement>('[data-success]');
+    const brochure = form.dataset.brochure;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!input) return;
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      if (!valid) {
+        input.setAttribute('aria-invalid', 'true');
+        if (error) error.textContent = 'Ingresa un correo electrónico válido.';
+        input.focus();
+        return;
+      }
+      input.removeAttribute('aria-invalid');
+      if (error) error.textContent = '';
+      if (brochure) {
+        const a = document.createElement('a');
+        a.href = brochure;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+      form.querySelector('.svc-capture__row')?.setAttribute('hidden', '');
+      if (success) success.hidden = false;
+    });
+  });
+</script>

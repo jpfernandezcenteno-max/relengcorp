@@ -242,6 +242,11 @@ p {
 }
 .skip-link:focus { top: var(--space-5); }
 
+/* ---------- UTILIDAD: zoom de imagen al hover ---------- */
+.zoom-img { overflow: hidden; border-radius: var(--radius-lg); margin: 0; }
+.zoom-img > * { transition: transform var(--dur-slow) var(--ease-out); }
+.zoom-img:hover > * { transform: scale(1.05); }
+
 /* ---------- PROSE (contenido de artículos del blog) ---------- */
 .prose {
   font-size: var(--fs-text-m);
