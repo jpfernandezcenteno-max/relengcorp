@@ -1,0 +1,67 @@
+# ============================================================
+# DECAP CMS — configuración del gestor de contenido de Relengcorp
+# Permite al cliente crear y editar artículos del blog desde /admin
+# con un editor visual, sin tocar código.
+# ============================================================
+
+backend:
+  name: github
+  repo: jpfernandezcenteno-max/relengcorp
+  branch: main
+  # Para producción en Vercel se requiere un proxy OAuth de GitHub.
+  # Ver README/instrucciones de despliegue.
+
+# Permite editar localmente con `npx decap-server` + `npm run dev`
+# (editar en http://localhost:4321/admin sin autenticación).
+local_backend: true
+
+media_folder: "public/images/blog"
+public_folder: "/images/blog"
+
+# Idioma de la interfaz
+locale: "es"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    label_singular: "Artículo"
+    description: "Artículos del blog de Relengcorp."
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    sortable_fields: ["pubDate", "title"]
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Descripción (resumen)", name: "description", widget: "text" }
+      - {
+          label: "Fecha de publicación",
+          name: "pubDate",
+          widget: "datetime",
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          format: "YYYY-MM-DD",
+        }
+      - {
+          label: "Fecha de actualización",
+          name: "updatedDate",
+          widget: "datetime",
+          required: false,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          format: "YYYY-MM-DD",
+        }
+      - {
+          label: "Categoría",
+          name: "category",
+          widget: "select",
+          default: "Industria",
+          options:
+            ["Industria", "Confiabilidad", "Integridad", "Mantenimiento Predictivo", "Transformación Digital", "Metalurgia"],
+        }
+      - { label: "Autor", name: "author", widget: "string", default: "Relengcorp" }
+      - { label: "Imagen de portada", name: "cover", widget: "image", required: false }
+      - { label: "Texto alternativo de la portada", name: "coverAlt", widget: "string", required: false }
+      - { label: "Borrador (no se publica)", name: "draft", widget: "boolean", default: false }
+      - { label: "Contenido", name: "body", widget: "markdown" }

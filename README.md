@@ -37,6 +37,13 @@ public/
   images/            Imágenes (pendiente: banco de fotos del cliente)
 ```
 
+## Gestor de contenido (Blog) — Decap CMS
+
+El cliente edita el blog desde **`/admin`** con un editor visual.
+
+- **En local:** ejecutar `npx decap-server` en una terminal y `npm run dev` en otra; entrar a `http://localhost:4321/admin` (sin login).
+- **En producción (Vercel):** Decap usa el backend `github` y requiere un **proxy OAuth de GitHub** (crear una GitHub OAuth App + un endpoint OAuth, p. ej. una función serverless en Vercel o un servicio como `oauth.netlify.com`). Hasta configurarlo, el panel funciona en local. Documentado como pendiente.
+
 ## Despliegue
 
 Despliegue continuo en **Vercel**: cada push a `main` genera un nuevo deploy.
