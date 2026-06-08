@@ -96,7 +96,11 @@
   --gradient-glow: radial-gradient(60% 60% at 70% 30%, rgba(0, 172, 229, 0.35) 0%, rgba(0, 172, 229, 0) 70%);
 
   /* ---------- TIPOGRAFÍA ---------- */
-  --font-sans: 'Raleway', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  /* Raleway = títulos/display · Poppins = textos/párrafos */
+  --font-heading: 'Raleway Variable', 'Raleway', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  /* alias de compatibilidad: por defecto el cuerpo usa Poppins */
+  --font-sans: var(--font-body);
 
   /* Escala (Figma). rem base = 16px */
   --fs-h-xxl: 3.5rem;    /* 56px / 120% */
