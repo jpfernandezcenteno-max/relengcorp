@@ -52,14 +52,6 @@ const schema = {
     <div class="container svc-hero__grid">
       <!-- Columna izquierda -->
       <div class="svc-hero__left">
-        <nav class="breadcrumb" aria-label="Ruta de navegación">
-          <ol>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/servicios">Servicios</a></li>
-            <li><span aria-current="page">{service.title}</span></li>
-          </ol>
-        </nav>
-        <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={36} /></span>
         <p class="eyebrow" data-reveal>Servicios especializados</p>
         <h1 class="h-xl" data-reveal>{service.title}</h1>
         <p class="svc-hero__intro" data-reveal>{service.intro}</p>
@@ -190,21 +182,6 @@ const schema = {
   .svc-hero__left h1 { color: var(--text-strong); }
   .svc-hero__intro { color: var(--text-body); font-size: var(--fs-text-r); max-width: 52ch; }
   .svc-hero__form { margin-top: var(--space-3); max-width: 480px; }
-  .svc-hero__icon {
-    display: grid; place-items: center;
-    width: 72px; height: 72px;
-    border-radius: var(--radius-lg);
-    background: var(--accent-soft);
-    color: var(--accent);
-    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
-  }
-  .svc-hero__icon:hover { transform: translateY(-4px) rotate(-4deg); box-shadow: var(--shadow-accent); }
-  .svc-hero .breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-2); }
-  .svc-hero .breadcrumb li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--fs-text-s); color: var(--text-muted); }
-  .svc-hero .breadcrumb li + li::before { content: '/'; color: var(--neutro-250); }
-  .svc-hero .breadcrumb a { color: var(--text-body); transition: color var(--dur-fast) var(--ease-out); }
-  .svc-hero .breadcrumb a:hover { color: var(--accent); }
-  .svc-hero .breadcrumb [aria-current] { color: var(--text-strong); }
 
   /* Columna derecha: imagen (sticky para acompañar el formulario) */
   .svc-hero__right { display: flex; flex-direction: column; gap: var(--space-6); position: sticky; top: calc(var(--header-h) + var(--space-6)); }
