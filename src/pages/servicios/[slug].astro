@@ -157,27 +157,27 @@ const schema = {
 </BaseLayout>
 
 <style>
-  /* ===== HERO oscuro ===== */
+  /* ===== HERO claro (fondo plomo que va degradando) ===== */
   .svc-hero {
     position: relative;
-    background: var(--gradient-hero);
-    color: var(--text-on-dark);
+    background: linear-gradient(180deg, var(--azul-50) 0%, var(--neutro-100) 55%, var(--bg-base) 100%);
+    color: var(--text-body);
     padding-top: calc(var(--header-h) + var(--space-9));
     padding-bottom: var(--space-10);
     overflow: hidden;
     isolation: isolate;
   }
   .svc-hero__bg { position: absolute; inset: 0; z-index: -1; }
-  .svc-hero__glow { position: absolute; top: -20%; left: -10%; width: 60%; height: 130%; background: var(--gradient-glow); }
+  .svc-hero__glow { position: absolute; top: -20%; left: -10%; width: 60%; height: 130%; background: radial-gradient(60% 60% at 30% 30%, rgba(0,172,229,0.10) 0%, transparent 70%); }
   .svc-hero__grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: var(--space-10); align-items: center; }
   .svc-hero__content { display: flex; flex-direction: column; gap: var(--space-5); max-width: 580px; }
-  .svc-hero__content h1 { color: #fff; }
-  .svc-hero .eyebrow { color: var(--celeste-300); margin-top: calc(var(--space-2) * -1); }
-  .svc-hero__intro { color: var(--azul-100); }
+  .svc-hero__content h1 { color: var(--text-strong); }
+  .svc-hero .eyebrow { color: var(--accent); margin-top: calc(var(--space-2) * -1); }
+  .svc-hero__intro { color: var(--text-body); }
 
   /* Captura de email */
   .svc-capture { display: flex; flex-direction: column; gap: var(--space-3); }
-  .svc-capture__row { display: flex; gap: var(--space-3); background: #fff; padding: 6px; border-radius: var(--radius-pill); max-width: 460px; }
+  .svc-capture__row { display: flex; gap: var(--space-3); background: #fff; padding: 6px; border-radius: var(--radius-pill); max-width: 460px; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
   .svc-capture__row input {
     flex: 1; border: none; background: transparent;
     padding: 0.6rem 1rem; color: var(--text-strong);
@@ -185,17 +185,17 @@ const schema = {
   }
   .svc-capture__row input:focus { outline: none; }
   .svc-capture__row .btn { white-space: nowrap; }
-  .svc-capture__error { color: #ff9b9b; font-size: var(--fs-text-xs); min-height: 1em; }
-  .svc-capture__success { color: var(--celeste-300); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
+  .svc-capture__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
+  .svc-capture__success { color: var(--accent-hover); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
 
   /* Stats */
   .svc-stats { display: flex; gap: var(--space-8); margin-top: var(--space-4); }
   .svc-stat { display: flex; flex-direction: column; gap: 2px; position: relative; padding-right: var(--space-8); }
-  .svc-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border-dark); }
-  .svc-stat__value { font-size: var(--fs-h-m); font-weight: var(--fw-extrabold); color: var(--celeste-400); line-height: 1; }
-  .svc-stat__label { color: var(--azul-100); }
+  .svc-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border); }
+  .svc-stat__value { font-size: var(--fs-h-m); font-weight: var(--fw-extrabold); color: var(--accent); line-height: 1; }
+  .svc-stat__label { color: var(--text-body); }
 
-  .svc-hero__media { box-shadow: var(--shadow-6); }
+  .svc-hero__media { box-shadow: var(--shadow-5); }
 
   /* ===== CLIENTES ===== */
   .svc-clients__logos { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); margin-top: var(--space-7); }
@@ -250,8 +250,9 @@ const schema = {
     .svc-stats { gap: var(--space-6); }
   }
   @media (max-width: 480px) {
-    .svc-capture__row { flex-direction: column; background: transparent; padding: 0; }
-    .svc-capture__row input { background: #fff; border-radius: var(--radius-pill); }
+    .svc-capture__row { flex-direction: column; background: transparent; padding: 0; border: none; box-shadow: none; }
+    .svc-capture__row input { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-pill); }
+    .svc-capture__row .btn { width: 100%; }
   }
 </style>
 

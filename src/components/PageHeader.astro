@@ -10,10 +10,10 @@ interface Props {
   title: string;
   subtitle?: string;
   breadcrumbs?: Crumb[];
-  /** 'dark' (por defecto) o 'light' (fondo blanco) */
+  /** 'light' (por defecto, fondo claro) o 'dark' */
   tone?: 'dark' | 'light';
 }
-const { eyebrow, title, subtitle, breadcrumbs = [], tone = 'dark' } = Astro.props;
+const { eyebrow, title, subtitle, breadcrumbs = [], tone = 'light' } = Astro.props;
 ---
 <header class:list={['page-header', `page-header--${tone}`]}>
   <div class="page-header__bg" aria-hidden="true">
