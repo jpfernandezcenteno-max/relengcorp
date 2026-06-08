@@ -242,6 +242,51 @@ p {
 }
 .skip-link:focus { top: var(--space-5); }
 
+/* ---------- PROSE (contenido de artículos del blog) ---------- */
+.prose {
+  font-size: var(--fs-text-m);
+  line-height: 1.75;
+  color: var(--text-body);
+}
+.prose > * + * { margin-top: var(--space-6); }
+.prose h2 {
+  font-size: var(--fs-h-m);
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-2);
+  color: var(--text-strong);
+}
+.prose h3 {
+  font-size: var(--fs-h-s);
+  margin-top: var(--space-8);
+  color: var(--text-strong);
+}
+.prose p { margin-top: var(--space-5); }
+.prose ul,
+.prose ol { margin-top: var(--space-5); padding-left: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+.prose ul li { list-style: disc; }
+.prose ol li { list-style: decimal; }
+.prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.prose a:hover { color: var(--accent-hover); }
+.prose strong { color: var(--text-strong); font-weight: var(--fw-bold); }
+.prose blockquote {
+  margin-top: var(--space-7);
+  padding: var(--space-5) var(--space-7);
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-text-l);
+  font-style: italic;
+  color: var(--text-strong);
+}
+.prose img { border-radius: var(--radius-md); margin-top: var(--space-6); }
+.prose code {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--neutro-100);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
 /* ---------- ANIMACIÓN: estado inicial para reveals GSAP ---------- */
 /* Elementos marcados se ocultan hasta que GSAP los anima. Si JS falla
    o el usuario prefiere menos movimiento, se muestran igual (regla más abajo). */

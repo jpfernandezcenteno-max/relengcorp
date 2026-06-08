@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
+import { getCollection, render } from 'astro:content';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, description, pubDate, updatedDate, category, author, cover, coverAlt } = post.data;
+const date = pubDate.toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+
+// Schema.org Article para SEO
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  author: { '@type': 'Organization', name: author },
+  publisher: { '@type': 'Organization', name: site.legalName, logo: { '@type': 'ImageObject', url: new URL('/logo.svg', site.url).href } },
+  mainEntityOfPage: new URL(`/blog/${post.id}`, site.url).href,
+};
+---
+<BaseLayout title={title} description={description} type="article" schema={schema}>
+  <article class="post">
+    <!-- Cabecera del artículo -->
+    <header class="post-header">
+      <div class="post-header__bg" aria-hidden="true"><div class="post-header__glow"></div></div>
+      <div class="container post-header__inner">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><span aria-current="page">{category}</span></li>
+          </ol>
+        </nav>
+        <span class="post-header__cat">{category}</span>
+        <h1 class="h-xl" data-reveal>{title}</h1>
+        <div class="post-header__meta" data-reveal>
+          <span>{author}</span>
+          <span aria-hidden="true">·</span>
+          <time datetime={pubDate.toISOString()}>{date}</time>
+        </div>
+      </div>
+    </header>
+
+    <!-- Imagen de portada -->
+    <div class="container post-cover" data-reveal>
+      {cover ? (
+        <img src={cover} alt={coverAlt || title} width="1200" height="600" />
+      ) : (
+        <ImagePlaceholder label={coverAlt || 'Imagen de portada del artículo'} ratio="2/1" tone="dark" />
+      )}
+    </div>
+
+    <!-- Contenido -->
+    <div class="container post-body">
+      <div class="prose" data-reveal>
+        <Content />
+      </div>
+
+      <footer class="post-footer" data-reveal>
+        <a href="/blog" class="link-arrow">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M19 12H5m6 6l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Volver al blog
+        </a>
+        <a href="/contacto" class="btn">Habla con un especialista</a>
+      </footer>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-header { position: relative; background: var(--gradient-hero); color: #fff; padding-top: calc(var(--header-h) + var(--space-9)); padding-bottom: var(--space-9); overflow: hidden; isolation: isolate; }
+  .post-header__bg { position: absolute; inset: 0; z-index: -1; }
+  .post-header__glow { position: absolute; top: -30%; right: -10%; width: 50%; height: 140%; background: var(--gradient-glow); }
+  .post-header__inner { display: flex; flex-direction: column; gap: var(--space-4); max-width: 800px; }
+  .post-header h1 { color: #fff; }
+  .post-header__cat { align-self: flex-start; background: var(--accent); color: #fff; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); padding: 4px 14px; border-radius: var(--radius-pill); }
+  .post-header__meta { display: flex; gap: var(--space-3); align-items: center; color: var(--azul-100); font-size: var(--fs-text-s); }
+  .post-header .breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+  .post-header .breadcrumb li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--fs-text-s); color: var(--azul-200); }
+  .post-header .breadcrumb li + li::before { content: '/'; color: var(--azul-300); }
+  .post-header .breadcrumb a { color: var(--azul-100); }
+  .post-header .breadcrumb [aria-current] { color: #fff; }
+
+  .post-cover { margin-top: calc(var(--space-9) * -1); position: relative; z-index: 1; max-width: 980px; }
+  .post-cover img { width: 100%; border-radius: var(--radius-lg); box-shadow: var(--shadow-5); }
+  :global(.post-cover .ph) { box-shadow: var(--shadow-5); }
+
+  .post-body { max-width: 760px; padding-top: var(--space-10); padding-bottom: var(--space-12); }
+
+  .post-footer { display: flex; justify-content: space-between; align-items: center; gap: var(--space-5); flex-wrap: wrap; margin-top: var(--space-10); padding-top: var(--space-7); border-top: 1px solid var(--border); }
+</style>

@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ImagePlaceholder from '../components/ImagePlaceholder.astro';
+import { services } from '../data/site';
+
+// PLACEHOLDER: proyectos de ejemplo. Reemplazar por casos reales del cliente
+// (servicios realizados con foto, cliente, alcance y resultado).
+const projects = [
+  { title: 'Inspección de integridad de molinos', sector: 'Minería de cobre', service: 'Integridad Estructural' },
+  { title: 'Monitoreo predictivo de activos críticos', sector: 'Planta concentradora', service: 'Mantenimiento Predictivo' },
+  { title: 'Análisis RAM y gestión de riesgo', sector: 'Operación minera', service: 'Ingeniería de Confiabilidad' },
+  { title: 'Centro de confiabilidad remota', sector: 'Multi-faena', service: 'Confiabilidad Inteligente' },
+  { title: 'Certificación de tuberías de relaves', sector: 'Transporte de relaves', service: 'Integridad Estructural' },
+  { title: 'Optimización metalúrgica con ML', sector: 'Laboratorio metalúrgico', service: 'Metalurgia Inteligente' },
+];
+---
+<BaseLayout
+  title="Portafolio"
+  description="Casos y proyectos ejecutados por Relengcorp en el sector minero e industrial: integridad estructural, mantenimiento predictivo, confiabilidad y más."
+>
+  <PageHeader
+    eyebrow="Portafolio"
+    title="Proyectos que sostienen operaciones críticas"
+    subtitle="Una muestra de los servicios realizados para algunas de las operaciones más exigentes del sector minero e industrial."
+    breadcrumbs={[{ label: 'Portafolio' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="portfolio-grid">
+        {projects.map((p) => (
+          <article class="project-card" data-reveal>
+            <div class="project-card__media">
+              <ImagePlaceholder label={`${p.title} — foto del proyecto`} ratio="4/3" tone="dark" />
+              <span class="project-card__tag">{p.service}</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="h-xs">{p.title}</h3>
+              <p class="text-s project-card__sector">{p.sector}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark on-dark portfolio-cta">
+    <div class="container portfolio-cta__inner">
+      <div data-reveal>
+        <h2 class="h-l">¿Tu operación necesita una solución a medida?</h2>
+        <p class="text-m">Conversemos sobre tu próximo proyecto de confiabilidad.</p>
+      </div>
+      <a href="/contacto" class="btn btn--lg" data-reveal>Iniciar conversación</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out); }
+  .project-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-5); }
+  .project-card__media { position: relative; }
+  .project-card__tag { position: absolute; top: var(--space-4); left: var(--space-4); background: var(--accent); color: #fff; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); padding: 4px 12px; border-radius: var(--radius-pill); }
+  .project-card__body { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
+  .project-card__sector { color: var(--text-muted); }
+
+  .portfolio-cta__inner { display: flex; justify-content: space-between; align-items: center; gap: var(--space-8); flex-wrap: wrap; }
+  .portfolio-cta__inner h2 { color: #fff; }
+  .portfolio-cta__inner p { color: var(--azul-100); margin-top: var(--space-3); }
+
+  @media (max-width: 900px) { .portfolio-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .portfolio-grid { grid-template-columns: 1fr; } }
+</style>

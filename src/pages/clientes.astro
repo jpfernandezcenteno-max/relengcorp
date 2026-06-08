@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// PLACEHOLDER: reemplazar por logos reales de clientes (subir a /public/images/clientes/).
+const clients = Array.from({ length: 12 }, (_, i) => `Cliente ${i + 1}`);
+const sectors = [
+  'Minería de cobre', 'Minería de oro', 'Plantas concentradoras',
+  'Transporte de relaves', 'Energía', 'Industria pesada',
+];
+---
+<BaseLayout
+  title="Clientes"
+  description="Empresas del sector minero e industrial que confían en Relengcorp para maximizar la disponibilidad y confiabilidad de sus activos críticos."
+>
+  <PageHeader
+    eyebrow="Nuestros clientes"
+    title="Confianza construida en operaciones exigentes"
+    subtitle="Acompañamos a empresas líderes del sector minero e industrial, entregando soluciones confiables y de alto impacto."
+    breadcrumbs={[{ label: 'Clientes' }]}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <p class="eyebrow eyebrow--center">Algunos de nuestros clientes</p>
+        <h2 class="h-l">Marcas que confían en nosotros</h2>
+      </div>
+      <ul class="clients-grid">
+        {clients.map((c) => (
+          <li class="client-logo" data-reveal>{c}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-subtle sectors">
+    <div class="container">
+      <div class="section-head section-head--center" data-reveal>
+        <p class="eyebrow eyebrow--center">Sectores que atendemos</p>
+        <h2 class="h-l">Experiencia transversal a la industria</h2>
+      </div>
+      <div class="sectors-grid">
+        {sectors.map((s) => (
+          <div class="sector-chip" data-reveal>{s}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .clients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
+  .client-logo {
+    display: grid; place-items: center;
+    height: 110px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--neutro-300);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--tracking-wide);
+    filter: grayscale(1);
+    transition: filter var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .client-logo:hover { filter: grayscale(0); color: var(--accent); box-shadow: var(--shadow-3); }
+
+  .sectors { background: var(--bg-subtle); }
+  .sectors-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
+  .sector-chip { padding: var(--space-4) var(--space-7); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-pill); font-weight: var(--fw-semibold); color: var(--text-strong); }
+
+  @media (max-width: 900px) { .clients-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 560px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>

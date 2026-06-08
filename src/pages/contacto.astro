@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { site, offices } from '../data/site';
+---
+<BaseLayout
+  title="Contáctanos"
+  description="Conversemos sobre tu operación. Oficinas en Arequipa, Lima y Chile. Escríbenos a comercial@relengcorp.com o llámanos."
+>
+  <PageHeader
+    eyebrow="Contáctanos"
+    title="Conversemos sobre tu operación"
+    subtitle="Nuestro equipo de especialistas está listo para diseñar la solución de confiabilidad que tu operación necesita."
+    breadcrumbs={[{ label: 'Contáctanos' }]}
+  />
+
+  <section class="section">
+    <div class="container contacto-grid">
+      <!-- Datos -->
+      <div class="contacto-info">
+        <div class="contacto-block" data-reveal>
+          <h2 class="h-s">Datos de contacto</h2>
+          <ul class="contacto-list">
+            <li>
+              <span class="contacto-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6"/></svg>
+              </span>
+              <div>
+                <span class="contacto-list__label">Correo</span>
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </div>
+            </li>
+            <li>
+              <span class="contacto-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M5 4h4l2 5-3 2a14 14 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 6a2 2 0 012-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              </span>
+              <div>
+                <span class="contacto-list__label">Teléfono</span>
+                <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contacto-block" data-reveal>
+          <h2 class="h-s">Nuestras oficinas</h2>
+          <ul class="offices-list">
+            {offices.map((o) => (
+              <li class="office">
+                <span class="office__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 21s7-5.2 7-11a7 7 0 10-14 0c0 5.8 7 11 7 11z" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg>
+                </span>
+                <div>
+                  <strong>{o.label} · {o.city}</strong>
+                  <span>{o.address}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <!-- Formulario -->
+      <div class="contacto-form" data-reveal>
+        <ContactForm
+          variant="contact"
+          title="Escríbenos"
+          description="Completa el formulario y un especialista te contactará a la brevedad."
+          submitLabel="Enviar mensaje"
+        />
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contacto-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--space-10); align-items: start; }
+  .contacto-info { display: flex; flex-direction: column; gap: var(--space-9); }
+  .contacto-block h2 { margin-bottom: var(--space-6); }
+
+  .contacto-list, .offices-list { display: flex; flex-direction: column; gap: var(--space-5); }
+  .contacto-list li, .office { display: flex; gap: var(--space-4); align-items: flex-start; }
+  .contacto-list__icon, .office__icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: var(--radius-md); background: var(--accent-soft); color: var(--accent); flex-shrink: 0; }
+  .contacto-list__label, .office strong { display: block; font-weight: var(--fw-semibold); color: var(--text-strong); }
+  .contacto-list a { color: var(--accent); font-weight: var(--fw-medium); }
+  .office div { display: flex; flex-direction: column; gap: 2px; }
+  .office span { color: var(--text-body); }
+
+  @media (max-width: 900px) { .contacto-grid { grid-template-columns: 1fr; } }
+</style>
