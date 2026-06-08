@@ -1,0 +1,255 @@
+---
+/* ============================================================
+   HERO — banner principal del Home.
+   - Título con efecto TYPEWRITER (palabra rotativa).
+   - Fondo industrial (placeholder de mina) + overlay azul.
+   - Marquee de aliados estratégicos (carrusel de logos).
+   Fiel al Figma: texto a la izquierda, imagen a la derecha.
+   ============================================================ */
+import ImagePlaceholder from '../ImagePlaceholder.astro';
+
+// Palabras que rotan en el typewriter (servicios clave de Relengcorp)
+const typewriterWords = [
+  'mantenimiento predictivo',
+  'integridad estructural',
+  'confiabilidad inteligente',
+  'metalurgia inteligente',
+  'ingeniería digital',
+];
+
+// Aliados estratégicos (marquee). PLACEHOLDER: reemplazar por logos reales del cliente.
+const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1'];
+---
+
+<section class="hero" aria-label="Presentación de Relengcorp">
+  <!-- Fondo -->
+  <div class="hero__bg" aria-hidden="true">
+    <ImagePlaceholder
+      label="Operación minera / faena (fondo)"
+      ratio="16/9"
+      rounded={false}
+      class="hero__bg-img"
+    />
+    <div class="hero__overlay"></div>
+    <div class="hero__glow"></div>
+  </div>
+
+  <div class="container hero__inner">
+    <div class="hero__content">
+      <p class="eyebrow" data-reveal>Confiabilidad inteligente para la minería</p>
+
+      <h1 class="hero__title h-xxl" data-reveal>
+        Expertos en
+        <span class="hero__rotator">
+          <span class="hero__typed" data-typewriter aria-live="polite" data-words={JSON.stringify(typewriterWords)}
+            >{typewriterWords[0]}</span
+          ><span class="hero__caret" aria-hidden="true"></span>
+        </span>
+      </h1>
+
+      <p class="hero__sub text-l" data-reveal>
+        Soluciones a tu medida con personal altamente capacitado. Maximizamos la
+        disponibilidad de tus activos críticos mediante tecnología avanzada e inteligencia
+        aplicada.
+      </p>
+
+      <div class="hero__actions" data-reveal>
+        <a href="/contacto" class="btn btn--lg">Contáctanos</a>
+        <a href="/servicios" class="btn btn--lg btn--outline-light">Conoce nuestros servicios</a>
+      </div>
+
+      <!-- Aliados estratégicos: marquee -->
+      <div class="hero__allies" data-reveal>
+        <p class="hero__allies-label">Contamos con aliados estratégicos A1:</p>
+        <div class="marquee" aria-label="Aliados estratégicos">
+          <ul class="marquee__track">
+            {allies.map((a) => <li class="marquee__item">{a}</li>)}
+            {/* duplicado para loop continuo */}
+            {allies.map((a) => (
+              <li class="marquee__item" aria-hidden="true">{a}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Imagen destacada -->
+    <div class="hero__figure" data-reveal>
+      <ImagePlaceholder label="Trabajador / equipo técnico en faena" ratio="4/5" tone="dark" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: var(--gradient-hero);
+    color: var(--text-on-dark);
+    padding-top: calc(var(--header-h) + var(--space-10));
+    padding-bottom: var(--space-12);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__bg { position: absolute; inset: 0; z-index: -2; }
+  :global(.hero__bg-img) {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    opacity: 0.35;
+  }
+  .hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      var(--azul-900) 10%,
+      rgba(28, 29, 45, 0.82) 45%,
+      rgba(28, 29, 45, 0.45) 100%
+    );
+  }
+  .hero__glow {
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 60%;
+    height: 90%;
+    background: var(--gradient-glow);
+    z-index: -1;
+  }
+
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    gap: var(--space-10);
+    min-height: 60vh;
+  }
+
+  .hero__content { max-width: 620px; display: flex; flex-direction: column; gap: var(--space-6); }
+  .hero .eyebrow { color: var(--celeste-300); }
+
+  .hero__title { color: #fff; margin: 0; }
+  .hero__rotator { display: inline-flex; align-items: baseline; }
+  .hero__typed {
+    background: linear-gradient(120deg, var(--celeste-300), var(--celeste-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    white-space: nowrap;
+  }
+  .hero__caret {
+    display: inline-block;
+    width: 3px;
+    height: 0.95em;
+    margin-left: 4px;
+    background: var(--celeste-400);
+    translate: 0 0.08em;
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink { 50% { opacity: 0; } }
+
+  .hero__sub { color: var(--azul-100); max-width: 52ch; }
+
+  .hero__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+
+  /* Aliados / marquee */
+  .hero__allies { margin-top: var(--space-5); }
+  .hero__allies-label {
+    font-size: var(--fs-text-s);
+    color: var(--azul-200);
+    margin-bottom: var(--space-4);
+  }
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee__track {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    width: max-content;
+    animation: marquee 24s linear infinite;
+  }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .marquee__item {
+    font-size: var(--fs-text-m);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--tracking-wide);
+    color: rgba(255, 255, 255, 0.7);
+    white-space: nowrap;
+    filter: grayscale(1);
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+
+  .hero__figure { width: 100%; }
+  :global(.hero__figure .ph) { box-shadow: var(--shadow-6); }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 980px) {
+    .hero__inner { grid-template-columns: 1fr; gap: var(--space-9); }
+    .hero__figure { order: -1; max-width: 460px; }
+    .hero__typed { white-space: normal; }
+  }
+  @media (max-width: 744px) {
+    .hero { padding-top: calc(var(--header-h) + var(--space-7)); }
+    .hero__rotator { display: block; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; }
+    .hero__caret { animation: none; }
+  }
+</style>
+
+<script>
+  // ---- TYPEWRITER (vanilla, sin dependencias) ----
+  // Escribe y borra palabras en bucle. Respeta prefers-reduced-motion.
+  const el = document.querySelector<HTMLElement>('[data-typewriter]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (el && !reduce) {
+    const words: string[] = JSON.parse(el.dataset.words || '[]');
+    let wordIndex = 0;
+    let charIndex = words[0].length; // empieza con la primera palabra ya escrita
+    let deleting = false;
+
+    const TYPE_SPEED = 70;
+    const DELETE_SPEED = 40;
+    const HOLD = 1600; // pausa con palabra completa
+    const GAP = 350; // pausa antes de escribir la siguiente
+
+    const tick = () => {
+      const current = words[wordIndex];
+
+      if (!deleting) {
+        charIndex++;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length) {
+          deleting = true;
+          return setTimeout(tick, HOLD);
+        }
+        return setTimeout(tick, TYPE_SPEED);
+      } else {
+        charIndex--;
+        el.textContent = current.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          return setTimeout(tick, GAP);
+        }
+        return setTimeout(tick, DELETE_SPEED);
+      }
+    };
+
+    // Arranca borrando tras una pausa inicial (la primera palabra ya está visible)
+    setTimeout(() => {
+      deleting = true;
+      tick();
+    }, HOLD);
+  }
+</script>

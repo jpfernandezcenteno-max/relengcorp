@@ -1,0 +1,26 @@
+{
+  "name": "relengcorp",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sitio web corporativo de Relengcorp — servicios industriales de confiabilidad para minería.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "cms": "decap-server"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.2.0",
+    "@astrojs/sitemap": "^3.3.0",
+    "@fontsource-variable/raleway": "^5.2.8",
+    "astro": "^5.7.0",
+    "gsap": "^3.13.0"
+  },
+  "devDependencies": {
+    "decap-server": "^3.1.0",
+    "sharp": "^0.34.0"
+  }
+}

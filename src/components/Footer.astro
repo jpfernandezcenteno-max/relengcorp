@@ -1,0 +1,149 @@
+---
+/* ============================================================
+   FOOTER — fondo oscuro con datos de contacto, oficinas y navegación.
+   ============================================================ */
+import { site, offices, services, certifications } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <!-- Marca -->
+    <div class="site-footer__brand">
+      <a href="/" class="site-footer__logo" aria-label={`${site.name} — inicio`}>
+        <img src="/logo.svg" alt={site.name} width="180" height="42" />
+      </a>
+      <p class="site-footer__desc">
+        Soluciones integrales de confiabilidad, mantenimiento predictivo y transformación
+        digital para la industria minera e industrial.
+      </p>
+      <ul class="site-footer__certs" aria-label="Certificaciones">
+        {certifications.map((c) => <li>{c.code}</li>)}
+      </ul>
+    </div>
+
+    <!-- Servicios -->
+    <nav class="site-footer__col" aria-label="Servicios">
+      <h3 class="site-footer__title">Servicios</h3>
+      <ul>
+        {services.map((s) => (
+          <li><a href={`/servicios/${s.slug}`}>{s.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Empresa -->
+    <nav class="site-footer__col" aria-label="Empresa">
+      <h3 class="site-footer__title">Empresa</h3>
+      <ul>
+        <li><a href="/nosotros">Nosotros</a></li>
+        <li><a href="/portafolio">Portafolio</a></li>
+        <li><a href="/clientes">Clientes</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/trabaja-con-nosotros">Trabaja con nosotros</a></li>
+        <li><a href="/contacto">Contáctanos</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contacto -->
+    <div class="site-footer__col site-footer__contact">
+      <h3 class="site-footer__title">Contacto</h3>
+      <ul>
+        <li>
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </li>
+        <li>
+          <a href={`tel:${site.phoneRaw}`}>{site.phone}</a>
+        </li>
+      </ul>
+      <ul class="site-footer__offices">
+        {offices.map((o) => (
+          <li>
+            <strong>{o.label}</strong>
+            <span>{o.address}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>&copy; {year} {site.legalName}. Todos los derechos reservados.</p>
+    <p class="site-footer__credit">Confiabilidad inteligente para la minería.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--neutro-800);
+    color: var(--azul-100);
+    padding-top: var(--space-14);
+    font-size: var(--fs-text-s);
+  }
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+    gap: var(--space-9) var(--space-7);
+    padding-bottom: var(--space-10);
+  }
+  .site-footer__logo { color: #fff; display: inline-flex; margin-bottom: var(--space-5); }
+  .site-footer__logo img { height: 40px; width: auto; }
+  .site-footer__desc { max-width: 36ch; line-height: var(--lh-body); }
+  .site-footer__certs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+  .site-footer__certs li {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-text-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tracking-wide);
+    color: #fff;
+  }
+
+  .site-footer__title {
+    color: #fff;
+    font-size: var(--fs-text-r);
+    font-weight: var(--fw-bold);
+    margin-bottom: var(--space-5);
+  }
+  .site-footer__col ul { display: flex; flex-direction: column; gap: var(--space-4); }
+  .site-footer__col a,
+  .site-footer__contact a {
+    color: var(--azul-100);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .site-footer__col a:hover,
+  .site-footer__contact a:hover { color: var(--accent); }
+
+  .site-footer__offices { margin-top: var(--space-6); gap: var(--space-5); }
+  .site-footer__offices li { display: flex; flex-direction: column; gap: 2px; }
+  .site-footer__offices strong { color: #fff; font-weight: var(--fw-semibold); }
+  .site-footer__offices span { color: var(--azul-200); line-height: var(--lh-snug); }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    padding-block: var(--space-6);
+    margin-top: var(--space-6);
+    border-top: 1px solid var(--border-dark);
+    color: var(--azul-200);
+    font-size: var(--fs-text-xs);
+  }
+
+  @media (max-width: 980px) {
+    .site-footer__grid { grid-template-columns: 1fr 1fr; }
+    .site-footer__brand { grid-column: 1 / -1; }
+  }
+  @media (max-width: 560px) {
+    .site-footer__grid { grid-template-columns: 1fr; }
+    .site-footer__bottom { justify-content: center; text-align: center; }
+  }
+</style>

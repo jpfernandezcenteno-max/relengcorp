@@ -1,0 +1,32 @@
+---
+/* SECCIÓN BLOG — últimos 3 artículos (Home). */
+import { getCollection } from 'astro:content';
+import BlogCard from '../BlogCard.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+<section class="section blog-section" aria-labelledby="blog-title">
+  <div class="container">
+    <div class="blog-section__head">
+      <div class="section-head" style="margin-bottom:0">
+        <p class="eyebrow" data-reveal>Conocimiento e industria</p>
+        <h2 id="blog-title" class="h-l" data-reveal>Lee nuestro blog</h2>
+      </div>
+      <a href="/blog" class="btn btn--ghost" data-reveal>Ver todos los artículos</a>
+    </div>
+
+    <div class="blog-section__grid">
+      {posts.map((post) => <BlogCard post={post} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .blog-section { background: var(--bg-subtle); }
+  .blog-section__head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-6); margin-bottom: var(--space-9); flex-wrap: wrap; }
+  .blog-section__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
+  @media (max-width: 900px) { .blog-section__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .blog-section__grid { grid-template-columns: 1fr; } }
+</style>

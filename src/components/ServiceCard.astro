@@ -1,0 +1,52 @@
+---
+import ServiceIcon from './ServiceIcon.astro';
+import type { Service } from '../data/site';
+interface Props { service: Service; carousel?: boolean; }
+const { service, carousel = false } = Astro.props;
+---
+<article class:list={['service-card', { 'carousel-item': carousel }]} data-reveal>
+  <a href={`/servicios/${service.slug}`} class="service-card__link">
+    <span class="service-card__icon"><ServiceIcon slug={service.slug} /></span>
+    <h3 class="service-card__title h-xs">{service.title}</h3>
+    <p class="service-card__desc text-s">{service.short}</p>
+    <span class="link-arrow text-s">
+      Ver servicio
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </a>
+</article>
+
+<style>
+  .service-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .service-card.carousel-item { width: 320px; max-width: 80vw; }
+  .service-card__link { display: flex; flex-direction: column; gap: var(--space-4); height: 100%; padding: var(--space-7); }
+  .service-card__icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .service-card__title { margin-top: var(--space-2); }
+  .service-card__desc { flex: 1; color: var(--text-body); }
+  .service-card .link-arrow { margin-top: var(--space-2); }
+
+  .service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-5);
+    border-color: transparent;
+  }
+  .service-card:hover .service-card__icon {
+    background: var(--accent);
+    color: #fff;
+    transform: scale(1.05) rotate(-4deg);
+  }
+</style>

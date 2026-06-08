@@ -1,0 +1,97 @@
+---
+/* SECCIÓN FACTS — cifras clave con contador animado (Home).
+   NOTA: cifras y etiquetas a CONFIRMAR con el cliente. */
+const facts = [
+  { value: 20, suffix: '+', label: 'Operaciones mineras atendidas' },
+  { value: 300, suffix: '+', label: 'Proyectos ejecutados' },
+  { value: 95, suffix: '%', label: 'Índice de satisfacción' },
+  { value: 10, suffix: '+', label: 'Años de experiencia' },
+  { value: 60, suffix: '+', label: 'Profesionales especializados' },
+];
+---
+<section class="section section-dark facts" aria-labelledby="facts-title" data-facts>
+  <div class="container">
+    <div class="section-head section-head--center" data-reveal>
+      <p class="eyebrow eyebrow--center">Datos que nos respaldan</p>
+      <h2 id="facts-title" class="h-l">Resultados que sostienen la confianza</h2>
+    </div>
+
+    <dl class="facts__grid">
+      {facts.map((f) => (
+        <div class="facts__item" data-reveal>
+          <dt class="facts__value">
+            <span data-counter data-target={f.value}>0</span><span class="facts__suffix">{f.suffix}</span>
+          </dt>
+          <dd class="facts__label text-s">{f.label}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .facts {
+    background:
+      radial-gradient(80% 120% at 50% 0%, rgba(0,172,229,0.10) 0%, transparent 60%),
+      var(--azul-900);
+  }
+  .facts__grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-6);
+    text-align: center;
+  }
+  .facts__item {
+    padding: var(--space-6) var(--space-4);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-dark);
+    background: rgba(255,255,255,0.02);
+  }
+  .facts__value {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: var(--fw-extrabold);
+    line-height: 1;
+    color: #fff;
+    display: inline-flex;
+    align-items: baseline;
+  }
+  .facts__suffix { color: var(--celeste-400); }
+  .facts__label { color: var(--azul-100); margin-top: var(--space-4); }
+
+  @media (max-width: 900px) {
+    .facts__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .facts__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+  // Contador animado: arranca cuando la sección entra en viewport.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const section = document.querySelector<HTMLElement>('[data-facts]');
+  if (section) {
+    const counters = section.querySelectorAll<HTMLElement>('[data-counter]');
+    const run = () => {
+      counters.forEach((c) => {
+        const target = Number(c.dataset.target || '0');
+        if (reduce) { c.textContent = String(target); return; }
+        const duration = 1600;
+        const start = performance.now();
+        const step = (now: number) => {
+          const p = Math.min((now - start) / duration, 1);
+          // easeOutCubic
+          const eased = 1 - Math.pow(1 - p, 3);
+          c.textContent = String(Math.round(target * eased));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    };
+    const io = new IntersectionObserver(
+      (entries, obs) => entries.forEach((e) => { if (e.isIntersecting) { run(); obs.disconnect(); } }),
+      { threshold: 0.4 }
+    );
+    io.observe(section);
+  }
+</script>

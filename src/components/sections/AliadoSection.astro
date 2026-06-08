@@ -1,0 +1,79 @@
+---
+/* SECCIÓN ALIADO — bloque oscuro destacado + logos de clientes (Home).
+   "Aliado confiable para distintas industrias". */
+
+// PLACEHOLDER: reemplazar por logos reales de clientes (carrusel de marca).
+const clients = Array.from({ length: 8 }, (_, i) => `Cliente ${i + 1}`);
+---
+<section class="section section-dark aliado on-dark" aria-labelledby="aliado-title">
+  <div class="container">
+    <div class="aliado__panel">
+      <div class="aliado__intro">
+        <p class="eyebrow" data-reveal>Socios estratégicos en tus operaciones</p>
+        <h2 id="aliado-title" class="h-l" data-reveal>
+          Aliado confiable para <span class="text-accent">distintas industrias</span>
+        </h2>
+        <p class="text-m aliado__lead" data-reveal>
+          Acompañamos a las operaciones más exigentes del sector minero e industrial con
+          soluciones que reducen riesgos, optimizan procesos y mejoran el desempeño operativo.
+        </p>
+        <a href="/clientes" class="btn btn--lg" data-reveal>Conoce a nuestros clientes</a>
+      </div>
+    </div>
+
+    <div class="aliado__clients" data-reveal>
+      <p class="aliado__clients-label">Confían en nosotros:</p>
+      <div class="marquee" aria-label="Clientes">
+        <ul class="marquee__track">
+          {clients.map((c) => <li class="aliado__logo">{c}</li>)}
+          {clients.map((c) => <li class="aliado__logo" aria-hidden="true">{c}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aliado__panel {
+    position: relative;
+    border-radius: var(--radius-xl);
+    padding: var(--space-12);
+    background: var(--gradient-glow), linear-gradient(120deg, var(--azul-800), var(--azul-700));
+    border: 1px solid var(--border-dark);
+    overflow: hidden;
+  }
+  .aliado__intro { max-width: 640px; display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
+  .aliado__lead { color: var(--azul-100); }
+
+  .aliado__clients { margin-top: var(--space-9); }
+  .aliado__clients-label { text-align: center; color: var(--azul-200); font-size: var(--fs-text-s); margin-bottom: var(--space-6); }
+
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee__track { display: flex; align-items: center; gap: var(--space-9); width: max-content; animation: marquee 30s linear infinite; }
+  .marquee:hover .marquee__track { animation-play-state: paused; }
+  .aliado__logo {
+    display: grid;
+    place-items: center;
+    height: 56px;
+    min-width: 150px;
+    padding-inline: var(--space-6);
+    border: 1px solid var(--border-dark);
+    border-radius: var(--radius-md);
+    color: rgba(255,255,255,0.6);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--tracking-wide);
+    white-space: nowrap;
+  }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  @media (max-width: 744px) {
+    .aliado__panel { padding: var(--space-8) var(--space-6); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track { animation: none; flex-wrap: wrap; justify-content: center; }
+  }
+</style>

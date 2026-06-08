@@ -1,0 +1,75 @@
+---
+/* ============================================================
+   IMAGE PLACEHOLDER
+   Marca de forma clara y profesional dónde irá una foto real del
+   cliente. Cuando llegue el banco de imágenes, se reemplaza este
+   componente por <Image> de Astro en cada uso.
+   ============================================================ */
+interface Props {
+  label: string;       // descripción de la foto sugerida
+  ratio?: string;      // ej. "16/9", "4/3", "1/1"
+  tone?: 'dark' | 'light';
+  rounded?: boolean;
+  class?: string;
+}
+const { label, ratio = '16/9', tone = 'dark', rounded = true, class: klass = '' } = Astro.props;
+---
+
+<div
+  class:list={['ph', `ph--${tone}`, { 'ph--rounded': rounded }, klass]}
+  style={`aspect-ratio:${ratio}`}
+  role="img"
+  aria-label={`Imagen sugerida: ${label}`}
+  data-img-placeholder
+>
+  <svg class="ph__icon" viewBox="0 0 24 24" width="40" height="40" fill="none" aria-hidden="true">
+    <path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="8.5" cy="9" r="1.5" fill="currentColor"/>
+  </svg>
+  <span class="ph__label">{label}</span>
+  <span class="ph__tag">Reemplazar con foto real</span>
+</div>
+
+<style>
+  .ph {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    padding: var(--space-6);
+    isolation: isolate;
+  }
+  .ph--rounded { border-radius: var(--radius-lg); }
+
+  .ph--dark {
+    background:
+      var(--gradient-glow),
+      linear-gradient(135deg, var(--azul-800) 0%, var(--azul-900) 100%);
+    color: var(--azul-200);
+    border: 1px solid var(--border-dark);
+  }
+  .ph--light {
+    background:
+      repeating-linear-gradient(45deg, var(--neutro-100) 0 12px, var(--neutro-150) 12px 24px);
+    color: var(--neutro-300);
+    border: 1px dashed var(--neutro-250);
+  }
+
+  .ph__icon { opacity: 0.7; }
+  .ph__label { font-size: var(--fs-text-s); font-weight: var(--fw-semibold); max-width: 30ch; }
+  .ph__tag {
+    font-size: var(--fs-text-xs);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(0, 172, 229, 0.15);
+    color: var(--celeste-300);
+  }
+  .ph--light .ph__tag { background: var(--neutro-200); color: var(--neutro-400); }
+</style>

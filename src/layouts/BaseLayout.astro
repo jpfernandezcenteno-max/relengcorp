@@ -1,0 +1,123 @@
+---
+/* ============================================================
+   BASE LAYOUT — estructura HTML + SEO de cada página.
+   ============================================================ */
+import '@fontsource-variable/raleway/index.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsappFab from '../components/WhatsappFab.astro';
+import { site, offices } from '../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Imagen para compartir en redes (ruta absoluta o relativa a /public) */
+  image?: string;
+  /** Tipo OpenGraph: website | article */
+  type?: 'website' | 'article';
+  /** Evitar indexación (ej. páginas de gracias) */
+  noindex?: boolean;
+  /** JSON-LD adicional específico de la página */
+  schema?: object;
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/images/og-default.jpg',
+  type = 'website',
+  noindex = false,
+  schema,
+} = Astro.props;
+
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImage = new URL(image, site.url).href;
+
+// JSON-LD base: Organización (se inyecta en todas las páginas)
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.legalName,
+  url: site.url,
+  logo: new URL('/logo.svg', site.url).href,
+  description: site.description,
+  email: site.email,
+  telephone: site.phone,
+  address: offices.map((o) => ({
+    '@type': 'PostalAddress',
+    streetAddress: o.address,
+    addressLocality: o.city,
+    addressCountry: o.country,
+  })),
+  areaServed: ['PE', 'CL'],
+  knowsAbout: [
+    'Confiabilidad',
+    'Mantenimiento Predictivo',
+    'Integridad Estructural',
+    'Monitoreo de Condición',
+    'Minería',
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Iconos / tema -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#1c1d2d" />
+    <meta name="author" content={site.name} />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content={site.locale} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Performance hints -->
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
+
+    <!-- Detección de JS (quita la clase no-js lo antes posible para evitar flash) -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Saltar al contenido principal</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsappFab />
+
+    <!-- Motor de animaciones GSAP (se bundlea y carga diferido) -->
+    <script>
+      import '../scripts/animations.ts';
+    </script>
+  </body>
+</html>

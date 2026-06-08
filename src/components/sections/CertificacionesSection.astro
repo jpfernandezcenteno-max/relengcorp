@@ -1,0 +1,101 @@
+---
+/* SECCIÓN CERTIFICACIONES — Trinorma ISO (Home). Card destacada (acento morado, como Figma). */
+import { certifications, homologations } from '../../data/site';
+---
+<section class="section certs" aria-labelledby="certs-title">
+  <div class="container">
+    <div class="certs__panel">
+      <div class="certs__intro" data-reveal>
+        <p class="eyebrow">Estándares internacionales</p>
+        <h2 id="certs-title" class="h-l">Estamos certificados</h2>
+        <p class="text-m certs__lead">
+          Nuestras operaciones se desarrollan bajo estándares internacionales de calidad,
+          seguridad y mejora continua, alineados a normas ISO que garantizan confiabilidad y
+          excelencia operativa en cada proyecto.
+        </p>
+      </div>
+
+      <ul class="certs__grid">
+        {certifications.map((c) => (
+          <li class="certs__item" data-reveal>
+            <span class="certs__check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="certs__code">{c.code}</span>
+            <span class="certs__scope text-s">{c.scope}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div class="certs__homolog" data-reveal>
+        <span class="certs__homolog-label">Empresa homologada por:</span>
+        <ul>
+          {homologations.map((h) => <li>{h}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .certs__panel {
+    position: relative;
+    border-radius: var(--radius-xl);
+    padding: var(--space-12);
+    color: #fff;
+    background:
+      radial-gradient(70% 90% at 85% 15%, rgba(137,95,226,0.45) 0%, transparent 60%),
+      linear-gradient(120deg, var(--morado-800) 0%, var(--azul-800) 100%);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .certs__panel h2 { color: #fff; }
+  .certs__intro { max-width: 620px; display: flex; flex-direction: column; gap: var(--space-4); }
+  .certs__intro .eyebrow { color: var(--morado-200); }
+  .certs__intro .eyebrow::before { background: var(--morado-300); }
+  .certs__lead { color: rgba(255,255,255,0.85); }
+
+  .certs__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+    margin-top: var(--space-9);
+  }
+  .certs__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-7);
+    border-radius: var(--radius-lg);
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(4px);
+  }
+  .certs__check {
+    display: grid; place-items: center;
+    width: 48px; height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--celeste-500);
+    color: #fff;
+  }
+  .certs__code { font-size: var(--fs-h-s); font-weight: var(--fw-extrabold); margin-top: var(--space-2); }
+  .certs__scope { color: rgba(255,255,255,0.75); }
+
+  .certs__homolog {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-top: var(--space-9);
+    padding-top: var(--space-7);
+    border-top: 1px solid rgba(255,255,255,0.14);
+  }
+  .certs__homolog-label { color: rgba(255,255,255,0.7); font-size: var(--fs-text-s); }
+  .certs__homolog ul { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+  .certs__homolog li {
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--tracking-wide);
+    color: rgba(255,255,255,0.9);
+  }
+
+  @media (max-width: 900px) { .certs__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 744px) { .certs__panel { padding: var(--space-8) var(--space-6); } }
+</style>

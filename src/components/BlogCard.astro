@@ -1,0 +1,52 @@
+---
+import ImagePlaceholder from './ImagePlaceholder.astro';
+import type { CollectionEntry } from 'astro:content';
+interface Props { post: CollectionEntry<'blog'>; carousel?: boolean; }
+const { post, carousel = false } = Astro.props;
+const { title, description, pubDate, category, cover, coverAlt } = post.data;
+const date = pubDate.toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+---
+<article class:list={['blog-card', { 'carousel-item': carousel }]} data-reveal>
+  <a href={`/blog/${post.id}`} class="blog-card__link">
+    <div class="blog-card__media">
+      {cover ? (
+        <img src={cover} alt={coverAlt || title} loading="lazy" width="400" height="240" />
+      ) : (
+        <ImagePlaceholder label={coverAlt || 'Portada del artículo'} ratio="5/3" tone="dark" />
+      )}
+      <span class="blog-card__cat">{category}</span>
+    </div>
+    <div class="blog-card__body">
+      <time class="blog-card__date text-xs" datetime={pubDate.toISOString()}>{date}</time>
+      <h3 class="blog-card__title h-xs">{title}</h3>
+      <p class="blog-card__desc text-s">{description}</p>
+      <span class="link-arrow text-s">Leer más
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+  </a>
+</article>
+
+<style>
+  .blog-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .blog-card.carousel-item { width: 360px; max-width: 85vw; }
+  .blog-card__link { display: flex; flex-direction: column; height: 100%; }
+  .blog-card__media { position: relative; }
+  .blog-card__media img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 5/3; }
+  .blog-card__cat {
+    position: absolute; top: var(--space-4); left: var(--space-4);
+    background: var(--accent); color: #fff;
+    font-size: var(--fs-text-xs); font-weight: var(--fw-semibold);
+    padding: 4px 12px; border-radius: var(--radius-pill);
+  }
+  .blog-card__body { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); flex: 1; }
+  .blog-card__date { color: var(--text-muted); text-transform: uppercase; letter-spacing: var(--tracking-wide); }
+  .blog-card__desc { flex: 1; color: var(--text-body); }
+  .blog-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-5); }
+</style>

@@ -1,0 +1,123 @@
+---
+/* ============================================================
+   CAROUSEL — carrusel accesible basado en scroll-snap.
+   - Sin dependencias, scroll nativo (rendimiento + accesible).
+   - Flechas prev/next que se deshabilitan en los extremos.
+   - Soporta teclado y arrastre nativo.
+   Uso: <Carousel id="..."><slot de items con clase .carousel-item /></Carousel>
+   ============================================================ */
+interface Props {
+  id: string;
+  label: string;
+  /** controles arriba a la derecha del encabezado en vez de a los lados */
+  controls?: 'sides' | 'top';
+}
+const { id, label, controls = 'sides' } = Astro.props;
+---
+
+<div class:list={['carousel', `carousel--${controls}`]} data-carousel aria-roledescription="carrusel" aria-label={label}>
+  {controls === 'sides' && (
+    <button type="button" class="carousel__btn carousel__btn--prev" data-prev aria-label="Anterior" aria-controls={id}>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  )}
+
+  <div class="carousel__viewport" id={id} data-track tabindex="0">
+    <slot />
+  </div>
+
+  {controls === 'sides' && (
+    <button type="button" class="carousel__btn carousel__btn--next" data-next aria-label="Siguiente" aria-controls={id}>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  )}
+
+  {controls === 'top' && (
+    <div class="carousel__top-controls">
+      <button type="button" class="carousel__btn" data-prev aria-label="Anterior" aria-controls={id}>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="carousel__btn" data-next aria-label="Siguiente" aria-controls={id}>
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  )}
+</div>
+
+<style>
+  .carousel { position: relative; }
+  .carousel--sides { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: var(--space-4); }
+
+  .carousel__viewport {
+    display: flex;
+    gap: var(--space-6);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-block: var(--space-2);
+    /* permite que las sombras de las tarjetas no se corten */
+    margin-inline: calc(var(--space-2) * -1);
+    padding-inline: var(--space-2);
+  }
+  .carousel__viewport::-webkit-scrollbar { display: none; }
+  .carousel__viewport > :global(.carousel-item) {
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+
+  .carousel__btn {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--surface);
+    color: var(--azul-700);
+    box-shadow: var(--shadow-3);
+    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+    flex-shrink: 0;
+  }
+  .carousel__btn:hover { background: var(--accent); color: #fff; transform: scale(1.05); }
+  .carousel__btn[disabled] { opacity: 0.35; pointer-events: none; }
+
+  .carousel__top-controls { display: flex; gap: var(--space-3); }
+
+  /* En contexto oscuro, los botones se adaptan vía esta clase utilitaria */
+  :global(.on-dark) .carousel__btn { background: rgba(255,255,255,0.1); color: #fff; }
+  :global(.on-dark) .carousel__btn:hover { background: var(--accent); }
+
+  @media (max-width: 744px) {
+    .carousel--sides { grid-template-columns: 1fr; }
+    .carousel--sides .carousel__btn--prev,
+    .carousel--sides .carousel__btn--next { display: none; }
+    .carousel__viewport { scroll-snap-type: x proximity; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector<HTMLElement>('[data-track]');
+    const prev = carousel.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = carousel.querySelector<HTMLButtonElement>('[data-next]');
+    if (!track) return;
+
+    const scrollByAmount = () => {
+      const first = track.querySelector<HTMLElement>('.carousel-item');
+      const gap = parseFloat(getComputedStyle(track).columnGap || '24') || 24;
+      return first ? first.offsetWidth + gap : track.clientWidth * 0.8;
+    };
+
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth - 2;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max;
+    };
+
+    prev?.addEventListener('click', () => track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' }));
+    next?.addEventListener('click', () => track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' }));
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
