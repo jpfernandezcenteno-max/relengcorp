@@ -1,0 +1,224 @@
+---
+/* ============================================================
+   CONTACT FORM — formulario reutilizable con validación.
+   variant:
+     - 'contact' : Nombre, Email, Teléfono, Empresa, Mensaje
+     - 'service' : captación de lead (+ descarga de brochure al enviar)
+     - 'job'     : postulación (Nombre, Email, Teléfono, Mensaje, CV)
+   NOTA backend: el envío real se conecta cuando se defina hosting/correo.
+   Por ahora valida en frontend y confirma (y descarga brochure en 'service').
+   ============================================================ */
+interface Props {
+  variant?: 'contact' | 'service' | 'job';
+  title?: string;
+  description?: string;
+  submitLabel?: string;
+  serviceName?: string;
+  brochureUrl?: string; // PDF a descargar (placeholder hasta que el cliente lo suba)
+  compact?: boolean;
+}
+const {
+  variant = 'contact',
+  title,
+  description,
+  submitLabel = 'Enviar solicitud',
+  serviceName,
+  brochureUrl = '/brochures/relengcorp-brochure.pdf',
+  compact = false,
+} = Astro.props;
+const showMessage = variant === 'contact' || variant === 'job';
+const showCompany = variant === 'contact' || variant === 'service';
+const showCV = variant === 'job';
+---
+<form
+  class:list={['cform', { 'cform--compact': compact }]}
+  data-form
+  data-variant={variant}
+  data-brochure={variant === 'service' ? brochureUrl : undefined}
+  novalidate
+>
+  {title && <h3 class="cform__title h-s" data-reveal>{title}</h3>}
+  {description && <p class="cform__desc text-s" data-reveal>{description}</p>}
+  {serviceName && <input type="hidden" name="servicio" value={serviceName} />}
+
+  <div class="cform__grid">
+    <div class="field">
+      <label for="cf-name">Nombre completo *</label>
+      <input type="text" id="cf-name" name="nombre" required autocomplete="name" />
+      <p class="field__error" data-error></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-email">Correo electrónico *</label>
+      <input type="email" id="cf-email" name="email" required autocomplete="email" />
+      <p class="field__error" data-error></p>
+    </div>
+
+    <div class="field">
+      <label for="cf-phone">Teléfono *</label>
+      <input type="tel" id="cf-phone" name="telefono" required autocomplete="tel" inputmode="tel" />
+      <p class="field__error" data-error></p>
+    </div>
+
+    {showCompany && (
+      <div class="field">
+        <label for="cf-company">Empresa</label>
+        <input type="text" id="cf-company" name="empresa" autocomplete="organization" />
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+
+    {showMessage && (
+      <div class="field field--full">
+        <label for="cf-message">{variant === 'job' ? 'Mensaje o descripción' : 'Mensaje'} *</label>
+        <textarea id="cf-message" name="mensaje" rows="4" required></textarea>
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+
+    {showCV && (
+      <div class="field field--full">
+        <label for="cf-cv">Sube tu CV (PDF) *</label>
+        <input type="file" id="cf-cv" name="cv" accept=".pdf,.doc,.docx" required />
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+  </div>
+
+  <div class="cform__actions">
+    <button type="submit" class="btn btn--lg">{submitLabel}</button>
+    <p class="cform__note text-xs">Campos obligatorios marcados con *. Tus datos se tratan de forma confidencial.</p>
+  </div>
+
+  <div class="cform__success" data-success hidden role="status">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p data-success-text></p>
+  </div>
+</form>
+
+<style>
+  .cform {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+  .cform--compact { padding: var(--space-6); box-shadow: none; }
+  .cform__title { color: var(--text-strong); }
+  .cform__desc { color: var(--text-body); }
+
+  .cform__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+  .field { display: flex; flex-direction: column; gap: var(--space-3); }
+  .field--full { grid-column: 1 / -1; }
+  .field label { font-size: var(--fs-text-s); font-weight: var(--fw-semibold); color: var(--text-strong); }
+  .field input,
+  .field textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--neutro-50);
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .field textarea { resize: vertical; min-height: 110px; }
+  .field input:focus,
+  .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
+  .field input[aria-invalid='true'],
+  .field textarea[aria-invalid='true'] { border-color: #e5484d; }
+  .field input[type='file'] { padding: 0.6rem; background: var(--neutro-100); cursor: pointer; }
+  .field__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
+
+  .cform__actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
+  .cform__note { color: var(--text-muted); }
+
+  .cform__success {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-md);
+    background: rgba(26,162,81,0.08);
+    border: 1px solid rgba(26,162,81,0.3);
+    color: var(--success);
+    font-weight: var(--fw-semibold);
+  }
+
+  @media (max-width: 560px) {
+    .cform { padding: var(--space-6); }
+    .cform__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
+    const successBox = form.querySelector<HTMLElement>('[data-success]');
+    const successText = form.querySelector<HTMLElement>('[data-success-text]');
+    const variant = form.dataset.variant;
+    const brochure = form.dataset.brochure;
+
+    const setError = (field: HTMLElement, msg: string) => {
+      field.setAttribute('aria-invalid', 'true');
+      const err = field.parentElement?.querySelector<HTMLElement>('[data-error]');
+      if (err) err.textContent = msg;
+    };
+    const clearError = (field: HTMLElement) => {
+      field.removeAttribute('aria-invalid');
+      const err = field.parentElement?.querySelector<HTMLElement>('[data-error]');
+      if (err) err.textContent = '';
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+      let firstInvalid: HTMLElement | null = null;
+
+      fields.forEach((f) => {
+        clearError(f);
+        const value = f.value.trim();
+        if (f.hasAttribute('required') && !value) {
+          setError(f, 'Este campo es obligatorio.');
+          valid = false;
+          firstInvalid ||= f;
+        } else if (f.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          setError(f, 'Ingresa un correo válido.');
+          valid = false;
+          firstInvalid ||= f;
+        } else if (f.type === 'tel' && value && value.replace(/\D/g, '').length < 7) {
+          setError(f, 'Ingresa un teléfono válido.');
+          valid = false;
+          firstInvalid ||= f;
+        }
+      });
+
+      if (!valid) { firstInvalid?.focus(); return; }
+
+      // TODO(backend): enviar datos a comercial@relengcorp.com cuando se defina hosting.
+
+      // Variante 'service': disparar descarga del brochure.
+      if (variant === 'service' && brochure) {
+        const a = document.createElement('a');
+        a.href = brochure;
+        a.download = '';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      const msg =
+        variant === 'service'
+          ? '¡Gracias! Tu brochure se está descargando y un especialista te contactará pronto.'
+          : variant === 'job'
+            ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
+            : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
+
+      form.querySelectorAll('.cform__grid, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
+      if (successText) successText.textContent = msg;
+      if (successBox) { successBox.hidden = false; successBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+    });
+  });
+</script>
