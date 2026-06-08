@@ -16,8 +16,14 @@ export function getStaticPaths() {
 const { service } = Astro.props;
 const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
-// Iconos rotativos para los grupos de alcance del servicio
+// Iconos y colores rotativos para los grupos de alcance del servicio
 const groupIcons = ['shield', 'gear', 'chart', 'layers', 'target', 'cube', 'wrench', 'document'];
+const groupColors = [
+  'var(--celeste-500)',
+  'var(--morado-500)',
+  'var(--azul-500)',
+  'var(--celeste-700)',
+];
 
 // Beneficios con iconografía
 const benefits = [
@@ -56,7 +62,7 @@ const schema = {
         <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={36} /></span>
         <p class="eyebrow" data-reveal>Servicios especializados</p>
         <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="svc-hero__intro text-l" data-reveal>{service.intro}</p>
+        <p class="svc-hero__intro" data-reveal>{service.intro}</p>
 
         <div class="svc-hero__form" data-reveal>
           <ContactForm
@@ -65,6 +71,7 @@ const schema = {
             title="Descarga el brochure"
             description="Déjanos tus datos y recibe el brochure de este servicio. Un especialista te contactará."
             submitLabel="Descargar brochure"
+            compact
           />
         </div>
       </div>
@@ -93,7 +100,7 @@ const schema = {
 
       <div class="svc-groups">
         {service.groups.map((group, i) => (
-          <div class="svc-group" data-reveal>
+          <div class="svc-group" data-reveal style={`--gc:${groupColors[i % groupColors.length]}`}>
             <span class="svc-group__icon"><UiIcon name={groupIcons[i % groupIcons.length]} size={26} /></span>
             <h3 class="svc-group__name h-xs">{group.name}</h3>
             <ul class="svc-group__list">
@@ -181,8 +188,8 @@ const schema = {
   .svc-hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: start; }
   .svc-hero__left { display: flex; flex-direction: column; gap: var(--space-5); }
   .svc-hero__left h1 { color: var(--text-strong); }
-  .svc-hero__intro { color: var(--text-body); }
-  .svc-hero__form { margin-top: var(--space-4); }
+  .svc-hero__intro { color: var(--text-body); font-size: var(--fs-text-r); max-width: 52ch; }
+  .svc-hero__form { margin-top: var(--space-3); max-width: 480px; }
   .svc-hero__icon {
     display: grid; place-items: center;
     width: 72px; height: 72px;
@@ -221,24 +228,27 @@ const schema = {
   /* ===== DETALLE GRUPOS ===== */
   .svc-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
   .svc-group {
+    --gc: var(--accent);
     padding: var(--space-7);
     border: 1px solid var(--border);
+    border-top: 3px solid var(--gc);
     border-radius: var(--radius-lg);
     background: var(--surface);
-    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
-  .svc-group:hover { box-shadow: var(--shadow-5); transform: translateY(-6px); border-color: transparent; }
+  .svc-group:hover { box-shadow: var(--shadow-5); transform: translateY(-6px); }
   .svc-group__icon {
     display: grid; place-items: center;
     width: 52px; height: 52px;
     border-radius: var(--radius-md);
-    background: var(--accent-soft);
-    color: var(--accent);
+    background: color-mix(in srgb, var(--gc) 14%, white);
+    color: var(--gc);
     margin-bottom: var(--space-5);
     transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
-  .svc-group:hover .svc-group__icon { background: var(--accent); color: #fff; transform: scale(1.08) rotate(-4deg); }
-  .svc-group__name { color: var(--text-strong); margin-bottom: var(--space-5); }
+  .svc-group:hover .svc-group__icon { background: var(--gc); color: #fff; transform: scale(1.08) rotate(-4deg); }
+  .svc-group__name { color: var(--gc); margin-bottom: var(--space-5); }
+  .svc-group__list svg { color: var(--gc) !important; }
   .svc-group__list { display: flex; flex-direction: column; gap: var(--space-4); }
   .svc-group__list li { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--text-body); }
   .svc-group__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }

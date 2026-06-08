@@ -107,7 +107,17 @@ const showCV = variant === 'job';
     flex-direction: column;
     gap: var(--space-5);
   }
-  .cform--compact { padding: var(--space-6); box-shadow: none; }
+  .cform--compact { padding: var(--space-6); box-shadow: none; gap: var(--space-4); }
+  .cform--compact .cform__title { font-size: var(--fs-h-xs); }
+  .cform--compact .cform__desc { font-size: var(--fs-text-xs); }
+  .cform--compact .cform__grid { gap: var(--space-4); }
+  .cform--compact .field { gap: var(--space-2); }
+  .cform--compact .field label { font-size: var(--fs-text-xs); }
+  .cform--compact .field input,
+  .cform--compact .field textarea { padding: 0.55rem 0.85rem; font-size: var(--fs-text-s); border-radius: var(--radius-sm); }
+  .cform--compact .field textarea { min-height: 84px; }
+  .cform--compact .btn { padding: 0.6rem 1.25rem; min-height: 42px; font-size: var(--fs-text-s); }
+  .cform--compact .cform__note { font-size: 0.7rem; }
   .cform__title { color: var(--text-strong); }
   .cform__desc { color: var(--text-body); }
 
