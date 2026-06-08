@@ -40,39 +40,38 @@ const schema = {
 ---
 
 <BaseLayout title={service.title} description={service.short} schema={schema}>
-  <!-- HERO claro: descripción del servicio -->
+  <!-- HERO claro en dos columnas: (izq) título/icono/descripción + formulario · (der) imagen -->
   <section class="svc-hero">
     <div class="svc-hero__glow" aria-hidden="true"></div>
-    <div class="container svc-hero__inner">
-      <nav class="breadcrumb" aria-label="Ruta de navegación">
-        <ol>
-          <li><a href="/">Inicio</a></li>
-          <li><a href="/servicios">Servicios</a></li>
-          <li><span aria-current="page">{service.title}</span></li>
-        </ol>
-      </nav>
-      <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={36} /></span>
-      <p class="eyebrow" data-reveal>Servicios especializados</p>
-      <h1 class="h-xl" data-reveal>{service.title}</h1>
-      <p class="svc-hero__intro text-l" data-reveal>{service.intro}</p>
-    </div>
-  </section>
+    <div class="container svc-hero__grid">
+      <!-- Columna izquierda -->
+      <div class="svc-hero__left">
+        <nav class="breadcrumb" aria-label="Ruta de navegación">
+          <ol>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/servicios">Servicios</a></li>
+            <li><span aria-current="page">{service.title}</span></li>
+          </ol>
+        </nav>
+        <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={36} /></span>
+        <p class="eyebrow" data-reveal>Servicios especializados</p>
+        <h1 class="h-xl" data-reveal>{service.title}</h1>
+        <p class="svc-hero__intro text-l" data-reveal>{service.intro}</p>
 
-  <!-- FORMULARIO + IMAGEN -->
-  <section class="section svc-apply">
-    <div class="container svc-apply__grid">
-      <div class="svc-apply__form" data-reveal>
-        <ContactForm
-          variant="service"
-          serviceName={service.title}
-          title="Descarga el brochure"
-          description="Déjanos tus datos y recibe el brochure de este servicio. Un especialista te contactará."
-          submitLabel="Descargar brochure"
-        />
+        <div class="svc-hero__form" data-reveal>
+          <ContactForm
+            variant="service"
+            serviceName={service.title}
+            title="Descarga el brochure"
+            description="Déjanos tus datos y recibe el brochure de este servicio. Un especialista te contactará."
+            submitLabel="Descargar brochure"
+          />
+        </div>
       </div>
 
-      <div class="svc-apply__aside" data-reveal>
-        <figure class="zoom-img">
+      <!-- Columna derecha: imagen -->
+      <div class="svc-hero__right" data-reveal>
+        <figure class="zoom-img svc-hero__media">
           <ImagePlaceholder label={`${service.title} en operación`} ratio="3/4" tone="dark" />
         </figure>
         <ul class="svc-badges">
@@ -162,13 +161,13 @@ const schema = {
   .zoom-img > :global(*) { transition: transform var(--dur-slow) var(--ease-out); }
   .zoom-img:hover > :global(*) { transform: scale(1.05); }
 
-  /* ===== HERO claro ===== */
+  /* ===== HERO claro en dos columnas ===== */
   .svc-hero {
     position: relative;
     background: var(--bg-base);
     color: var(--text-body);
     padding-top: calc(var(--header-h) + var(--space-9));
-    padding-bottom: var(--space-9);
+    padding-bottom: var(--space-10);
     overflow: hidden;
     isolation: isolate;
   }
@@ -179,9 +178,11 @@ const schema = {
     background: radial-gradient(60% 60% at 70% 30%, rgba(0,172,229,0.12) 0%, transparent 70%);
     z-index: -1;
   }
-  .svc-hero__inner { display: flex; flex-direction: column; gap: var(--space-5); max-width: 760px; }
-  .svc-hero__inner h1 { color: var(--text-strong); }
+  .svc-hero__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: start; }
+  .svc-hero__left { display: flex; flex-direction: column; gap: var(--space-5); }
+  .svc-hero__left h1 { color: var(--text-strong); }
   .svc-hero__intro { color: var(--text-body); }
+  .svc-hero__form { margin-top: var(--space-4); }
   .svc-hero__icon {
     display: grid; place-items: center;
     width: 72px; height: 72px;
@@ -198,12 +199,10 @@ const schema = {
   .svc-hero .breadcrumb a:hover { color: var(--accent); }
   .svc-hero .breadcrumb [aria-current] { color: var(--text-strong); }
 
-  /* ===== FORMULARIO + IMAGEN ===== */
-  .svc-apply { padding-top: var(--space-9); }
-  .svc-apply__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: stretch; }
-  .svc-apply__aside { display: flex; flex-direction: column; gap: var(--space-6); }
-  .svc-apply__aside .zoom-img { flex: 1; min-height: 420px; box-shadow: var(--shadow-4); }
-  .svc-apply__aside :global(.ph) { height: 100%; }
+  /* Columna derecha: imagen (sticky para acompañar el formulario) */
+  .svc-hero__right { display: flex; flex-direction: column; gap: var(--space-6); position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+  .svc-hero__media { flex: 1; min-height: 560px; box-shadow: var(--shadow-5); }
+  .svc-hero__media :global(.ph) { height: 100%; }
   .svc-badges { display: flex; flex-wrap: wrap; gap: var(--space-4); }
   .svc-badges li {
     display: inline-flex; align-items: center; gap: var(--space-3);
@@ -288,9 +287,10 @@ const schema = {
 
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
-    .svc-apply__grid, .svc-benefit__grid { grid-template-columns: 1fr; }
+    .svc-hero__grid, .svc-benefit__grid { grid-template-columns: 1fr; }
     .svc-groups, .svc-others__grid { grid-template-columns: 1fr; }
     .svc-benefit__media { order: -1; min-height: 320px; }
-    .svc-apply__aside .zoom-img { min-height: 340px; }
+    .svc-hero__right { position: static; order: -1; }
+    .svc-hero__media { min-height: 360px; }
   }
 </style>
