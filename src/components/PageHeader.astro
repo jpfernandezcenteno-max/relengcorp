@@ -10,10 +10,12 @@ interface Props {
   title: string;
   subtitle?: string;
   breadcrumbs?: Crumb[];
+  /** 'dark' (por defecto) o 'light' (fondo blanco) */
+  tone?: 'dark' | 'light';
 }
-const { eyebrow, title, subtitle, breadcrumbs = [] } = Astro.props;
+const { eyebrow, title, subtitle, breadcrumbs = [], tone = 'dark' } = Astro.props;
 ---
-<header class="page-header">
+<header class:list={['page-header', `page-header--${tone}`]}>
   <div class="page-header__bg" aria-hidden="true">
     <div class="page-header__glow"></div>
   </div>
@@ -66,4 +68,22 @@ const { eyebrow, title, subtitle, breadcrumbs = [] } = Astro.props;
   .breadcrumb a { color: var(--azul-100); transition: color var(--dur-fast) var(--ease-out); }
   .breadcrumb a:hover { color: var(--celeste-300); }
   .breadcrumb [aria-current] { color: #fff; }
+
+  /* ---- Variante clara (fondo blanco) ---- */
+  .page-header--light {
+    background: var(--bg-base);
+    color: var(--text-body);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header--light .page-header__glow {
+    background: radial-gradient(60% 60% at 80% 20%, rgba(0, 172, 229, 0.10) 0%, transparent 70%);
+  }
+  .page-header--light .eyebrow { color: var(--accent); }
+  .page-header--light .page-header__title { color: var(--text-strong); }
+  .page-header--light .page-header__sub { color: var(--text-body); }
+  .page-header--light .breadcrumb li { color: var(--text-muted); }
+  .page-header--light .breadcrumb li + li::before { color: var(--neutro-250); }
+  .page-header--light .breadcrumb a { color: var(--text-body); }
+  .page-header--light .breadcrumb a:hover { color: var(--accent); }
+  .page-header--light .breadcrumb [aria-current] { color: var(--text-strong); }
 </style>

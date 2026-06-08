@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import ServiceIcon from '../../components/ServiceIcon.astro';
+import UiIcon from '../../components/UiIcon.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import { services, site } from '../../data/site';
 
@@ -14,6 +15,17 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+
+// Iconos rotativos para los grupos de alcance del servicio
+const groupIcons = ['shield', 'gear', 'chart', 'layers', 'target', 'cube', 'wrench', 'document'];
+
+// Beneficios con iconografía
+const benefits = [
+  { icon: 'target', text: 'Reducción de riesgos operacionales y paradas no planificadas.' },
+  { icon: 'chart', text: 'Mayor disponibilidad y vida útil de los activos críticos.' },
+  { icon: 'spark', text: 'Inteligencia aplicada: datos convertidos en decisiones accionables.' },
+  { icon: 'user', text: 'Acompañamiento de especialistas con experiencia en faena.' },
+];
 
 // Schema.org Service para SEO
 const schema = {
@@ -28,25 +40,28 @@ const schema = {
 ---
 
 <BaseLayout title={service.title} description={service.short} schema={schema}>
-  <!-- HERO con formulario de captación (descarga de brochure) -->
+  <!-- HERO claro: descripción del servicio -->
   <section class="svc-hero">
-    <div class="svc-hero__bg" aria-hidden="true"><div class="svc-hero__glow"></div></div>
+    <div class="svc-hero__glow" aria-hidden="true"></div>
     <div class="container svc-hero__inner">
-      <div class="svc-hero__content">
-        <nav class="breadcrumb" aria-label="Ruta de navegación">
-          <ol>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/servicios">Servicios</a></li>
-            <li><span aria-current="page">{service.title}</span></li>
-          </ol>
-        </nav>
-        <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={34} /></span>
-        <p class="eyebrow" data-reveal>Servicios especializados</p>
-        <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="svc-hero__intro text-l" data-reveal>{service.intro}</p>
-      </div>
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <ol>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/servicios">Servicios</a></li>
+          <li><span aria-current="page">{service.title}</span></li>
+        </ol>
+      </nav>
+      <span class="svc-hero__icon" data-reveal><ServiceIcon slug={service.slug} size={36} /></span>
+      <p class="eyebrow" data-reveal>Servicios especializados</p>
+      <h1 class="h-xl" data-reveal>{service.title}</h1>
+      <p class="svc-hero__intro text-l" data-reveal>{service.intro}</p>
+    </div>
+  </section>
 
-      <div class="svc-hero__form" data-reveal>
+  <!-- FORMULARIO + IMAGEN -->
+  <section class="section svc-apply">
+    <div class="container svc-apply__grid">
+      <div class="svc-apply__form" data-reveal>
         <ContactForm
           variant="service"
           serviceName={service.title}
@@ -55,10 +70,21 @@ const schema = {
           submitLabel="Descargar brochure"
         />
       </div>
+
+      <div class="svc-apply__aside" data-reveal>
+        <figure class="zoom-img">
+          <ImagePlaceholder label={`${service.title} en operación`} ratio="3/4" tone="dark" />
+        </figure>
+        <ul class="svc-badges">
+          <li><span class="svc-badges__icon"><UiIcon name="download" size={20} /></span>Brochure en PDF</li>
+          <li><span class="svc-badges__icon"><UiIcon name="clock" size={20} /></span>Respuesta en 24 h</li>
+          <li><span class="svc-badges__icon"><UiIcon name="user" size={20} /></span>Especialista asignado</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- DETALLE: grupos de servicios -->
+  <!-- DETALLE: grupos de servicios con iconografía -->
   <section class="section svc-detail">
     <div class="container">
       <div class="section-head" data-reveal>
@@ -67,13 +93,14 @@ const schema = {
       </div>
 
       <div class="svc-groups">
-        {service.groups.map((group) => (
+        {service.groups.map((group, i) => (
           <div class="svc-group" data-reveal>
+            <span class="svc-group__icon"><UiIcon name={groupIcons[i % groupIcons.length]} size={26} /></span>
             <h3 class="svc-group__name h-xs">{group.name}</h3>
             <ul class="svc-group__list">
               {group.items.map((item) => (
                 <li>
-                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  <UiIcon name="check" size={18} />
                   <span>{item}</span>
                 </li>
               ))}
@@ -84,26 +111,30 @@ const schema = {
     </div>
   </section>
 
-  <!-- BENEFICIOS / imagen -->
-  <section class="section section--tight svc-benefit">
+  <!-- BENEFICIOS + imagen grande -->
+  <section class="section svc-benefit">
     <div class="container svc-benefit__grid">
-      <div class="svc-benefit__media" data-reveal>
-        <ImagePlaceholder label={`${service.title} en operación`} ratio="4/3" tone="dark" />
-      </div>
+      <figure class="svc-benefit__media zoom-img" data-reveal>
+        <ImagePlaceholder label={`${service.title} — resultados en faena`} ratio="4/3" tone="dark" />
+      </figure>
       <div class="svc-benefit__text" data-reveal>
         <p class="eyebrow">Por qué Relengcorp</p>
         <h2 class="h-m">Confiabilidad que se traduce en continuidad operacional</h2>
-        <p class="text-m">
-          Combinamos ingeniería especializada, tecnología avanzada e inteligencia aplicada para
-          reducir riesgos, optimizar procesos y maximizar la disponibilidad de tus activos críticos.
-        </p>
+        <ul class="svc-benefit__list">
+          {benefits.map((b) => (
+            <li>
+              <span class="svc-benefit__icon"><UiIcon name={b.icon} size={22} /></span>
+              <span>{b.text}</span>
+            </li>
+          ))}
+        </ul>
         <a href="/contacto" class="btn btn--lg">Conversemos sobre tu operación</a>
       </div>
     </div>
   </section>
 
   <!-- OTROS SERVICIOS -->
-  <section class="section section-dark svc-others on-dark">
+  <section class="section svc-others">
     <div class="container">
       <div class="section-head section-head--center" data-reveal>
         <p class="eyebrow eyebrow--center">Sigue explorando</p>
@@ -115,6 +146,9 @@ const schema = {
             <span class="svc-others__icon"><ServiceIcon slug={s.slug} /></span>
             <h3 class="h-xs">{s.title}</h3>
             <p class="text-s">{s.short}</p>
+            <span class="link-arrow text-s">Ver servicio
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
           </a>
         ))}
       </div>
@@ -123,46 +157,140 @@ const schema = {
 </BaseLayout>
 
 <style>
-  /* Hero */
-  .svc-hero { position: relative; background: var(--gradient-hero); color: #fff; padding-top: calc(var(--header-h) + var(--space-9)); padding-bottom: var(--space-12); overflow: hidden; isolation: isolate; }
-  .svc-hero__bg { position: absolute; inset: 0; z-index: -1; }
-  .svc-hero__glow { position: absolute; top: -20%; left: -10%; width: 60%; height: 120%; background: var(--gradient-glow); }
-  .svc-hero__inner { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-10); align-items: start; }
-  .svc-hero__content { display: flex; flex-direction: column; gap: var(--space-5); }
-  .svc-hero__content h1 { color: #fff; }
-  .svc-hero .eyebrow { color: var(--celeste-300); }
-  .svc-hero__icon { display: grid; place-items: center; width: 64px; height: 64px; border-radius: var(--radius-lg); background: rgba(0,172,229,0.18); color: var(--celeste-300); }
-  .svc-hero__intro { color: var(--azul-100); }
-  .svc-hero .breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-2); }
-  .svc-hero .breadcrumb li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--fs-text-s); color: var(--azul-200); }
-  .svc-hero .breadcrumb li + li::before { content: '/'; color: var(--azul-300); }
-  .svc-hero .breadcrumb a { color: var(--azul-100); }
-  .svc-hero .breadcrumb [aria-current] { color: #fff; }
+  /* ===== Utilidad: zoom de imagen al hover ===== */
+  .zoom-img { overflow: hidden; border-radius: var(--radius-lg); margin: 0; }
+  .zoom-img > :global(*) { transition: transform var(--dur-slow) var(--ease-out); }
+  .zoom-img:hover > :global(*) { transform: scale(1.05); }
 
-  /* Detalle */
+  /* ===== HERO claro ===== */
+  .svc-hero {
+    position: relative;
+    background: var(--bg-base);
+    color: var(--text-body);
+    padding-top: calc(var(--header-h) + var(--space-9));
+    padding-bottom: var(--space-9);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .svc-hero__glow {
+    position: absolute;
+    top: -40%; right: -10%;
+    width: 55%; height: 150%;
+    background: radial-gradient(60% 60% at 70% 30%, rgba(0,172,229,0.12) 0%, transparent 70%);
+    z-index: -1;
+  }
+  .svc-hero__inner { display: flex; flex-direction: column; gap: var(--space-5); max-width: 760px; }
+  .svc-hero__inner h1 { color: var(--text-strong); }
+  .svc-hero__intro { color: var(--text-body); }
+  .svc-hero__icon {
+    display: grid; place-items: center;
+    width: 72px; height: 72px;
+    border-radius: var(--radius-lg);
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .svc-hero__icon:hover { transform: translateY(-4px) rotate(-4deg); box-shadow: var(--shadow-accent); }
+  .svc-hero .breadcrumb ol { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-2); }
+  .svc-hero .breadcrumb li { display: flex; align-items: center; gap: var(--space-3); font-size: var(--fs-text-s); color: var(--text-muted); }
+  .svc-hero .breadcrumb li + li::before { content: '/'; color: var(--neutro-250); }
+  .svc-hero .breadcrumb a { color: var(--text-body); transition: color var(--dur-fast) var(--ease-out); }
+  .svc-hero .breadcrumb a:hover { color: var(--accent); }
+  .svc-hero .breadcrumb [aria-current] { color: var(--text-strong); }
+
+  /* ===== FORMULARIO + IMAGEN ===== */
+  .svc-apply { padding-top: var(--space-9); }
+  .svc-apply__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: stretch; }
+  .svc-apply__aside { display: flex; flex-direction: column; gap: var(--space-6); }
+  .svc-apply__aside .zoom-img { flex: 1; min-height: 420px; box-shadow: var(--shadow-4); }
+  .svc-apply__aside :global(.ph) { height: 100%; }
+  .svc-badges { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+  .svc-badges li {
+    display: inline-flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) var(--space-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    font-size: var(--fs-text-s);
+    font-weight: var(--fw-semibold);
+    color: var(--text-strong);
+    background: var(--surface);
+    transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  }
+  .svc-badges li:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+  .svc-badges__icon { color: var(--accent); display: inline-flex; }
+
+  /* ===== DETALLE GRUPOS ===== */
   .svc-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
-  .svc-group { padding: var(--space-7); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .svc-group:hover { box-shadow: var(--shadow-4); transform: translateY(-4px); }
-  .svc-group__name { color: var(--accent); margin-bottom: var(--space-5); }
+  .svc-group {
+    padding: var(--space-7);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .svc-group:hover { box-shadow: var(--shadow-5); transform: translateY(-6px); border-color: transparent; }
+  .svc-group__icon {
+    display: grid; place-items: center;
+    width: 52px; height: 52px;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: var(--space-5);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .svc-group:hover .svc-group__icon { background: var(--accent); color: #fff; transform: scale(1.08) rotate(-4deg); }
+  .svc-group__name { color: var(--text-strong); margin-bottom: var(--space-5); }
   .svc-group__list { display: flex; flex-direction: column; gap: var(--space-4); }
   .svc-group__list li { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--text-body); }
   .svc-group__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
 
-  /* Beneficio */
-  .svc-benefit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-9); align-items: center; }
+  /* ===== BENEFICIO ===== */
+  .svc-benefit { background: var(--bg-subtle); }
+  .svc-benefit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-10); align-items: center; }
+  .svc-benefit__media { min-height: 440px; box-shadow: var(--shadow-4); }
+  .svc-benefit__media :global(.ph) { height: 100%; }
   .svc-benefit__text { display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
+  .svc-benefit__list { display: flex; flex-direction: column; gap: var(--space-5); }
+  .svc-benefit__list li { display: flex; gap: var(--space-4); align-items: flex-start; color: var(--text-body); }
+  .svc-benefit__icon {
+    display: grid; place-items: center;
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+  }
+  .svc-benefit__list li:hover .svc-benefit__icon { background: var(--accent); color: #fff; }
 
-  /* Otros */
+  /* ===== OTROS SERVICIOS (claro) ===== */
   .svc-others__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .svc-others__card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-7); border-radius: var(--radius-lg); background: rgba(255,255,255,0.04); border: 1px solid var(--border-dark); transition: background-color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
-  .svc-others__card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
-  .svc-others__card h3 { color: #fff; }
-  .svc-others__card p { color: var(--azul-100); }
-  .svc-others__icon { display: grid; place-items: center; width: 52px; height: 52px; border-radius: var(--radius-md); background: rgba(0,172,229,0.18); color: var(--celeste-300); }
+  .svc-others__card {
+    display: flex; flex-direction: column; gap: var(--space-3);
+    padding: var(--space-7);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  }
+  .svc-others__card:hover { transform: translateY(-6px); box-shadow: var(--shadow-5); border-color: transparent; }
+  .svc-others__card h3 { color: var(--text-strong); }
+  .svc-others__card p { color: var(--text-body); flex: 1; }
+  .svc-others__icon {
+    display: grid; place-items: center;
+    width: 52px; height: 52px;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft);
+    color: var(--accent);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .svc-others__card:hover .svc-others__icon { background: var(--accent); color: #fff; transform: scale(1.08) rotate(-4deg); }
 
+  /* ===== Responsive ===== */
   @media (max-width: 900px) {
-    .svc-hero__inner, .svc-benefit__grid { grid-template-columns: 1fr; }
+    .svc-apply__grid, .svc-benefit__grid { grid-template-columns: 1fr; }
     .svc-groups, .svc-others__grid { grid-template-columns: 1fr; }
-    .svc-benefit__media { order: -1; max-width: 520px; }
+    .svc-benefit__media { order: -1; min-height: 320px; }
+    .svc-apply__aside .zoom-img { min-height: 340px; }
   }
 </style>
