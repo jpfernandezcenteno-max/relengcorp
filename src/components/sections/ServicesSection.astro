@@ -6,15 +6,13 @@ import { services } from '../../data/site';
 ---
 <section class="section services" id="servicios" aria-labelledby="servicios-title">
   <div class="container">
-    <div class="services__head">
-      <div class="section-head" style="margin-bottom:0">
-        <p class="eyebrow" data-reveal>Servicios especializados</p>
-        <h2 id="servicios-title" class="h-l" data-reveal>Soluciones integrales de confiabilidad</h2>
-        <p class="text-m" data-reveal>
-          Anticipamos, conectamos y optimizamos operaciones críticas mediante inteligencia
-          aplicada para asegurar mayor disponibilidad y confiabilidad.
-        </p>
-      </div>
+    <div class="section-head section-head--center">
+      <p class="eyebrow eyebrow--center" data-reveal>Servicios especializados</p>
+      <h2 id="servicios-title" class="h-l" data-reveal>Soluciones integrales de confiabilidad</h2>
+      <p class="text-m" data-reveal>
+        Anticipamos, conectamos y optimizamos operaciones críticas mediante inteligencia
+        aplicada para asegurar mayor disponibilidad y confiabilidad.
+      </p>
     </div>
 
     <Carousel id="services-carousel" label="Servicios especializados" controls="sides">
@@ -22,7 +20,3 @@ import { services } from '../../data/site';
     </Carousel>
   </div>
 </section>
-
-<style>
-  .services__head { display: flex; justify-content: space-between; align-items: flex-end; gap: var(--space-6); margin-bottom: var(--space-9); }
-</style>

@@ -1,27 +1,33 @@
 ---
-/* SECCIÓN FACTS — cifras clave con contador animado (Home).
-   NOTA: cifras y etiquetas a CONFIRMAR con el cliente. */
-const facts = [
-  { value: 20, suffix: '+', label: 'Operaciones mineras atendidas' },
+/* SECCIÓN DATOS QUE RESPALDAN — fiel al Figma: fondo oscuro con degradados
+   radiales, números con degradado y layout 3 + 2 con divisores. */
+const row1 = [
+  { value: 20, suffix: '+', label: 'Clientes en minería e industria' },
   { value: 300, suffix: '+', label: 'Proyectos ejecutados' },
-  { value: 95, suffix: '%', label: 'Índice de satisfacción' },
+  { value: 95, suffix: '%', label: 'Índice de satisfacción del cliente' },
+];
+const row2 = [
   { value: 10, suffix: '+', label: 'Años de experiencia' },
-  { value: 60, suffix: '+', label: 'Profesionales especializados' },
+  { value: 60, suffix: '+', label: 'Trabajadores capacitados' },
 ];
 ---
-<section class="section section-dark facts" aria-labelledby="facts-title" data-facts>
+<section class="facts" aria-labelledby="facts-title" data-facts>
   <div class="container">
-    <div class="section-head section-head--center" data-reveal>
-      <p class="eyebrow eyebrow--center">Datos que nos respaldan</p>
-      <h2 id="facts-title" class="h-l">Resultados que sostienen la confianza</h2>
-    </div>
+    <h2 id="facts-title" class="h-m facts__title" data-reveal>Datos que respaldan</h2>
 
-    <dl class="facts__grid">
-      {facts.map((f) => (
+    <dl class="facts__row facts__row--3">
+      {row1.map((f) => (
         <div class="facts__item" data-reveal>
-          <dt class="facts__value">
-            <span data-counter data-target={f.value}>0</span><span class="facts__suffix">{f.suffix}</span>
-          </dt>
+          <dt class="facts__value"><span data-counter data-target={f.value}>0</span>{f.suffix}</dt>
+          <dd class="facts__label text-s">{f.label}</dd>
+        </div>
+      ))}
+    </dl>
+
+    <dl class="facts__row facts__row--2">
+      {row2.map((f) => (
+        <div class="facts__item" data-reveal>
+          <dt class="facts__value"><span data-counter data-target={f.value}>0</span>{f.suffix}</dt>
           <dd class="facts__label text-s">{f.label}</dd>
         </div>
       ))}
@@ -31,43 +37,54 @@ const facts = [
 
 <style>
   .facts {
-    background:
-      radial-gradient(80% 120% at 50% 0%, rgba(0,172,229,0.10) 0%, transparent 60%),
-      var(--azul-900);
-  }
-  .facts__grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: var(--space-6);
-    text-align: center;
-  }
-  .facts__item {
-    padding: var(--space-6) var(--space-4);
-    border-radius: var(--radius-lg);
-    border: 1px solid var(--border-dark);
-    background: rgba(255,255,255,0.02);
-  }
-  .facts__value {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    font-weight: var(--fw-extrabold);
-    line-height: 1;
+    position: relative;
+    padding-block: var(--space-14);
     color: #fff;
-    display: inline-flex;
-    align-items: baseline;
+    background:
+      radial-gradient(38% 55% at 2% 0%, rgba(137, 95, 226, 0.28) 0%, transparent 70%),
+      radial-gradient(36% 50% at 100% 2%, rgba(0, 172, 229, 0.22) 0%, transparent 70%),
+      radial-gradient(45% 60% at 100% 100%, rgba(66, 70, 106, 0.45) 0%, transparent 70%),
+      radial-gradient(40% 60% at 0% 100%, rgba(0, 172, 229, 0.12) 0%, transparent 70%),
+      #0a0b14;
+    overflow: hidden;
+    isolation: isolate;
   }
-  .facts__suffix { color: var(--celeste-400); }
+  .facts__title { text-align: center; color: #fff; margin-bottom: var(--space-10); }
+
+  .facts__row { display: grid; }
+  .facts__row--3 { grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+  .facts__row--2 { grid-template-columns: repeat(2, 1fr); max-width: 66.66%; margin-inline: auto; }
+
+  .facts__item {
+    text-align: center;
+    padding: var(--space-8) var(--space-5);
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .facts__row--3 .facts__item:last-child,
+  .facts__row--2 .facts__item:last-child { border-right: none; }
+
+  .facts__value {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 3.25rem);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    background: linear-gradient(160deg, #ffffff 0%, var(--celeste-300) 45%, var(--morado-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
   .facts__label { color: var(--azul-100); margin-top: var(--space-4); }
 
-  @media (max-width: 900px) {
-    .facts__grid { grid-template-columns: repeat(3, 1fr); }
-  }
-  @media (max-width: 560px) {
-    .facts__grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 760px) {
+    .facts__row--3 { grid-template-columns: 1fr; }
+    .facts__row--2 { grid-template-columns: 1fr; max-width: 100%; }
+    .facts__item { border-right: none; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+    .facts__row--2 .facts__item:last-child { border-bottom: none; }
   }
 </style>
 
 <script>
-  // Contador animado: arranca cuando la sección entra en viewport.
+  // Contador animado al entrar en viewport (respeta prefers-reduced-motion).
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const section = document.querySelector<HTMLElement>('[data-facts]');
   if (section) {
@@ -80,7 +97,6 @@ const facts = [
         const start = performance.now();
         const step = (now: number) => {
           const p = Math.min((now - start) / duration, 1);
-          // easeOutCubic
           const eased = 1 - Math.pow(1 - p, 3);
           c.textContent = String(Math.round(target * eased));
           if (p < 1) requestAnimationFrame(step);

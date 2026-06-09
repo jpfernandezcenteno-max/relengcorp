@@ -1,86 +1,99 @@
 ---
-/* SECCIÓN CTA CONTACTO — franja "¿Necesitas más información?" (Home).
-   Formulario compacto. NOTA: el envío real se conecta cuando se defina
-   hosting/correo (decisión: backend más adelante). Por ahora valida en
-   frontend y muestra confirmación. */
+/* SECCIÓN CTA "¿Necesitas más información?" — fiel al Figma.
+   Cápsula con input + botón Contactar (icono) dentro, y botón WhatsApp al
+   costado. NOTA: envío real a conectar con hosting/correo. */
 import { site } from '../../data/site';
-const waLink = `https://wa.me/${site.whatsapp}`;
+const waLink = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+  'Hola Relengcorp, me gustaría más información sobre sus servicios.'
+)}`;
 ---
 <section class="section cta-contact" aria-labelledby="cta-title">
   <div class="container">
-    <div class="cta-contact__panel">
-      <div class="cta-contact__text">
-        <p class="eyebrow eyebrow--center" data-reveal>Hablemos de tu operación</p>
-        <h2 id="cta-title" class="h-l" data-reveal>¿Necesitas más información?</h2>
-        <p class="text-m" data-reveal>
-          Cuéntanos sobre tu proyecto y un especialista te contactará para diseñar la
-          solución de confiabilidad que tu operación necesita.
-        </p>
-      </div>
-
-      <form class="cta-contact__form" data-contact-form novalidate data-reveal>
-        <div class="cta-contact__row">
-          <div class="field">
-            <label for="cta-email" class="sr-only">Correo electrónico</label>
-            <input type="email" id="cta-email" name="email" placeholder="Tu correo electrónico" required autocomplete="email" />
-            <p class="field__error" data-error></p>
-          </div>
-          <button type="submit" class="btn btn--lg">Solicitar cotización</button>
-        </div>
-        <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn btn--lg btn--whatsapp cta-contact__wa">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.519 5.26l-.999 3.648 3.748-.997z"/></svg>
-          Escríbenos por WhatsApp
-        </a>
-        <p class="cta-contact__success" data-success hidden>✓ ¡Gracias! Hemos recibido tu solicitud. Te contactaremos muy pronto.</p>
-      </form>
+    <div class="section-head section-head--center" data-reveal>
+      <h2 id="cta-title" class="h-l">¿Necesitas más información?</h2>
+      <p class="text-m cta-contact__lead">
+        Completa el formulario y nuestro equipo se pondrá en contacto contigo a la brevedad.
+        Si prefieres, también puedes comunicarte directamente con nosotros a través de WhatsApp.
+      </p>
     </div>
+
+    <div class="cta-contact__controls" data-reveal>
+      <form class="cta-contact__form" data-contact-form novalidate>
+        <div class="cta-contact__capsule">
+          <label for="cta-email" class="sr-only">Correo electrónico</label>
+          <input type="email" id="cta-email" name="email" placeholder="Ingresa tu email" required autocomplete="email" />
+          <button type="submit" class="btn cta-contact__send">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Contactar
+          </button>
+        </div>
+        <p class="cta-contact__error" data-error></p>
+      </form>
+
+      <a href={waLink} target="_blank" rel="noopener noreferrer" class="btn cta-contact__wa">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 0 1-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 0 1 8.413 3.488 11.824 11.824 0 0 1 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 0 0 1.519 5.26l-.999 3.648 3.748-.997z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <p class="cta-contact__success" data-success hidden role="status">✓ ¡Gracias! Hemos recibido tu solicitud. Te contactaremos muy pronto.</p>
   </div>
 </section>
 
 <style>
   .cta-contact { background: var(--bg-base); }
-  .cta-contact__panel {
-    text-align: center;
-    max-width: 760px;
-    margin-inline: auto;
+  .cta-contact__lead { color: var(--text-body); }
+
+  .cta-contact__controls {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-8);
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+    margin-top: var(--space-9);
   }
-  .cta-contact__text { display: flex; flex-direction: column; gap: var(--space-4); align-items: center; }
-  .cta-contact__text .eyebrow { justify-content: center; }
+  .cta-contact__form { display: flex; flex-direction: column; gap: var(--space-3); }
 
-  .cta-contact__form { display: flex; flex-direction: column; gap: var(--space-4); align-items: center; }
-  .cta-contact__row { display: flex; gap: var(--space-4); width: 100%; max-width: 560px; }
-  .field { flex: 1; text-align: left; }
-  .field input {
-    width: 100%;
-    padding: 0.75rem 1.1rem;
-    min-height: 48px;
-    border: 1.5px solid var(--border);
+  .cta-contact__capsule {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--neutro-100);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    background: var(--surface);
-    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+    padding: 5px 5px 5px var(--space-3);
+    width: min(440px, 90vw);
   }
-  .field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
-  .field input[aria-invalid='true'] { border-color: #e5484d; }
-  .field__error { color: #e5484d; font-size: var(--fs-text-xs); margin-top: 4px; padding-left: var(--space-4); min-height: 1em; }
+  .cta-contact__capsule input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    padding: 0.6rem 0.25rem;
+    color: var(--text-strong);
+  }
+  .cta-contact__capsule input:focus { outline: none; }
+  .cta-contact__capsule input[aria-invalid='true'] { color: #c0341d; }
+  .cta-contact__send { flex-shrink: 0; }
 
-  .cta-contact__wa { width: 100%; max-width: 560px; }
-  .cta-contact__success { color: var(--success); font-weight: var(--fw-semibold); }
+  .cta-contact__wa { --btn-bg: var(--whatsapp); min-height: 48px; padding-inline: var(--space-6); }
+  .cta-contact__wa:hover { background: var(--whatsapp-hover); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35); }
 
-  @media (max-width: 560px) {
-    .cta-contact__row { flex-direction: column; }
-    .cta-contact__row .btn { width: 100%; }
+  .cta-contact__error { color: #c0341d; font-size: var(--fs-text-xs); min-height: 1em; padding-left: var(--space-3); }
+  .cta-contact__success { text-align: center; color: var(--success); font-weight: var(--fw-semibold); margin-top: var(--space-6); }
+
+  @media (max-width: 520px) {
+    .cta-contact__controls { flex-direction: column; align-items: center; }
+    .cta-contact__wa { width: min(440px, 90vw); }
   }
 </style>
 
 <script>
-  // Validación frontend + confirmación. (Conectar a backend/servicio de correo después.)
+  // Validación + descarga/confirmación. (Backend de envío a conectar con hosting.)
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) => {
     const input = form.querySelector<HTMLInputElement>('input[name="email"]');
     const error = form.querySelector<HTMLElement>('[data-error]');
-    const success = form.querySelector<HTMLElement>('[data-success]');
+    const section = form.closest('section');
+    const success = section?.querySelector<HTMLElement>('[data-success]');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -94,8 +107,8 @@ const waLink = `https://wa.me/${site.whatsapp}`;
       }
       input.removeAttribute('aria-invalid');
       if (error) error.textContent = '';
-      // TODO(backend): enviar lead a comercial@relengcorp.com cuando se defina hosting.
-      form.querySelector('.cta-contact__row')?.setAttribute('hidden', '');
+      // TODO(backend): enviar lead a comercial@relengcorp.com.
+      form.setAttribute('hidden', '');
       if (success) success.hidden = false;
     });
   });
