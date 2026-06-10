@@ -62,14 +62,10 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
     });
   }
 
-  // --- Botones "tech": magnetismo + spotlight que sigue el cursor ---
-  const isFinePointer = window.matchMedia('(pointer: fine)').matches;
+  // --- Botones "tech": spotlight que sigue el cursor ---
   const btnCleanups: Array<() => void> = [];
 
   gsap.utils.toArray<HTMLElement>('.btn').forEach((btn) => {
-    const xTo = gsap.quickTo(btn, 'x', { duration: 0.5, ease: 'power3' });
-    const yTo = gsap.quickTo(btn, 'y', { duration: 0.5, ease: 'power3' });
-
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse') return;
       const rect = btn.getBoundingClientRect();
@@ -78,11 +74,6 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
 
       btn.style.setProperty('--mx', `${relX}px`);
       btn.style.setProperty('--my', `${relY}px`);
-
-      if (isFinePointer) {
-        xTo((relX - rect.width / 2) * 0.25);
-        yTo((relY - rect.height / 2) * 0.35);
-      }
     };
 
     const onEnter = (e: PointerEvent) => {
@@ -92,7 +83,7 @@ mm.add('(prefers-reduced-motion: no-preference)', () => {
 
     const onLeave = (e: PointerEvent) => {
       if (e.pointerType !== 'mouse') return;
-      gsap.to(btn, { scale: 1, x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.45)' });
+      gsap.to(btn, { scale: 1, duration: 0.6, ease: 'elastic.out(1, 0.45)' });
     };
 
     const onDown = (e: PointerEvent) => {
