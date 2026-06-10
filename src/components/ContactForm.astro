@@ -85,15 +85,17 @@ const showCV = variant === 'job';
     )}
   </div>
 
+  <label class="cform__consent">
+    <input type="checkbox" id="cf-consent" name="acepta_correos" />
+    <span>Acepto recibir comunicaciones y novedades de Relengcorp por correo electrónico.</span>
+  </label>
+
   <div class="cform__actions">
     <button type="submit" class="btn btn--lg">{submitLabel}</button>
     <p class="cform__note text-xs">Campos obligatorios marcados con *. Tus datos se tratan de forma confidencial.</p>
   </div>
 
-  <div class="cform__success" data-success hidden role="status">
-    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <p data-success-text></p>
-  </div>
+  <p class="cform__success" data-success hidden role="status" data-success-text></p>
 </form>
 
 <style>
@@ -142,20 +144,27 @@ const showCV = variant === 'job';
   .field input[type='file'] { padding: 0.6rem; background: var(--neutro-100); cursor: pointer; }
   .field__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
 
+  .cform__consent {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--fs-text-s);
+    color: var(--text-body);
+    cursor: pointer;
+  }
+  .cform__consent input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+
   .cform__actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
   .cform__note { color: var(--text-muted); }
 
   .cform__success {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    border-radius: var(--radius-md);
-    background: rgba(26,162,81,0.08);
-    border: 1px solid rgba(26,162,81,0.3);
     color: var(--success);
     font-weight: var(--fw-semibold);
   }
+
+  .cform__grid[hidden],
+  .cform__consent[hidden],
+  .cform__actions[hidden] { display: none; }
 
   @media (max-width: 560px) {
     .cform { padding: var(--space-6); }
@@ -165,9 +174,8 @@ const showCV = variant === 'job';
 
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
-    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea');
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([type="checkbox"]), textarea');
     const successBox = form.querySelector<HTMLElement>('[data-success]');
-    const successText = form.querySelector<HTMLElement>('[data-success-text]');
     const variant = form.dataset.variant;
     const brochure = form.dataset.brochure;
 
@@ -226,9 +234,12 @@ const showCV = variant === 'job';
             ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
             : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
 
-      form.querySelectorAll('.cform__grid, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
-      if (successText) successText.textContent = msg;
-      if (successBox) { successBox.hidden = false; successBox.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      form.querySelectorAll('.cform__grid, .cform__consent, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
+      if (successBox) {
+        successBox.textContent = msg;
+        successBox.hidden = false;
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   });
 </script>
