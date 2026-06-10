@@ -1,38 +1,149 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageHeader from '../../components/PageHeader.astro';
 import BlogCard from '../../components/BlogCard.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const [featured, ...rest] = posts;
+const sidePosts = rest.slice(0, 2);
+const morePosts = rest.slice(2);
 ---
 <BaseLayout
   title="Blog"
   description="Artículos sobre confiabilidad, mantenimiento predictivo, integridad estructural y transformación digital en la industria minera e industrial."
 >
-  <PageHeader
-    eyebrow="Conocimiento e industria"
-    title="Blog Relengcorp"
-    subtitle="Ideas, tendencias y mejores prácticas en confiabilidad, mantenimiento predictivo y transformación digital para la minería."
-    imageLabel="Contenido y recursos del blog"
-  />
-
-  <section class="section">
-    <div class="container">
-      {posts.length === 0 ? (
-        <p class="text-m">Pronto publicaremos nuevos artículos.</p>
-      ) : (
-        <div class="blog-index__grid">
-          {posts.map((post) => <BlogCard post={post} />)}
-        </div>
-      )}
+  <!-- Encabezado del blog -->
+  <header class="blog-hero">
+    <div class="container blog-hero__inner">
+      <p class="blog-hero__eyebrow" data-reveal>Nuestro Blog</p>
+      <h1 class="blog-hero__title h-xl" data-reveal>Noticias y Novedades</h1>
+      <p class="blog-hero__sub text-l" data-reveal>
+        Descubre artículos, noticias y reflexiones sobre lo que más nos apasiona. Aquí
+        compartimos ideas, aprendizajes y tendencias para inspirarte y mantenerte al día.
+      </p>
+      <a href="/contacto" class="blog-hero__capture" data-reveal>
+        <span class="blog-hero__capture-label">Ingresa tu email</span>
+        <span class="btn">Contactar</span>
+      </a>
     </div>
-  </section>
+  </header>
+
+  {posts.length === 0 ? (
+    <section class="section">
+      <div class="container">
+        <p class="text-m">Pronto publicaremos nuevos artículos.</p>
+      </div>
+    </section>
+  ) : (
+    <section class="section blog-latest">
+      <div class="container">
+        <h2 class="blog-latest__heading">Últimos posts</h2>
+        <div class="blog-latest__grid">
+          <div class="blog-latest__featured">
+            <BlogCard post={featured} variant="featured" />
+          </div>
+          {sidePosts.length > 0 && (
+            <div class="blog-latest__side">
+              {sidePosts.map((post) => <BlogCard post={post} variant="side" />)}
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {morePosts.length > 0 && (
+    <section class="section section--tight blog-all">
+      <div class="container">
+        <h2 class="blog-all__heading">Todos los posts</h2>
+        <div class="blog-all__grid">
+          {morePosts.map((post) => <BlogCard post={post} variant="grid" />)}
+        </div>
+      </div>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
-  .blog-index__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  @media (max-width: 900px) { .blog-index__grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .blog-index__grid { grid-template-columns: 1fr; } }
+  /* ---- Encabezado ---- */
+  .blog-hero { background: var(--bg-base); padding-top: calc(var(--header-h) + 6rem); padding-bottom: 6rem; }
+  .blog-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-7);
+    max-width: 960px;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .blog-hero__eyebrow {
+    font-size: var(--fs-text-m);
+    font-weight: var(--fw-semibold);
+    color: var(--accent);
+  }
+  .blog-hero__title { color: var(--text-strong); margin: 0; font-weight: var(--fw-bold); }
+  .blog-hero__sub { color: var(--text-body); max-width: 48rem; }
+
+  .blog-hero__capture {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-9);
+    width: 100%;
+    max-width: 28rem;
+    padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
+    border: 0.5px solid var(--neutro-250);
+    border-radius: var(--radius-md);
+    background: var(--neutro-100);
+    color: var(--text-muted);
+    transition: border-color var(--dur-fast) var(--ease-out);
+  }
+  .blog-hero__capture:hover { border-color: var(--accent); }
+  .blog-hero__capture-label { font-size: var(--fs-text-m); }
+
+  /* ---- Últimos posts ---- */
+  .blog-latest__heading {
+    font-size: var(--fs-h-s);
+    font-weight: var(--fw-bold);
+    font-family: var(--font-heading);
+    color: var(--text-strong);
+    margin-bottom: var(--space-8);
+  }
+  .blog-latest__grid { display: flex; gap: var(--space-9); align-items: stretch; }
+  .blog-latest__featured { flex: 1 1 0; min-width: 0; }
+  .blog-latest__side {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-9);
+  }
+
+  /* ---- Todos los posts ---- */
+  .blog-all { background: var(--bg-subtle); }
+  .blog-all__heading {
+    font-size: var(--fs-h-s);
+    font-weight: var(--fw-bold);
+    font-family: var(--font-heading);
+    color: var(--text-strong);
+    margin-bottom: var(--space-8);
+  }
+  .blog-all__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8) var(--space-7); }
+
+  @media (max-width: 980px) {
+    .blog-latest__grid { flex-direction: column; }
+  }
+  @media (max-width: 900px) {
+    .blog-all__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 744px) {
+    .blog-hero { padding-block: var(--space-12); }
+    .blog-hero__capture { flex-direction: column; align-items: stretch; gap: var(--space-4); }
+  }
+  @media (max-width: 620px) {
+    .blog-all__grid { grid-template-columns: 1fr; }
+  }
 </style>
