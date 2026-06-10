@@ -6,16 +6,18 @@
    - Menú móvil tipo drawer.
    ============================================================ */
 import { nav, site } from '../data/site';
+import logoSvg from '../../public/logo.svg?raw';
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === '/' ? path === '/' : path === href || path.startsWith(href + '/');
+const isHome = path === '/';
 ---
 
-<header class="site-header" data-header>
+<header class:list={['site-header', { 'site-header--has-light-bg': !isHome }]} data-header>
   <div class="container site-header__inner">
     <a href="/" class="site-header__logo" aria-label={`${site.name} — inicio`}>
-      <img src="/logo.svg" alt={site.name} width="160" height="37" />
+      <Fragment set:html={logoSvg} />
     </a>
 
     <nav class="site-nav" aria-label="Navegación principal">
@@ -141,8 +143,18 @@ const isActive = (href: string) =>
     flex-shrink: 0;
     display: flex;
     align-items: center;
+    transition: color var(--dur-fast) var(--ease-out);
   }
-  .site-header__logo img { height: 34px; width: auto; }
+  .site-header__logo :global(svg) { display: block; height: 34px; width: auto; aspect-ratio: 1322.44 / 305.4; }
+
+  /* Páginas internas: el header arranca sobre un fondo claro, así que
+     el logo y los enlaces necesitan tono oscuro hasta hacer scroll. */
+  .site-header--has-light-bg:not(.is-scrolled) .site-header__logo { color: var(--text-strong); }
+  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link { color: var(--text-body); }
+  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link:hover,
+  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link.is-active { color: var(--text-strong); }
+  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link.is-active { background: var(--accent-soft); }
+  .site-header--has-light-bg:not(.is-scrolled) .site-header__burger span { background: var(--text-strong); }
 
   .site-nav { margin-inline: auto; }
   .site-nav__list { display: flex; align-items: center; gap: var(--space-2); }
