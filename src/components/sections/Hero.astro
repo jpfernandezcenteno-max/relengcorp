@@ -33,6 +33,7 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
     <div class="hero__overlay"></div>
     <div class="hero__glow"></div>
   </div>
+  <canvas class="hero__particles" aria-hidden="true"></canvas>
 
   <div class="container hero__inner">
     <div class="hero__content">
@@ -118,7 +119,20 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
     z-index: -1;
   }
 
+  /* Partículas: muy sutiles, decorativas */
+  .hero__particles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
   .hero__inner {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     align-items: center;
@@ -251,5 +265,72 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
       deleting = true;
       tick();
     }, HOLD);
+  }
+
+  // ---- PARTÍCULAS DEL HERO (canvas + GSAP, muy sutil) ----
+  const canvas = document.querySelector<HTMLCanvasElement>('.hero__particles');
+  const ctx = canvas?.getContext('2d');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (canvas && ctx && !reduceMotion) {
+    import('gsap').then(({ default: gsap }) => {
+      const hero = canvas.closest('.hero') as HTMLElement;
+      let width = 0;
+      let height = 0;
+
+      type Particle = { x: number; y: number; r: number; alpha: number };
+      const PARTICLE_COUNT = 46;
+      const particles: Particle[] = [];
+
+      const resize = () => {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = hero.offsetWidth;
+        height = hero.offsetHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      resize();
+
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const p: Particle = {
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 1.4 + 0.4,
+          alpha: Math.random() * 0.35 + 0.08,
+        };
+        particles.push(p);
+
+        // Deriva lenta y aleatoria, casi imperceptible
+        gsap.to(p, {
+          x: `+=${(Math.random() - 0.5) * 120}`,
+          y: `+=${(Math.random() - 0.5) * 120}`,
+          duration: 25 + Math.random() * 25,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+        });
+      }
+
+      const draw = () => {
+        ctx.clearRect(0, 0, width, height);
+        for (const p of particles) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(178, 219, 255, ${p.alpha})`;
+          ctx.fill();
+        }
+      };
+
+      gsap.ticker.add(draw);
+
+      let resizeTimer: ReturnType<typeof setTimeout>;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 200);
+      });
+    });
   }
 </script>
