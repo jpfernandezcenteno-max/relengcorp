@@ -59,7 +59,7 @@ const schema = {
 
         <form class="svc-capture" data-capture data-brochure={brochureUrl} novalidate data-reveal>
           <div class="svc-capture__grid">
-            <div class="svc-capture__field">
+            <div class="svc-capture__field svc-capture__field--full">
               <label for="svc-name" class="sr-only">Nombre completo</label>
               <input type="text" id="svc-name" name="nombre" placeholder="Nombre completo" required autocomplete="name" />
             </div>
@@ -71,12 +71,12 @@ const schema = {
               <label for="svc-phone" class="sr-only">Teléfono</label>
               <input type="tel" id="svc-phone" name="telefono" placeholder="Teléfono" required autocomplete="tel" inputmode="tel" />
             </div>
-            <div class="svc-capture__field">
+            <div class="svc-capture__field svc-capture__field--full">
               <label for="svc-email" class="sr-only">Correo electrónico</label>
               <input type="email" id="svc-email" name="email" placeholder="Correo electrónico" required autocomplete="email" />
             </div>
           </div>
-          <button type="submit" class="btn svc-capture__submit">Contactar</button>
+          <button type="submit" class="btn svc-capture__submit">Enviar datos</button>
           <p class="svc-capture__hint">Al enviar tus datos, descargarás automáticamente nuestro brochure.</p>
           <p class="svc-capture__error" data-error></p>
           <p class="svc-capture__success" data-success hidden>✓ ¡Gracias! Tu brochure se está descargando y un especialista te contactará.</p>
@@ -193,6 +193,7 @@ const schema = {
   /* Captura de datos */
   .svc-capture { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); max-width: 460px; }
   .svc-capture__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); width: 100%; }
+  .svc-capture__field--full { grid-column: 1 / -1; }
   .svc-capture__field input {
     width: 100%; border: 1px solid var(--border); background: #fff;
     padding: 0.6rem 1rem; border-radius: var(--radius-md); color: var(--text-strong);
@@ -200,7 +201,7 @@ const schema = {
   }
   .svc-capture__field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
   .svc-capture__field input[aria-invalid='true'] { border-color: #e5484d; }
-  .svc-capture__submit { white-space: nowrap; }
+  .svc-capture__submit { width: 100%; text-align: center; }
   .svc-capture__hint { color: var(--text-muted); font-size: var(--fs-text-xs); }
   .svc-capture__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
   .svc-capture__success { color: var(--accent-hover); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
