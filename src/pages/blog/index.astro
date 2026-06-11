@@ -23,10 +23,20 @@ const morePosts = rest.slice(2);
         Descubre artículos, noticias y reflexiones sobre lo que más nos apasiona. Aquí
         compartimos ideas, aprendizajes y tendencias para inspirarte y mantenerte al día.
       </p>
-      <a href="/contacto" class="blog-hero__capture" data-reveal>
-        <span class="blog-hero__capture-label">Ingresa tu email</span>
-        <span class="btn">Contactar</span>
-      </a>
+      <form class="blog-hero__capture" data-subscribe data-reveal novalidate>
+        <input
+          type="email"
+          name="email"
+          class="blog-hero__capture-input"
+          placeholder="Ingresa tu email"
+          required
+          aria-label="Correo electrónico"
+        />
+        <button type="submit" class="btn">Suscribirse</button>
+      </form>
+      <p class="blog-hero__capture-success" data-subscribe-success hidden role="status">
+        ¡Gracias por suscribirte! Pronto recibirás nuestras novedades.
+      </p>
     </div>
   </header>
 
@@ -100,8 +110,29 @@ const morePosts = rest.slice(2);
     color: var(--text-muted);
     transition: border-color var(--dur-fast) var(--ease-out);
   }
-  .blog-hero__capture:hover { border-color: var(--accent); }
-  .blog-hero__capture-label { font-size: var(--fs-text-m); }
+  .blog-hero__capture:hover,
+  .blog-hero__capture:focus-within { border-color: var(--accent); }
+  .blog-hero__capture-input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: transparent;
+    font-size: var(--fs-text-m);
+    color: var(--text-strong);
+    font-family: inherit;
+  }
+  .blog-hero__capture-input::placeholder { color: var(--text-muted); }
+  .blog-hero__capture-input:focus { outline: none; }
+
+  .blog-hero__capture[hidden] { display: none; }
+
+  .blog-hero__capture-success {
+    width: 100%;
+    max-width: 28rem;
+    margin-inline: auto;
+    color: var(--success);
+    font-weight: var(--fw-semibold);
+  }
 
   /* ---- Últimos posts ---- */
   .blog-latest__heading {
@@ -147,3 +178,22 @@ const morePosts = rest.slice(2);
     .blog-all__grid { grid-template-columns: 1fr; }
   }
 </style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-subscribe]');
+  const success = document.querySelector<HTMLElement>('[data-subscribe-success]');
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = form.querySelector<HTMLInputElement>('input[name="email"]');
+    if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+      email?.focus();
+      return;
+    }
+
+    // TODO(backend): enviar email a la lista de suscripción cuando se defina hosting.
+
+    form.setAttribute('hidden', '');
+    if (success) success.hidden = false;
+  });
+</script>
