@@ -58,11 +58,25 @@ const schema = {
         <p class="eyebrow" data-reveal>Pide un diagnóstico gratuito</p>
 
         <form class="svc-capture" data-capture data-brochure={brochureUrl} novalidate data-reveal>
-          <div class="svc-capture__row">
-            <label for="svc-email" class="sr-only">Correo electrónico</label>
-            <input type="email" id="svc-email" name="email" placeholder="Ingresa tu email" required autocomplete="email" />
-            <button type="submit" class="btn">Contactar</button>
+          <div class="svc-capture__grid">
+            <div class="svc-capture__field">
+              <label for="svc-name" class="sr-only">Nombre completo</label>
+              <input type="text" id="svc-name" name="nombre" placeholder="Nombre completo" required autocomplete="name" />
+            </div>
+            <div class="svc-capture__field">
+              <label for="svc-company" class="sr-only">Empresa</label>
+              <input type="text" id="svc-company" name="empresa" placeholder="Empresa" autocomplete="organization" />
+            </div>
+            <div class="svc-capture__field">
+              <label for="svc-phone" class="sr-only">Teléfono</label>
+              <input type="tel" id="svc-phone" name="telefono" placeholder="Teléfono" required autocomplete="tel" inputmode="tel" />
+            </div>
+            <div class="svc-capture__field">
+              <label for="svc-email" class="sr-only">Correo electrónico</label>
+              <input type="email" id="svc-email" name="email" placeholder="Correo electrónico" required autocomplete="email" />
+            </div>
           </div>
+          <button type="submit" class="btn svc-capture__submit">Contactar</button>
           <p class="svc-capture__error" data-error></p>
           <p class="svc-capture__success" data-success hidden>✓ ¡Gracias! Tu brochure se está descargando y un especialista te contactará.</p>
         </form>
@@ -175,18 +189,21 @@ const schema = {
   .svc-hero .eyebrow { color: var(--accent); margin-top: calc(var(--space-2) * -1); }
   .svc-hero__intro { color: var(--text-body); }
 
-  /* Captura de email */
-  .svc-capture { display: flex; flex-direction: column; gap: var(--space-3); }
-  .svc-capture__row { display: flex; gap: var(--space-3); background: #fff; padding: 6px; border-radius: var(--radius-md); max-width: 460px; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
-  .svc-capture__row input {
-    flex: 1; border: none; background: transparent;
-    padding: 0.6rem 1rem; color: var(--text-strong);
-    min-width: 0;
+  /* Captura de datos */
+  .svc-capture { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); max-width: 460px; }
+  .svc-capture__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); width: 100%; }
+  .svc-capture__field input {
+    width: 100%; border: 1px solid var(--border); background: #fff;
+    padding: 0.6rem 1rem; border-radius: var(--radius-md); color: var(--text-strong);
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
   }
-  .svc-capture__row input:focus { outline: none; }
-  .svc-capture__row .btn { white-space: nowrap; }
+  .svc-capture__field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
+  .svc-capture__field input[aria-invalid='true'] { border-color: #e5484d; }
+  .svc-capture__submit { white-space: nowrap; }
   .svc-capture__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
   .svc-capture__success { color: var(--accent-hover); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
+  .svc-capture__grid[hidden],
+  .svc-capture__submit[hidden] { display: none; }
 
   /* Stats */
   .svc-stats { display: flex; gap: var(--space-8); margin-top: var(--space-4); }
@@ -250,9 +267,8 @@ const schema = {
     .svc-stats { gap: var(--space-6); }
   }
   @media (max-width: 480px) {
-    .svc-capture__row { flex-direction: column; background: transparent; padding: 0; border: none; box-shadow: none; }
-    .svc-capture__row input { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-pill); }
-    .svc-capture__row .btn { width: 100%; }
+    .svc-capture__grid { grid-template-columns: 1fr; }
+    .svc-capture__submit { width: 100%; }
   }
 </style>
 
@@ -260,22 +276,43 @@ const schema = {
   // Captura de email del hero -> valida, descarga brochure, confirma.
   // TODO(backend): enviar lead a comercial@relengcorp.com al definir hosting.
   document.querySelectorAll<HTMLFormElement>('[data-capture]').forEach((form) => {
-    const input = form.querySelector<HTMLInputElement>('input[name="email"]');
+    const fields = form.querySelectorAll<HTMLInputElement>('.svc-capture__field input');
     const error = form.querySelector<HTMLElement>('[data-error]');
     const success = form.querySelector<HTMLElement>('[data-success]');
     const brochure = form.dataset.brochure;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!input) return;
-      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value.trim());
+      let valid = true;
+      let firstInvalid: HTMLInputElement | null = null;
+      let message = '';
+
+      fields.forEach((f) => {
+        f.removeAttribute('aria-invalid');
+        const value = f.value.trim();
+        if (f.hasAttribute('required') && !value) {
+          f.setAttribute('aria-invalid', 'true');
+          valid = false;
+          firstInvalid = firstInvalid || f;
+          message = message || 'Completa los campos obligatorios.';
+        } else if (f.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          f.setAttribute('aria-invalid', 'true');
+          valid = false;
+          firstInvalid = firstInvalid || f;
+          message = message || 'Ingresa un correo electrónico válido.';
+        } else if (f.type === 'tel' && value && value.replace(/\D/g, '').length < 7) {
+          f.setAttribute('aria-invalid', 'true');
+          valid = false;
+          firstInvalid = firstInvalid || f;
+          message = message || 'Ingresa un teléfono válido.';
+        }
+      });
+
       if (!valid) {
-        input.setAttribute('aria-invalid', 'true');
-        if (error) error.textContent = 'Ingresa un correo electrónico válido.';
-        input.focus();
+        if (error) error.textContent = message;
+        firstInvalid?.focus();
         return;
       }
-      input.removeAttribute('aria-invalid');
       if (error) error.textContent = '';
       if (brochure) {
         const a = document.createElement('a');
@@ -285,7 +322,8 @@ const schema = {
         a.click();
         a.remove();
       }
-      form.querySelector('.svc-capture__row')?.setAttribute('hidden', '');
+      form.querySelector('.svc-capture__grid')?.setAttribute('hidden', '');
+      form.querySelector('.svc-capture__submit')?.setAttribute('hidden', '');
       if (success) success.hidden = false;
     });
   });
