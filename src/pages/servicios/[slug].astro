@@ -55,7 +55,7 @@ const schema = {
     <div class="container svc-hero__grid">
       <div class="svc-hero__content">
         <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="eyebrow" data-reveal>Pide un diagnóstico gratuito</p>
+        <p class="eyebrow" data-reveal>Déjanos tus datos y nos comunicaremos contigo</p>
 
         <form class="svc-capture" data-capture data-brochure={brochureUrl} novalidate data-reveal>
           <div class="svc-capture__grid">
@@ -77,6 +77,7 @@ const schema = {
             </div>
           </div>
           <button type="submit" class="btn svc-capture__submit">Contactar</button>
+          <p class="svc-capture__hint">Al enviar tus datos, descargarás automáticamente nuestro brochure.</p>
           <p class="svc-capture__error" data-error></p>
           <p class="svc-capture__success" data-success hidden>✓ ¡Gracias! Tu brochure se está descargando y un especialista te contactará.</p>
         </form>
@@ -200,10 +201,12 @@ const schema = {
   .svc-capture__field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
   .svc-capture__field input[aria-invalid='true'] { border-color: #e5484d; }
   .svc-capture__submit { white-space: nowrap; }
+  .svc-capture__hint { color: var(--text-muted); font-size: var(--fs-text-xs); }
   .svc-capture__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
   .svc-capture__success { color: var(--accent-hover); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
   .svc-capture__grid[hidden],
-  .svc-capture__submit[hidden] { display: none; }
+  .svc-capture__submit[hidden],
+  .svc-capture__hint[hidden] { display: none; }
 
   /* Stats */
   .svc-stats { display: flex; gap: var(--space-8); margin-top: var(--space-4); }
@@ -324,6 +327,7 @@ const schema = {
       }
       form.querySelector('.svc-capture__grid')?.setAttribute('hidden', '');
       form.querySelector('.svc-capture__submit')?.setAttribute('hidden', '');
+      form.querySelector('.svc-capture__hint')?.setAttribute('hidden', '');
       if (success) success.hidden = false;
     });
   });
