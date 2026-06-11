@@ -54,7 +54,7 @@ const showCV = variant === 'job';
       <p class="field__error" data-error></p>
     </div>
 
-    <div class="field">
+    <div class:list={['field', { 'field--full': !showCompany }]}>
       <label for="cf-phone">Teléfono *</label>
       <input type="tel" id="cf-phone" name="telefono" required autocomplete="tel" inputmode="tel" />
       <p class="field__error" data-error></p>

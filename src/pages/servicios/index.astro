@@ -37,8 +37,27 @@ import { services } from '../../data/site';
 
 <style>
   .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
-  @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .services-grid { grid-template-columns: 1fr; } }
+  /* Si la última tarjeta queda sola en su fila, centrarla en vez de dejarla pegada a la izquierda */
+  .services-grid > :last-child:nth-child(3n+1) {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: calc((100% - 2 * var(--space-7)) / 3);
+    margin-inline: auto;
+  }
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .services-grid > :last-child:nth-child(3n+1) { max-width: none; }
+    .services-grid > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: calc((100% - var(--space-7)) / 2);
+      margin-inline: auto;
+    }
+  }
+  @media (max-width: 620px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .services-grid > :last-child:nth-child(odd) { max-width: none; }
+  }
 
   .services-cta__inner { display: flex; justify-content: space-between; align-items: center; gap: var(--space-8); flex-wrap: wrap; }
   .services-cta__inner h2 { color: #fff; }
