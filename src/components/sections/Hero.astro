@@ -145,14 +145,21 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
 
   .hero__title { color: #fff; margin: 0; text-transform: uppercase; }
   /* Siempre en dos líneas: "Expertos en" arriba y la palabra animada abajo, para que no salte el layout */
-  .hero__rotator { display: flex; align-items: baseline; }
+  .hero__rotator {
+    display: flex;
+    align-items: baseline;
+    font-size: 0.6em;
+    margin-top: -0.2em;
+  }
   .hero__typed {
+    display: inline-block;
+    line-height: var(--lh-tight);
+    min-height: calc(1em * var(--lh-tight));
     background: linear-gradient(120deg, var(--celeste-300), var(--celeste-500));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     white-space: normal;
-    font-size: 0.6em;
   }
   .hero__caret {
     display: inline-block;
@@ -224,7 +231,7 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
   }
   @media (max-width: 480px) {
     /* Reduce solo la palabra animada para que siempre quepa en una línea */
-    .hero__typed { font-size: 0.55em; }
+    .hero__rotator { font-size: 0.55em; }
   }
 
   @media (max-width: 480px) {
