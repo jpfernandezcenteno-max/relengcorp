@@ -144,13 +144,15 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
   .hero .eyebrow { color: var(--celeste-300); }
 
   .hero__title { color: #fff; margin: 0; text-transform: uppercase; }
-  .hero__rotator { display: inline-flex; align-items: baseline; }
+  /* Siempre en dos líneas: "Expertos en" arriba y la palabra animada abajo, para que no salte el layout */
+  .hero__rotator { display: flex; align-items: baseline; }
   .hero__typed {
     background: linear-gradient(120deg, var(--celeste-300), var(--celeste-500));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    white-space: nowrap;
+    white-space: normal;
+    font-size: 0.6em;
   }
   .hero__caret {
     display: inline-block;
@@ -207,19 +209,22 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
   @media (max-width: 980px) {
     .hero__inner { grid-template-columns: 1fr; gap: var(--space-9); }
     .hero__figure { order: -1; max-width: 460px; }
-    .hero__typed { white-space: normal; }
   }
   @media (max-width: 744px) {
     .hero { padding-top: calc(var(--header-h) + var(--space-7)); }
-    .hero__rotator { display: block; }
 
     /* En móvil ocultamos la foto y centramos todo el contenido de texto */
     .hero__figure { display: none; }
     .hero__content { align-items: center; text-align: center; max-width: 100%; }
+    .hero__rotator { justify-content: center; }
     .hero__sub { max-width: 100%; }
     .hero__actions { justify-content: center; }
     .hero__allies { width: 100%; }
     .hero__allies-label { text-align: center; }
+  }
+  @media (max-width: 480px) {
+    /* Reduce solo la palabra animada para que siempre quepa en una línea */
+    .hero__typed { font-size: 0.55em; }
   }
 
   @media (max-width: 480px) {
