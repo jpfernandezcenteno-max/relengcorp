@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import BlogCard from '../../components/BlogCard.astro';
+import ParticlesField from '../../components/ParticlesField.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -16,6 +17,7 @@ const morePosts = rest.slice(2);
 >
   <!-- Encabezado del blog -->
   <header class="blog-hero">
+    <ParticlesField selector=".blog-hero" />
     <div class="container blog-hero__inner">
       <p class="blog-hero__eyebrow" data-reveal>Nuestro Blog</p>
       <h1 class="blog-hero__title h-xl" data-reveal>Noticias y Novedades</h1>
@@ -78,8 +80,16 @@ const morePosts = rest.slice(2);
 
 <style>
   /* ---- Encabezado ---- */
-  .blog-hero { background: var(--bg-base); padding-top: calc(var(--header-h) + 6rem); padding-bottom: 6rem; }
+  .blog-hero {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-base);
+    padding-top: calc(var(--header-h) + 6rem);
+    padding-bottom: 6rem;
+  }
   .blog-hero__inner {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
