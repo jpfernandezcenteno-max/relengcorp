@@ -14,7 +14,7 @@ interface Props {
   /** Opacidad general del canvas (controla qué tan sutil se ve). */
   opacity?: number;
 }
-const { selector, color = '0, 172, 229', count = 36, opacity = 0.4 } = Astro.props;
+const { selector, color = '0, 172, 229', count = 36, opacity = 0.8 } = Astro.props;
 ---
 
 <canvas
@@ -71,8 +71,8 @@ const { selector, color = '0, 172, 229', count = 36, opacity = 0.4 } = Astro.pro
         const p: Particle = {
           x: Math.random() * width,
           y: Math.random() * height,
-          r: Math.random() * 1.6 + 0.5,
-          alpha: Math.random() * 0.5 + 0.2,
+          r: Math.random() * 2 + 0.8,
+          alpha: Math.random() * 0.5 + 0.35,
         };
         particles.push(p);
 
@@ -104,7 +104,7 @@ const { selector, color = '0, 172, 229', count = 36, opacity = 0.4 } = Astro.pro
               ctx.beginPath();
               ctx.moveTo(a.x, a.y);
               ctx.lineTo(b.x, b.y);
-              ctx.strokeStyle = `rgba(${color}, ${(1 - dist / LINK_DIST) * 0.18})`;
+              ctx.strokeStyle = `rgba(${color}, ${(1 - dist / LINK_DIST) * 0.3})`;
               ctx.lineWidth = 1;
               ctx.stroke();
             }
