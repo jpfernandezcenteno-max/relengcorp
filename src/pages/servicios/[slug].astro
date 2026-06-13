@@ -153,12 +153,12 @@ const schema = {
     </div>
   </section>
 
-  <!-- ===== GALERÍA ===== -->
-  <section class="section section--tight svc-gallery">
-    <div class="container">
-      <div class="svc-gallery__grid">
-        {[1, 2, 3].map((n) => (
-          <figure class="zoom-img" data-reveal>
+  <!-- ===== GALERÍA: roll banner de fotografías ===== -->
+  <section class="section section--tight svc-gallery" data-reveal>
+    <div class="container svc-gallery__viewport">
+      <div class="svc-gallery__track">
+        {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((n, i) => (
+          <figure class="svc-gallery__item" aria-hidden={i >= 6 ? 'true' : undefined}>
             <ImagePlaceholder label={`${service.title} — foto ${n}`} ratio="4/3" tone="dark" />
           </figure>
         ))}
@@ -254,9 +254,43 @@ const schema = {
   .svc-features__media { min-height: 440px; box-shadow: var(--shadow-4); }
   .svc-features__media :global(.ph) { height: 100%; }
 
-  /* ===== GALERÍA ===== */
-  .svc-gallery__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); }
-  .svc-gallery__grid .zoom-img { box-shadow: var(--shadow-3); }
+  /* ===== GALERÍA: roll banner ===== */
+  .svc-gallery__viewport {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  }
+  .svc-gallery__track {
+    display: flex;
+    gap: var(--space-6);
+    width: max-content;
+    padding-block: var(--space-6);
+    margin-block: calc(var(--space-6) * -1);
+    animation: svc-gallery-scroll 45s linear infinite;
+  }
+  .svc-gallery__track:hover { animation-play-state: paused; }
+  .svc-gallery__item {
+    flex: 0 0 340px;
+    margin: 0;
+    box-shadow: var(--shadow-3);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+  }
+  .svc-gallery__item:hover {
+    transform: scale(1.06);
+    box-shadow: var(--shadow-5);
+    z-index: 1;
+  }
+  @keyframes svc-gallery-scroll {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-gallery__track { animation: none; }
+  }
+  @media (max-width: 620px) {
+    .svc-gallery__item { flex: 0 0 260px; }
+  }
 
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
