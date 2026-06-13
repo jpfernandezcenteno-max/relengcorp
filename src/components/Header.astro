@@ -161,6 +161,7 @@ const isHome = path === '/';
   .site-nav__item { position: relative; }
 
   .site-nav__link {
+    position: relative;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -172,9 +173,24 @@ const isHome = path === '/';
     white-space: nowrap;
     transition: color var(--dur-fast) var(--ease-out), background-color var(--dur-fast) var(--ease-out);
   }
+  .site-nav__link::after {
+    content: '';
+    position: absolute;
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: 6px;
+    height: 2px;
+    border-radius: var(--radius-pill);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
   .site-nav__link:hover,
   .site-nav__link.is-active { color: #fff; }
   .site-nav__link.is-active { background: rgba(255, 255, 255, 0.08); }
+  .site-nav__link:hover::after,
+  .site-nav__link.is-active::after { transform: scaleX(1); }
   .site-nav__toggle .chev { transition: transform var(--dur-fast) var(--ease-out); }
 
   /* Dropdown */
