@@ -3,6 +3,7 @@
    FOOTER — fondo oscuro con datos de contacto, oficinas y navegación.
    ============================================================ */
 import { site, offices, services, certifications } from '../data/site';
+import logoSvg from '../../public/logo.svg?raw';
 const year = new Date().getFullYear();
 ---
 
@@ -11,7 +12,7 @@ const year = new Date().getFullYear();
     <!-- Marca -->
     <div class="site-footer__brand">
       <a href="/" class="site-footer__logo" aria-label={`${site.name} — inicio`}>
-        <img src="/logo.svg" alt={site.name} width="180" height="42" />
+        <Fragment set:html={logoSvg} />
       </a>
       <p class="site-footer__desc">
         Soluciones integrales de confiabilidad, mantenimiento predictivo y transformación
@@ -23,18 +24,18 @@ const year = new Date().getFullYear();
     </div>
 
     <!-- Servicios -->
-    <nav class="site-footer__col" aria-label="Servicios">
-      <h3 class="site-footer__title">Servicios</h3>
+    <details class="site-footer__col footer-accordion">
+      <summary class="site-footer__title">Servicios</summary>
       <ul>
         {services.map((s) => (
           <li><a href={`/servicios/${s.slug}`}>{s.title}</a></li>
         ))}
       </ul>
-    </nav>
+    </details>
 
     <!-- Empresa -->
-    <nav class="site-footer__col" aria-label="Empresa">
-      <h3 class="site-footer__title">Empresa</h3>
+    <details class="site-footer__col footer-accordion">
+      <summary class="site-footer__title">Empresa</summary>
       <ul>
         <li><a href="/nosotros">Nosotros</a></li>
         <li><a href="/portafolio">Portafolio</a></li>
@@ -43,11 +44,11 @@ const year = new Date().getFullYear();
         <li><a href="/trabaja-con-nosotros">Trabaja con nosotros</a></li>
         <li><a href="/contacto">Contáctanos</a></li>
       </ul>
-    </nav>
+    </details>
 
     <!-- Contacto -->
-    <div class="site-footer__col site-footer__contact">
-      <h3 class="site-footer__title">Contacto</h3>
+    <details class="site-footer__col site-footer__contact footer-accordion">
+      <summary class="site-footer__title">Contacto</summary>
       <ul>
         <li>
           <a href={`mailto:${site.email}`}>{site.email}</a>
@@ -64,7 +65,7 @@ const year = new Date().getFullYear();
           </li>
         ))}
       </ul>
-    </div>
+    </details>
   </div>
 
   <div class="container site-footer__bottom">
@@ -75,7 +76,7 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    background: var(--neutro-800);
+    background: var(--morado-900);
     color: var(--azul-100);
     padding-top: var(--space-14);
     font-size: var(--fs-text-s);
@@ -87,7 +88,7 @@ const year = new Date().getFullYear();
     padding-bottom: var(--space-10);
   }
   .site-footer__logo { color: #fff; display: inline-flex; margin-bottom: var(--space-5); }
-  .site-footer__logo img { height: 40px; width: auto; }
+  .site-footer__logo :global(svg) { display: block; height: 40px; width: auto; }
   .site-footer__desc { max-width: 36ch; line-height: var(--lh-body); }
   .site-footer__certs {
     display: flex;
@@ -106,11 +107,29 @@ const year = new Date().getFullYear();
   }
 
   .site-footer__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
     color: #fff;
     font-size: var(--fs-text-r);
     font-weight: var(--fw-bold);
     margin-bottom: var(--space-5);
+    list-style: none;
   }
+  .site-footer__title::-webkit-details-marker { display: none; }
+  .site-footer__title::after {
+    content: '';
+    display: none;
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .footer-accordion[open] > .site-footer__title::after { transform: rotate(-135deg); }
   .site-footer__col ul { display: flex; flex-direction: column; gap: var(--space-4); }
   .site-footer__col a,
   .site-footer__contact a {
@@ -142,8 +161,25 @@ const year = new Date().getFullYear();
     .site-footer__grid { grid-template-columns: 1fr 1fr; }
     .site-footer__brand { grid-column: 1 / -1; }
   }
-  @media (max-width: 560px) {
-    .site-footer__grid { grid-template-columns: 1fr; }
+  @media (max-width: 760px) {
+    .site-footer__grid { grid-template-columns: 1fr; gap: 0; padding-bottom: var(--space-6); }
+    .site-footer__brand { padding-bottom: var(--space-8); }
     .site-footer__bottom { justify-content: center; text-align: center; }
+
+    /* Servicios, Empresa y Contacto se vuelven acordeones para ocupar menos espacio */
+    .footer-accordion {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-block: var(--space-5);
+    }
+    .footer-accordion .site-footer__title {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+    .footer-accordion .site-footer__title::after { display: block; }
+    .footer-accordion[open] .site-footer__title { margin-bottom: var(--space-5); }
+    .footer-accordion:not([open]) > ul,
+    .footer-accordion:not([open]) > .site-footer__offices {
+      display: none;
+    }
   }
 </style>
