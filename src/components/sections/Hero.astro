@@ -6,7 +6,9 @@
    - Marquee de aliados estratégicos (carrusel de logos).
    Fiel al Figma: texto a la izquierda, imagen a la derecha.
    ============================================================ */
+import { Image } from 'astro:assets';
 import ImagePlaceholder from '../ImagePlaceholder.astro';
+import heroImage from '../../assets/images/hero-mineria.jpg';
 
 // Palabras que rotan en el typewriter (servicios clave de Relengcorp)
 const typewriterWords = [
@@ -24,7 +26,16 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
 <section class="hero" aria-label="Presentación de Relengcorp">
   <!-- Fondo -->
   <div class="hero__bg" aria-hidden="true">
-    <img src="/images/hero-mineria.jpg" alt="" class="hero__bg-img" />
+    <Image
+      src={heroImage}
+      alt=""
+      class="hero__bg-img"
+      widths={[640, 960, 1280, 1920]}
+      sizes="100vw"
+      quality={40}
+      loading="eager"
+      fetchpriority="high"
+    />
     <div class="hero__overlay"></div>
     <div class="hero__glow"></div>
   </div>
