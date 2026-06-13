@@ -24,7 +24,7 @@ const year = new Date().getFullYear();
     </div>
 
     <!-- Servicios -->
-    <details class="site-footer__col footer-accordion">
+    <details class="site-footer__col footer-accordion" open>
       <summary class="site-footer__title">Servicios</summary>
       <ul>
         {services.map((s) => (
@@ -34,7 +34,7 @@ const year = new Date().getFullYear();
     </details>
 
     <!-- Empresa -->
-    <details class="site-footer__col footer-accordion">
+    <details class="site-footer__col footer-accordion" open>
       <summary class="site-footer__title">Empresa</summary>
       <ul>
         <li><a href="/nosotros">Nosotros</a></li>
@@ -47,7 +47,7 @@ const year = new Date().getFullYear();
     </details>
 
     <!-- Contacto -->
-    <details class="site-footer__col site-footer__contact footer-accordion">
+    <details class="site-footer__col site-footer__contact footer-accordion" open>
       <summary class="site-footer__title">Contacto</summary>
       <ul>
         <li>
@@ -76,7 +76,7 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    background: var(--morado-900);
+    background: #1d142f;
     color: var(--azul-100);
     padding-top: var(--space-14);
     font-size: var(--fs-text-s);
@@ -177,9 +177,19 @@ const year = new Date().getFullYear();
     }
     .footer-accordion .site-footer__title::after { display: block; }
     .footer-accordion[open] .site-footer__title { margin-bottom: var(--space-5); }
-    .footer-accordion:not([open]) > ul,
-    .footer-accordion:not([open]) > .site-footer__offices {
-      display: none;
-    }
   }
 </style>
+
+<script>
+  // En responsive, Servicios/Empresa/Contacto inician colapsados (dropdown);
+  // en escritorio siempre permanecen expandidos.
+  const accordions = document.querySelectorAll<HTMLDetailsElement>('.footer-accordion');
+  const mq = window.matchMedia('(max-width: 760px)');
+  const syncAccordions = () => {
+    accordions.forEach((details) => {
+      details.open = !mq.matches;
+    });
+  };
+  syncAccordions();
+  mq.addEventListener('change', syncAccordions);
+</script>
