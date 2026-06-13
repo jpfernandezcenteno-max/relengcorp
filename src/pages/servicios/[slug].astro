@@ -272,10 +272,15 @@ const schema = {
     margin: 0;
   }
   .svc-gallery__item :global(.ph) {
+    position: relative;
     box-shadow: var(--shadow-3);
     transition: box-shadow var(--dur-base) var(--ease-out);
   }
-  .svc-gallery__item :global(.ph) > * {
+  .svc-gallery__item :global(.ph)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: inherit;
     transition: transform var(--dur-base) var(--ease-out);
   }
   .svc-gallery__item:hover {
@@ -284,8 +289,8 @@ const schema = {
   .svc-gallery__item:hover :global(.ph) {
     box-shadow: var(--shadow-5);
   }
-  .svc-gallery__item:hover :global(.ph) > * {
-    transform: scale(1.06);
+  .svc-gallery__item:hover :global(.ph)::before {
+    transform: scale(1.1);
   }
   @keyframes svc-gallery-scroll {
     to { transform: translateX(-50%); }
