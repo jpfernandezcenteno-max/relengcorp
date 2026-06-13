@@ -55,10 +55,11 @@ const { id, label, controls = 'sides' } = Astro.props;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     scrollbar-width: none;
-    padding-block: var(--space-2);
     /* permite que las sombras de las tarjetas no se corten */
     margin-inline: calc(var(--space-2) * -1);
     padding-inline: var(--space-2);
+    padding-block: var(--space-12);
+    margin-block: calc(var(--space-12) * -1);
   }
   .carousel__viewport::-webkit-scrollbar { display: none; }
   .carousel__viewport > :global(.carousel-item) {
