@@ -257,8 +257,6 @@ const schema = {
   /* ===== GALERÍA: roll banner ===== */
   .svc-gallery__viewport {
     overflow: hidden;
-    padding-inline: var(--space-3);
-    margin-inline: calc(var(--space-3) * -1);
   }
   .svc-gallery__track {
     display: flex;
@@ -275,14 +273,19 @@ const schema = {
   }
   .svc-gallery__item :global(.ph) {
     box-shadow: var(--shadow-3);
-    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+  .svc-gallery__item :global(.ph) > * {
+    transition: transform var(--dur-base) var(--ease-out);
   }
   .svc-gallery__item:hover {
     z-index: 1;
   }
   .svc-gallery__item:hover :global(.ph) {
-    transform: scale(1.06);
     box-shadow: var(--shadow-5);
+  }
+  .svc-gallery__item:hover :global(.ph) > * {
+    transform: scale(1.06);
   }
   @keyframes svc-gallery-scroll {
     to { transform: translateX(-50%); }
