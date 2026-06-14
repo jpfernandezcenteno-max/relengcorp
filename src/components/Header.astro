@@ -254,10 +254,23 @@ const isHome = path === '/';
     width: 24px; height: 2px;
     background: #fff;
     border-radius: 2px;
-    transition: transform var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
+    transform-origin: center;
+    transition: transform var(--dur-base) var(--ease-in-out);
+  }
+  /* La barra central se contrae primero al abrir y reaparece al final al cerrar */
+  .site-header__burger span:nth-child(2) {
+    transition: transform var(--dur-fast) var(--ease-in-out), opacity var(--dur-fast) var(--ease-in-out);
+  }
+  .site-header:not(.menu-open) .site-header__burger span:nth-child(2) {
+    transition-delay: 120ms;
+  }
+  /* Las barras externas rotan con un pequeño retraso al abrir, para que el morph se vea encadenado */
+  .site-header.menu-open .site-header__burger span:nth-child(1),
+  .site-header.menu-open .site-header__burger span:nth-child(3) {
+    transition-delay: 80ms;
   }
   .site-header.menu-open .site-header__burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-  .site-header.menu-open .site-header__burger span:nth-child(2) { opacity: 0; }
+  .site-header.menu-open .site-header__burger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
   .site-header.menu-open .site-header__burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
   /* Menú móvil */
