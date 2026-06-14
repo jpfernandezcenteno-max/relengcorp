@@ -93,7 +93,6 @@ const isHome = path === '/';
                   </svg>
                 </button>
                 <ul class="mobile-menu__sub">
-                  <li><a href={item.href}>Ver todos</a></li>
                   {item.children.map((c) => (
                     <li><a href={c.href}>{c.label}</a></li>
                   ))}
@@ -296,8 +295,8 @@ const isHome = path === '/';
     align-items: center;
     width: 100%;
     padding: var(--space-5) 0;
-    font-size: var(--fs-h-xs);
-    font-weight: var(--fw-semibold);
+    font-size: var(--fs-text-l);
+    font-weight: var(--fw-normal);
     border-bottom: 1px solid var(--border-dark);
   }
   .mobile-menu__sub {
