@@ -118,21 +118,12 @@ p {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3);
   font-size: var(--fs-text-s);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
   color: var(--accent);
 }
-.eyebrow::before {
-  content: '';
-  width: 28px;
-  height: 2px;
-  background: var(--accent);
-  display: inline-block;
-}
-.eyebrow--center::before { display: none; }
 
 /* ---------- LAYOUT ---------- */
 .container {
