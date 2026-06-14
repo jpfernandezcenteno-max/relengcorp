@@ -38,9 +38,6 @@ const isHome = path === '/';
                   </svg>
                 </button>
                 <div class="dropdown" role="menu">
-                  <a href={item.href} class="dropdown__all" role="menuitem">
-                    Ver todos los servicios
-                  </a>
                   <ul>
                     {item.children.map((c) => (
                       <li>
@@ -231,15 +228,6 @@ const isHome = path === '/';
   .has-dropdown:hover .chev,
   .has-dropdown:focus-within .chev { transform: rotate(180deg); }
 
-  .dropdown__all {
-    display: block;
-    padding: var(--space-3) var(--space-4);
-    font-size: var(--fs-text-s);
-    font-weight: var(--fw-bold);
-    color: var(--accent);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: var(--space-2);
-  }
   .dropdown__link {
     display: block;
     padding: var(--space-3) var(--space-4);
