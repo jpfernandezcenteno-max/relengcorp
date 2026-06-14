@@ -130,6 +130,12 @@ const isHome = path === '/';
     backdrop-filter: blur(12px);
     box-shadow: var(--shadow-3);
   }
+  /* Con el menú móvil abierto, quitamos el backdrop-filter: en Chromium crea un
+     containing block para los descendientes "fixed" (.mobile-menu), lo que
+     rompe su `inset` y le impide ocupar todo el viewport. */
+  .site-header.menu-open.is-scrolled {
+    backdrop-filter: none;
+  }
 
   .site-header__inner {
     display: flex;
