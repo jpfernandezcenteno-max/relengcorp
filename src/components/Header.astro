@@ -330,10 +330,16 @@ const isHome = path === '/';
     const burger = header.querySelector<HTMLButtonElement>('[data-burger]');
     const menu = header.querySelector<HTMLElement>('[data-mobile-menu]');
     burger?.addEventListener('click', () => {
+      if (menu?.hidden) {
+        // primera apertura: quitamos "hidden" y forzamos reflow antes de
+        // animar, para que el navegador registre el estado de partida
+        // (translateX(100%)) y la transición se reproduzca correctamente
+        menu.hidden = false;
+        menu.getBoundingClientRect();
+      }
       const open = header.classList.toggle('menu-open');
       burger.setAttribute('aria-expanded', String(open));
       burger.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
-      if (menu) menu.hidden = false; // siempre presente para animar
       document.body.style.overflow = open ? 'hidden' : '';
     });
 
