@@ -61,23 +61,25 @@ const projects = [
       <div class="portfolio-grid">
         {projects.map((p, i) => (
           <button type="button" class="project-card" data-reveal data-project-trigger={i} data-title={p.title} aria-haspopup="dialog">
-            <div class="project-card__media">
-              <ImagePlaceholder label={`${p.title} — foto del proyecto`} ratio="4/3" tone="dark" />
-              <span class="project-card__tag">{p.service}</span>
-              <span class="project-card__count">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                {p.photos.length}
-              </span>
-              <div class="project-card__overlay">
-                <span class="project-card__overlay-text">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  Ver galería
+            <div class="project-card__inner">
+              <div class="project-card__media">
+                <ImagePlaceholder label={`${p.title} — foto del proyecto`} ratio="4/3" tone="dark" />
+                <span class="project-card__tag">{p.service}</span>
+                <span class="project-card__count">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" aria-hidden="true"><path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {p.photos.length}
                 </span>
+                <div class="project-card__overlay">
+                  <span class="project-card__overlay-text">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Ver galería
+                  </span>
+                </div>
               </div>
-            </div>
-            <div class="project-card__body">
-              <h3 class="h-xs">{p.title}</h3>
-              <p class="text-s project-card__sector">{p.sector}</p>
+              <div class="project-card__body">
+                <h3 class="h-xs">{p.title}</h3>
+                <p class="text-s project-card__sector">{p.sector}</p>
+              </div>
             </div>
           </button>
         ))}
@@ -144,12 +146,18 @@ const projects = [
   .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
   .project-card {
     display: block; width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
-    transition: transform var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    background: none; border: none; padding: 0;
+    transition: transform var(--dur-base) var(--ease-out);
   }
   .project-card:hover,
-  .project-card:focus-visible { transform: translateY(-6px); box-shadow: var(--shadow-5); }
+  .project-card:focus-visible { transform: translateY(-6px); }
   .project-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .project-card__inner {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden;
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+  .project-card:hover .project-card__inner,
+  .project-card:focus-visible .project-card__inner { box-shadow: var(--shadow-5); }
   .project-card__media { position: relative; }
   .project-card__tag { position: absolute; top: var(--space-4); left: var(--space-4); background: var(--accent); color: #fff; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); padding: 4px 12px; border-radius: var(--radius-pill); }
   .project-card__count {
