@@ -18,6 +18,13 @@ export const site = {
   whatsapp: '51947541183',
 } as const;
 
+// TODO: reemplazar '#' por las URLs reales de las redes sociales.
+export const social = {
+  facebook: '#',
+  instagram: '#',
+  linkedin: '#',
+} as const;
+
 export const offices = [
   {
     city: 'Arequipa',
