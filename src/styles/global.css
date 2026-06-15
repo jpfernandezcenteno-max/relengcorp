@@ -265,6 +265,65 @@ p {
 }
 .skip-link:focus { top: var(--space-5); }
 
+/* ---------- LOADER de página ---------- */
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  background: var(--bg-dark);
+  opacity: 1;
+  transition: opacity var(--dur-slow) var(--ease-out);
+}
+.page-loader--hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.page-loader__logo {
+  display: block;
+  color: #fff;
+  animation: page-loader-pulse 1.6s ease-in-out infinite;
+}
+.page-loader__logo svg {
+  display: block;
+  width: 160px;
+  height: auto;
+  aspect-ratio: 1322.44 / 305.4;
+}
+.page-loader__bar {
+  width: 120px;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+.page-loader__bar-fill {
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  animation: page-loader-bar 1.2s ease-in-out infinite;
+}
+@keyframes page-loader-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+@keyframes page-loader-bar {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(250%); }
+}
+/* Sin JS, no podemos saber cuándo ocultarlo: mejor no bloquear la página */
+.no-js .page-loader { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .page-loader__logo, .page-loader__bar-fill { animation: none; }
+}
+
 /* ---------- UTILIDAD: zoom de imagen al hover ---------- */
 .zoom-img { overflow: hidden; border-radius: var(--radius-lg); margin: 0; }
 .zoom-img > * { transition: transform var(--dur-slow) var(--ease-out); }
