@@ -197,7 +197,7 @@ p {
   pointer-events: none;
 }
 .btn > * { position: relative; z-index: 1; }
-.btn:hover { background: var(--accent-hover); box-shadow: var(--shadow-accent); }
+.btn:hover { background: var(--accent-hover); color: #fff; box-shadow: var(--shadow-accent); }
 .btn:hover::before { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -213,14 +213,14 @@ p {
   --btn-fg: var(--text-strong);
   border: 1.5px solid var(--border);
 }
-.btn--ghost:hover { --btn-bg: var(--neutro-100); box-shadow: none; }
+.btn--ghost:hover { background: var(--neutro-100); color: var(--text-strong); box-shadow: none; }
 
 .btn--outline-light {
   --btn-bg: transparent;
   --btn-fg: var(--neutro-0);
   border: 1.5px solid rgba(255, 255, 255, 0.35);
 }
-.btn--outline-light:hover { --btn-bg: rgba(255, 255, 255, 0.08); box-shadow: none; }
+.btn--outline-light:hover { background: rgba(255, 255, 255, 0.08); color: #fff; box-shadow: none; }
 
 .btn--whatsapp { --btn-bg: var(--whatsapp); }
 .btn--whatsapp:hover { background: var(--whatsapp-hover); box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35); }
