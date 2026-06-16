@@ -213,7 +213,7 @@ p {
   --btn-fg: var(--text-strong);
   border: 1.5px solid var(--border);
 }
-.btn--ghost:hover { background: var(--neutro-100); color: var(--text-strong); box-shadow: none; }
+.btn--ghost:hover { box-shadow: none; }
 
 .btn--outline-light {
   --btn-bg: transparent;
