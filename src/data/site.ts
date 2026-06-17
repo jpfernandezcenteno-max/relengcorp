@@ -18,11 +18,11 @@ export const site = {
   whatsapp: '51947541183',
 } as const;
 
-// TODO: reemplazar '#' por las URLs reales de las redes sociales.
 export const social = {
-  facebook: '#',
-  instagram: '#',
-  linkedin: '#',
+  facebook: 'https://www.facebook.com/relengcorp',
+  instagram: 'https://www.instagram.com/relengcorp/',
+  linkedin: 'https://www.linkedin.com/company/relengcorp/',
+  youtube: 'https://www.youtube.com/channel/UCtHcOWlia13_UugiOn88iZQ',
 } as const;
 
 export const offices = [
