@@ -34,6 +34,7 @@ const brochureUrl = '/brochures/relengcorp-brochure.pdf';
 <style>
   .socios { background: var(--bg-base); }
   .socios__card {
+    position: relative;
     display: grid;
     grid-template-columns: 0.9fr 1.1fr;
     gap: var(--space-9);
@@ -45,8 +46,22 @@ const brochureUrl = '/brochures/relengcorp-brochure.pdf';
     box-shadow: var(--shadow-5);
     overflow: hidden;
   }
-  .socios__media { box-shadow: var(--shadow-4); }
-  .socios__content { display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
+  /* Grilla de cuadros decorativa que se desvanece hacia la izquierda */
+  .socios__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 65% 110% at 92% 50%, black 5%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 110% at 92% 50%, black 5%, transparent 72%);
+  }
+  .socios__media { position: relative; z-index: 1; box-shadow: var(--shadow-4); }
+  .socios__content { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
   .socios__title { color: #fff; }
   .socios__desc { color: var(--azul-100); }
   .socios__actions { display: flex; flex-wrap: wrap; gap: var(--space-4); }
