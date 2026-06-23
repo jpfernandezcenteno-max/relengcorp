@@ -320,7 +320,7 @@
     "client": "Las Bambas – MMG",
     "period": "Abril 2022 (6 meses)",
     "description": "Elaboración de Work Instruction (WI), PETs (PET) y Cartillas Check List (CL) para un total de 1,000 tareas (actividades) de equipos planta. Tareas de mantenimiento Mecánico, Eléctrico e Instrumentación.",
-    "result": "Entrega completa de los 1,000 instructivos (WIs, PETs y cartillas) para los equipos de la planta.",
+    "result": "",
     "images": [
       "/images/portafolio/022/00.webp",
       "/images/portafolio/022/01.webp",
@@ -725,23 +725,6 @@
       "/images/portafolio/049/00.webp",
       "/images/portafolio/049/01.webp",
       "/images/portafolio/049/02.webp"
-    ]
-  },
-  {
-    "id": "050",
-    "category": "Paradas de Planta",
-    "slug": "servicio-medicion-de-elongacion-de-pernos-inteligentes-en-molino-sag-y-ultrasonido-convencional-en-molino-de-bolasplanta-concentradora-minera-las-bambas",
-    "title": "Servicio Medición de Elongación y Ultrasonido Convencional en Molino de Bolas",
-    "client": "Sub-contrato FLSmidth – Las Bambas (MMG)",
-    "period": "2022",
-    "description": "Medición de elongación de pernos inteligentes en el Molino SAG y ultrasonido convencional en el Molino de Bolas de la Planta Concentradora de Minera Las Bambas.",
-    "result": "Ejecución del servicio con los más altos niveles de seguridad y cero incidentes.",
-    "images": [
-      "/images/portafolio/050/00.webp",
-      "/images/portafolio/050/01.webp",
-      "/images/portafolio/050/02.webp",
-      "/images/portafolio/050/03.webp",
-      "/images/portafolio/050/04.webp"
     ]
   }
 ]

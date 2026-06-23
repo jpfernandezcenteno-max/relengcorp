@@ -60,7 +60,7 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
 
       <div class="portfolio-grid" data-grid>
         {projects.map((p, i) => (
-          <button type="button" class="project-card" data-reveal data-project-trigger={i} data-category={p.category} aria-haspopup="dialog">
+          <button type="button" class="project-card" data-project-trigger={i} data-category={p.category} aria-haspopup="dialog">
             <div class="project-card__inner">
               <div class="project-card__media">
                 <img src={p.images[0]} alt={p.title} class="project-card__img" loading="lazy" decoding="async" />
