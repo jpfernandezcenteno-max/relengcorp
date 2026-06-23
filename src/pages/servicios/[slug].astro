@@ -1,9 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
-import ServiceIcon from '../../components/ServiceIcon.astro';
 import UiIcon from '../../components/UiIcon.astro';
-import ContactCTASection from '../../components/sections/ContactCTASection.astro';
+import ContactForm from '../../components/ContactForm.astro';
 import CertificacionesSection from '../../components/sections/CertificacionesSection.astro';
 import { services, site } from '../../data/site';
 
@@ -15,7 +14,6 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
-const brochureUrl = '/brochures/relengcorp-brochure.pdf';
 
 // Stats del hero. PLACEHOLDER: confirmar cifras reales por servicio con el cliente.
 const stats = [
@@ -30,9 +28,6 @@ const benefits = [
   { title: 'Inteligencia aplicada', text: 'Convertimos datos de condición en decisiones accionables.' },
   { title: 'Especialistas en faena', text: 'Acompañamiento experto con experiencia comprobada en terreno.' },
 ];
-
-// Características técnicas: aplanamos los items de los grupos del servicio.
-const features = service.groups.flatMap((g) => g.items).slice(0, 6);
 
 // PLACEHOLDER: logos reales de clientes.
 const clients = Array.from({ length: 6 }, (_, i) => `Cliente ${i + 1}`);
@@ -55,32 +50,7 @@ const schema = {
     <div class="container svc-hero__grid">
       <div class="svc-hero__content">
         <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="eyebrow" data-reveal>Déjanos tus datos y nos comunicaremos contigo</p>
-
-        <form class="svc-capture" data-capture data-brochure={brochureUrl} novalidate data-reveal>
-          <div class="svc-capture__grid">
-            <div class="svc-capture__field svc-capture__field--full">
-              <label for="svc-name" class="sr-only">Nombre completo</label>
-              <input type="text" id="svc-name" name="nombre" placeholder="Nombre completo" required autocomplete="name" />
-            </div>
-            <div class="svc-capture__field">
-              <label for="svc-company" class="sr-only">Empresa</label>
-              <input type="text" id="svc-company" name="empresa" placeholder="Empresa" autocomplete="organization" />
-            </div>
-            <div class="svc-capture__field">
-              <label for="svc-phone" class="sr-only">Teléfono</label>
-              <input type="tel" id="svc-phone" name="telefono" placeholder="Teléfono" required autocomplete="tel" inputmode="tel" />
-            </div>
-            <div class="svc-capture__field svc-capture__field--full">
-              <label for="svc-email" class="sr-only">Correo electrónico</label>
-              <input type="email" id="svc-email" name="email" placeholder="Correo electrónico" required autocomplete="email" />
-            </div>
-          </div>
-          <button type="submit" class="btn svc-capture__submit">Enviar datos</button>
-          <p class="svc-capture__hint">Al enviar tus datos, descargarás automáticamente nuestro brochure.</p>
-          <p class="svc-capture__error" data-error></p>
-          <p class="svc-capture__success" data-success hidden>✓ ¡Gracias! Tu brochure se está descargando y un especialista te contactará.</p>
-        </form>
+        <p class="eyebrow" data-reveal>{service.short}</p>
 
         <p class="svc-hero__intro text-m" data-reveal>{service.intro}</p>
 
@@ -134,18 +104,17 @@ const schema = {
     </div>
   </section>
 
-  <!-- ===== CARACTERÍSTICAS TÉCNICAS ===== -->
-  <section class="section svc-features">
+  <!-- ===== FORMULARIO DE SERVICIO + IMAGEN ===== -->
+  <section class="section svc-features" id="cotiza">
     <div class="container svc-features__grid">
-      <div class="svc-features__text" data-reveal>
-        <h2 class="h-l">Características técnicas</h2>
-        <p class="text-m">{service.intro}</p>
-        <ul class="svc-features__list">
-          {features.map((f) => (
-            <li><UiIcon name="check" size={18} /><span>{f}</span></li>
-          ))}
-        </ul>
-        <a href="/contacto" class="btn btn--lg">Conversemos sobre tu operación</a>
+      <div class="svc-features__form" data-reveal>
+        <ContactForm
+          variant="service"
+          serviceName={service.title}
+          title="Solicita más información"
+          description="Déjanos tus datos y un especialista te contactará. Recibirás también nuestro brochure."
+          submitLabel="Enviar solicitud"
+        />
       </div>
       <figure class="svc-features__media zoom-img" data-reveal>
         <ImagePlaceholder label={`${service.title} — detalle técnico`} ratio="4/5" tone="dark" />
@@ -166,8 +135,7 @@ const schema = {
     </div>
   </section>
 
-  <!-- ===== FORMULARIO + CERTIFICACIONES (reutilizados del Home) ===== -->
-  <ContactCTASection />
+  <!-- ===== CERTIFICACIONES (reutilizada del Home) ===== -->
   <CertificacionesSection />
 </BaseLayout>
 
@@ -189,25 +157,6 @@ const schema = {
   .svc-hero__content h1 { color: var(--text-strong); }
   .svc-hero .eyebrow { color: var(--accent); margin-top: calc(var(--space-2) * -1); }
   .svc-hero__intro { color: var(--text-body); }
-
-  /* Captura de datos */
-  .svc-capture { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); max-width: 460px; }
-  .svc-capture__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); width: 100%; }
-  .svc-capture__field--full { grid-column: 1 / -1; }
-  .svc-capture__field input {
-    width: 100%; border: 1px solid var(--border); background: #fff;
-    padding: 0.6rem 1rem; border-radius: var(--radius-md); color: var(--text-strong);
-    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
-  }
-  .svc-capture__field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
-  .svc-capture__field input[aria-invalid='true'] { border-color: #e5484d; }
-  .svc-capture__submit { width: 100%; text-align: center; }
-  .svc-capture__hint { color: var(--text-muted); font-size: var(--fs-text-xs); }
-  .svc-capture__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
-  .svc-capture__success { color: var(--accent-hover); font-weight: var(--fw-semibold); font-size: var(--fs-text-s); }
-  .svc-capture__grid[hidden],
-  .svc-capture__submit[hidden],
-  .svc-capture__hint[hidden] { display: none; }
 
   /* Stats */
   .svc-stats { display: flex; gap: var(--space-8); margin-top: var(--space-4); }
@@ -314,66 +263,4 @@ const schema = {
     .svc-gallery__grid { grid-template-columns: 1fr; }
     .svc-stats { gap: var(--space-6); }
   }
-  @media (max-width: 480px) {
-    .svc-capture__grid { grid-template-columns: 1fr; }
-    .svc-capture__submit { width: 100%; }
-  }
 </style>
-
-<script>
-  // Captura de email del hero -> valida, descarga brochure, confirma.
-  // TODO(backend): enviar lead a comercial@relengcorp.com al definir hosting.
-  document.querySelectorAll<HTMLFormElement>('[data-capture]').forEach((form) => {
-    const fields = form.querySelectorAll<HTMLInputElement>('.svc-capture__field input');
-    const error = form.querySelector<HTMLElement>('[data-error]');
-    const success = form.querySelector<HTMLElement>('[data-success]');
-    const brochure = form.dataset.brochure;
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let valid = true;
-      let firstInvalid: HTMLInputElement | null = null;
-      let message = '';
-
-      fields.forEach((f) => {
-        f.removeAttribute('aria-invalid');
-        const value = f.value.trim();
-        if (f.hasAttribute('required') && !value) {
-          f.setAttribute('aria-invalid', 'true');
-          valid = false;
-          firstInvalid = firstInvalid || f;
-          message = message || 'Completa los campos obligatorios.';
-        } else if (f.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-          f.setAttribute('aria-invalid', 'true');
-          valid = false;
-          firstInvalid = firstInvalid || f;
-          message = message || 'Ingresa un correo electrónico válido.';
-        } else if (f.type === 'tel' && value && value.replace(/\D/g, '').length < 7) {
-          f.setAttribute('aria-invalid', 'true');
-          valid = false;
-          firstInvalid = firstInvalid || f;
-          message = message || 'Ingresa un teléfono válido.';
-        }
-      });
-
-      if (!valid) {
-        if (error) error.textContent = message;
-        firstInvalid?.focus();
-        return;
-      }
-      if (error) error.textContent = '';
-      if (brochure) {
-        const a = document.createElement('a');
-        a.href = brochure;
-        a.download = '';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-      }
-      form.querySelector('.svc-capture__grid')?.setAttribute('hidden', '');
-      form.querySelector('.svc-capture__submit')?.setAttribute('hidden', '');
-      form.querySelector('.svc-capture__hint')?.setAttribute('hidden', '');
-      if (success) success.hidden = false;
-    });
-  });
-</script>

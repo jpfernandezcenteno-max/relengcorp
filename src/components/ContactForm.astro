@@ -85,10 +85,17 @@ const showCV = variant === 'job';
     )}
   </div>
 
-  <label class="cform__consent">
-    <input type="checkbox" id="cf-consent" name="acepta_correos" />
-    <span>Acepto recibir comunicaciones y novedades de Relengcorp por correo electrónico.</span>
-  </label>
+  <div class="cform__consent-wrap">
+    <label class="cform__consent">
+      <input type="checkbox" id="cf-consent" name="acepta_politica" required data-consent />
+      <span>
+        Acepto la
+        <a href="/politica-de-privacidad" target="_blank" rel="noopener" class="cform__policy-link">Política de Protección de Datos Personales</a>
+        y autorizo a RELENG SOLUTION SAC al tratamiento de mis datos para recibir información sobre sus servicios.
+      </span>
+    </label>
+    <p class="field__error" data-consent-error></p>
+  </div>
 
   <div class="cform__actions">
     <button type="submit" class="btn btn--lg">{submitLabel}</button>
@@ -153,6 +160,9 @@ const showCV = variant === 'job';
     cursor: pointer;
   }
   .cform__consent input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+  .cform__policy-link { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; font-weight: var(--fw-medium); }
+  .cform__policy-link:hover { color: var(--accent-hover); }
+  .cform__consent input[aria-invalid='true'] { outline: 2px solid #e5484d; outline-offset: 2px; }
 
   .cform__actions { display: flex; flex-direction: column; gap: var(--space-3); align-items: flex-start; }
   .cform__note { color: var(--text-muted); }
@@ -163,7 +173,7 @@ const showCV = variant === 'job';
   }
 
   .cform__grid[hidden],
-  .cform__consent[hidden],
+  .cform__consent-wrap[hidden],
   .cform__actions[hidden] { display: none; }
 
   @media (max-width: 560px) {
@@ -213,6 +223,19 @@ const showCV = variant === 'job';
         }
       });
 
+      // Validar el consentimiento de la política (obligatorio)
+      const consent = form.querySelector<HTMLInputElement>('[data-consent]');
+      const consentError = form.querySelector<HTMLElement>('[data-consent-error]');
+      if (consent && !consent.checked) {
+        consent.setAttribute('aria-invalid', 'true');
+        if (consentError) consentError.textContent = 'Debes aceptar la Política de Protección de Datos Personales.';
+        valid = false;
+        firstInvalid ||= consent;
+      } else if (consent) {
+        consent.removeAttribute('aria-invalid');
+        if (consentError) consentError.textContent = '';
+      }
+
       if (!valid) { firstInvalid?.focus(); return; }
 
       // TODO(backend): enviar datos a comercial@relengcorp.com cuando se defina hosting.
@@ -234,7 +257,7 @@ const showCV = variant === 'job';
             ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
             : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
 
-      form.querySelectorAll('.cform__grid, .cform__consent, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
+      form.querySelectorAll('.cform__grid, .cform__consent-wrap, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
       if (successBox) {
         successBox.textContent = msg;
         successBox.hidden = false;
