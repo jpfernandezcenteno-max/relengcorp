@@ -14,7 +14,10 @@
       "Bash(cd \"c:/Users/Usuario/relengcorp\" && node -v && rm -f public/images/portafolio/p*.png public/images/portafolio/p*.jpg && echo \"cleaned old flat files\")",
       "Bash(node \"C:/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-relengcorp/7c57e3fe-87f5-441a-b8f4-51f2f0e0308c/scratchpad/fetch-gallery.mjs\")",
       "Bash(cp \"C:/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-relengcorp/7c57e3fe-87f5-441a-b8f4-51f2f0e0308c/scratchpad/fetch-gallery.mjs\" \"c:/Users/Usuario/relengcorp/tmp-fetch-gallery.mjs\")",
-      "Bash(node tmp-fetch-gallery.mjs)"
+      "Bash(node tmp-fetch-gallery.mjs)",
+      "Bash(curl -sL \"https://relengcorp.com/portafolio/\" -o /tmp/port.html)",
+      "Bash(curl -sL https://relengcorp.com/portafolio/ -o __TRACKED_VAR__/port.html)",
+      "Bash(node -e ' *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios",

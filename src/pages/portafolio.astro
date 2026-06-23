@@ -3,10 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import galleryManifest from '../data/portafolio-images.json';
 
-// Casos reales de Relengcorp (https://relengcorp.com/portafolio/), organizados por categoría.
-// Datos (cliente, año, ubicación, descripción y logro) tomados de la ficha de cada proyecto.
-// NOTA: las imágenes son placeholders hasta que el cliente suba las fotos reales de cada caso.
+// Casos reales de Relengcorp (https://relengcorp.com/portafolio/), organizados por categoría
+// y conteo idénticos a la web: Servicios Especializados (9), Confiabilidad (11),
+// Contratos Predictivos / CBM (1) y Paradas de Planta (5). Se conservan los proyectos
+// que la web lista en más de una categoría o repetidos.
+// Las imágenes (galería WebP optimizada) se enlazan por `slug` desde el manifiesto.
 interface Project {
+  slug: string;
   title: string;
   client: string;
   period: string;
@@ -24,6 +27,7 @@ const categories: { name: string; projects: Project[] }[] = [
     name: 'Servicios Especializados',
     projects: [
       {
+        slug: 'ultrasonido-phase-array-de-ciguenal',
         title: 'Ultrasonido Phase Array de cigüeñal',
         client: 'FLSmidth',
         period: '2024 · 2 días',
@@ -32,6 +36,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'servicio-de-elongacion-de-pernos-quellaveco',
         title: 'Servicio de elongación de pernos – Quellaveco',
         client: 'FLSmidth',
         period: '2024 · 5 días',
@@ -41,6 +46,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'servicio-de-escaneo-laser-de-reductor_emo',
         title: 'Servicio de escaneo láser de reductor – EMO',
         client: 'SEW-Eurodrive del Perú',
         period: '2024 · 15 días',
@@ -49,6 +55,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'servicios-de-inspeccion-de-tanques-de-aire-comprimido-planta-antapaccay-y-tintaya',
         title: 'Inspección de tanques de aire comprimido – Plantas Antapaccay y Tintaya',
         client: 'Antapaccay – Glencore',
         period: '2024 · 3 meses',
@@ -58,6 +65,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'srv-inspeccion-certificacion-de-tanques-de-aire-comprimido-planta-oxidos',
         title: 'Inspección y certificación de tanques de aire comprimido – Planta Óxidos',
         client: 'Antapaccay – Glencore',
         period: '2024 · 1 mes',
@@ -67,6 +75,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'srv-inspeccion-presurizacion-certificacion-de-tanques-de-aire-talleres-mina',
         title: 'Inspección, presurización y certificación de tanques de aire – Talleres Mina',
         client: 'Antapaccay – Glencore',
         period: '2024',
@@ -76,6 +85,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'servicio-de-escaneo-laser-minera-las-bravas',
         title: 'Servicio de escaneo láser – Minera Las Bravas',
         client: 'Gemin',
         period: '2024 · 15 días',
@@ -85,6 +95,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'escaneo-laser-procesamiento-de-nube-de-puntos-y-modelado-3d-de-chasis',
         title: 'Escaneo láser, procesamiento de nube de puntos y modelado 3D de chasis',
         client: 'Tecpred',
         period: '2024 · 10 días',
@@ -93,6 +104,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'levantamiento-dimensional-mediante-escaneo-laser-3d-de-la-planta-concentradora-cobriza',
         title: 'Levantamiento dimensional con escaneo láser 3D – Planta Concentradora Cobriza',
         client: 'Gemin',
         period: '2024 · 60 días',
@@ -107,6 +119,7 @@ const categories: { name: string; projects: Project[] }[] = [
     name: 'Confiabilidad',
     projects: [
       {
+        slug: 'servicio-levantamiento-de-condicion-de-equipos-en-minera-cerro-colorado-iquique-chile',
         title: 'Levantamiento de condición de equipos – Minera Cerro Colorado, Iquique (Chile)',
         client: 'Ripp Consulting',
         period: '2024 · 45 días',
@@ -116,6 +129,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'desarrollo-de-los-procesos-de-mantenimiento-estrategia-administracion-del-trabajo-y-mejoramiento-de-la-confiabilidad',
         title:
           'Desarrollo de los procesos de mantenimiento: estrategia, administración del trabajo y mejora de la confiabilidad',
         client: 'Minera Cerro Colorado – BHP Billiton, Iquique (Chile)',
@@ -126,6 +140,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'implementacion-de-analisis-de-confiabilidad-en-planta-molienda',
         title: 'Implementación de análisis de confiabilidad en Planta Molienda',
         client: 'Antapaccay – Glencore',
         period: '2013 · 6 meses',
@@ -135,6 +150,16 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag-2',
+        title: 'Medición de elongación de pernos SPC4 Molino SAG / Ensayos NDT en trunnion SAG',
+        client: 'Antapaccay – Glencore',
+        period: '2017 · 8 meses',
+        description:
+          'Análisis y parametrización de la estadística de mantenimiento y evaluación de disponibilidad, confiabilidad y productividad de la planta de chancado, junto con la medición de elongación de pernos inteligentes SPC4 y ensayos NDT en el trunnion del Molino SAG.',
+        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
+      },
+      {
+        slug: 'desarrollo-de-los-procesos-de-planeamiento-de-control-de-procesos-cdp-y-kpis',
         title: 'Desarrollo de los procesos de planeamiento, control de procesos (CdP) y KPI’s',
         client: 'Antapaccay – Glencore',
         period: '2018 · 5 meses',
@@ -143,6 +168,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento del plan y reportabilidad oportuna.',
       },
       {
+        slug: 'analisis-rcm-y-planes-de-mantenimiento-planta-equipos-criticos-y-estatutorias',
         title: 'Análisis RCM y planes de mantenimiento de planta (equipos críticos y estatutarias)',
         client: 'Las Bambas – MMG',
         period: '2020 · 4 meses',
@@ -151,6 +177,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'analisis-rcm-y-planes-de-mantenimiento-planta-puerto',
         title: 'Análisis RCM y planes de mantenimiento – Planta Puerto',
         client: 'El Pacífico – CMP Chile',
         period: '2020 · 6 meses',
@@ -160,6 +187,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'elaboracion-de-instructivos-de-trabajo-wis-y-cartillas-resumen-de-equipos-linea-amarilla',
         title: 'Instructivos de trabajo (WIs) y cartillas resumen de equipos de línea amarilla',
         client: 'Las Bambas – MMG',
         period: '2021 · 8 meses',
@@ -168,6 +196,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'levantamiento-de-inventario-de-equipos-e-implementacion-de-estrategias-y-planes-de-mantenimiento-de-plantas-nirsa',
         title:
           'Levantamiento de inventario e implementación de estrategias y planes de mantenimiento – Plantas NIRSA',
         client: 'NIRSA – Posorja (Ecuador)',
@@ -178,6 +207,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de la programación y ejecución del proyecto.',
       },
       {
+        slug: 'elaboracion-de-instructivos-de-trabajo-wis-pets-y-cartillas-resumen-de-equipos-planta',
         title: 'Instructivos de trabajo (WIs), PETs y cartillas resumen de equipos de planta',
         client: 'Las Bambas – MMG',
         period: '2022 · 6 meses',
@@ -186,6 +216,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Entrega completa de los 1,000 instructivos para los equipos de la planta.',
       },
       {
+        slug: 'elaboracion-de-procedimientos-de-mantenimiento-instructivos-de-mantenimiento-e-instructivos-de-bloqueo',
         title: 'Procedimientos e instructivos de mantenimiento e instructivos de bloqueo',
         client: 'Mantoverde – Chile',
         period: '2022 · 6 meses',
@@ -200,6 +231,7 @@ const categories: { name: string; projects: Project[] }[] = [
     name: 'Contratos Predictivos / CBM',
     projects: [
       {
+        slug: 'servicio-de-medicion-de-espesores-de-lineas-de-tuberia-conduccion-de-relaves-4-lineas',
         title: 'Medición de espesores en líneas de tubería de conducción de relaves (4 líneas)',
         client: 'Sociedad Minera Corona S.A.',
         period: '2024 · 15 días',
@@ -213,6 +245,7 @@ const categories: { name: string; projects: Project[] }[] = [
     name: 'Paradas de Planta',
     projects: [
       {
+        slug: 'medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag-2',
         title: 'Medición de elongación de pernos SPC4 y ensayos NDT en trunnion del Molino SAG',
         client: 'Antapaccay – Glencore',
         period: '2017',
@@ -221,6 +254,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'inspeccion-y-deteccion-de-fallas-en-pernos-del-shell-alimentacion-y-descarga-y-tapa-de-descarga-del-molino-sag',
         title: 'Inspección y detección de fallas en pernos del shell y tapa de descarga del Molino SAG',
         client: 'Antapaccay – Glencore',
         period: '2018 · 10 días',
@@ -229,6 +263,7 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
       },
       {
+        slug: 'evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda-2',
         title: 'Evaluación de la condición de los equipos principales de las líneas de chancado y molienda',
         client: 'Antapaccay – Glencore',
         period: '2019 · 10 días',
@@ -237,6 +272,16 @@ const categories: { name: string; projects: Project[] }[] = [
         result: 'Ejecución de la parada con los más altos niveles de seguridad y cero incidentes.',
       },
       {
+        slug: 'evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda-2',
+        title: 'Evaluación de la condición de los equipos principales de las líneas de chancado y molienda',
+        client: 'Antapaccay – Glencore',
+        period: '2019 · 10 días',
+        description:
+          'Evaluación de la condición de los equipos principales de chancado y molienda mediante ensayos no destructivos (NDT): pica rocas, chancadora primaria, apron feeder, molinos, espesadores y pernos inteligentes SPC4.',
+        result: 'Ejecución de la parada con los más altos niveles de seguridad y cero incidentes.',
+      },
+      {
+        slug: 'servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-mb1-planta-concentradora-chinalco-toromocho',
         title:
           'Medición de elongación de pernos inteligentes y UT en Molino MB1 – Planta Concentradora Chinalco Toromocho',
         client: 'Sub-contrato FLSmidth – Chinalco',
@@ -250,7 +295,7 @@ const categories: { name: string; projects: Project[] }[] = [
   },
 ];
 
-// Galerías reales (optimizadas a WebP) por proyecto, en el mismo orden de los datos.
+// Galerías reales (optimizadas a WebP) enlazadas por slug.
 const manifest = galleryManifest as Record<string, string[]>;
 
 // Índice global para enlazar tarjeta ↔ galería/ficha del modal.
@@ -259,7 +304,7 @@ categories.forEach((cat) => {
   cat.projects.forEach((p) => {
     p.category = cat.name;
     p.index = allProjects.length;
-    p.gallery = (manifest[String(p.index)] ?? []).map((f) => `/images/portafolio/${f}`);
+    p.gallery = (manifest[p.slug] ?? []).map((f) => `/images/portafolio/${f}`);
     p.image = p.gallery[0];
     allProjects.push(p);
   });
@@ -288,6 +333,12 @@ categories.forEach((cat) => {
                   <div class="project-card__media">
                     <img src={p.image} alt={p.title} class="project-card__img" loading="lazy" decoding="async" />
                     <span class="project-card__tag">{cat.name}</span>
+                    {p.gallery!.length > 1 && (
+                      <span class="project-card__count">
+                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        {p.gallery!.length}
+                      </span>
+                    )}
                     <div class="project-card__overlay">
                       <span class="project-card__overlay-text">
                         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -313,22 +364,22 @@ categories.forEach((cat) => {
     <div class="project-modal__backdrop" data-project-modal-close></div>
     <div class="project-modal__dialog" role="dialog" aria-modal="true" aria-label="Ficha del proyecto">
       <button type="button" class="project-modal__close" data-project-modal-close aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <div class="project-modal__viewer">
-        <div class="project-modal__stage">
-          {allProjects.flatMap((p) => p.gallery!.map((src, ii) => (
-            <img class="project-modal__img" data-project={p.index} data-image={ii} src={src} alt={`${p.title} — imagen ${ii + 1}`} loading="lazy" decoding="async" hidden />
-          )))}
-          <button type="button" class="project-modal__nav project-modal__nav--prev" data-gallery-prev aria-label="Imagen anterior" hidden>
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button type="button" class="project-modal__nav project-modal__nav--next" data-gallery-next aria-label="Imagen siguiente" hidden>
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span class="project-modal__counter" hidden><span data-gallery-current>1</span> / <span data-gallery-total>1</span></span>
-        </div>
+      <div class="project-modal__stage">
+        {allProjects.flatMap((p) => p.gallery!.map((src, ii) => (
+          <img class="project-modal__img" data-project={p.index} data-image={ii} src={src} alt={`${p.title} — imagen ${ii + 1}`} loading="lazy" decoding="async" hidden />
+        )))}
+
+        <button type="button" class="project-modal__nav project-modal__nav--prev" data-gallery-prev aria-label="Imagen anterior" hidden>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="project-modal__nav project-modal__nav--next" data-gallery-next aria-label="Imagen siguiente" hidden>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="project-modal__counter" hidden><span data-gallery-current>1</span> / <span data-gallery-total>1</span></span>
+
         <div class="project-modal__thumbs" hidden>
           {allProjects.map((p) => (
             <div class="project-modal__thumbgroup" data-project={p.index} hidden>
@@ -399,6 +450,13 @@ categories.forEach((cat) => {
   .project-card__media { position: relative; flex-shrink: 0; }
   .project-card__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg-dark); }
   .project-card__tag { position: absolute; top: var(--space-4); left: var(--space-4); background: var(--accent); color: #fff; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); padding: 4px 12px; border-radius: var(--radius-pill); }
+  .project-card__count {
+    position: absolute; bottom: var(--space-4); right: var(--space-4);
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(8,10,20,0.7); color: #fff;
+    font-size: var(--fs-text-xs); font-weight: var(--fw-semibold);
+    padding: 3px 9px; border-radius: var(--radius-pill);
+  }
   .project-card__overlay {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
@@ -433,32 +491,38 @@ categories.forEach((cat) => {
   .project-modal[hidden] { display: none; }
   .project-modal__backdrop {
     position: absolute; inset: 0;
-    background: rgba(11, 12, 22, 0.75);
+    background: rgba(11, 12, 22, 0.78);
     backdrop-filter: blur(4px);
   }
   .project-modal__dialog {
     position: relative;
-    width: 100%; max-width: 920px;
-    max-height: 90vh;
+    width: 100%; max-width: 940px;
+    max-height: 92vh;
     background: var(--bg-dark);
     border-radius: var(--radius-lg);
-    overflow: auto;
+    overflow: hidden;
     display: flex; flex-direction: column;
     box-shadow: var(--shadow-5);
   }
   .project-modal__close {
-    position: absolute; top: var(--space-4); right: var(--space-4); z-index: 2;
+    position: absolute; top: var(--space-4); right: var(--space-4); z-index: 4;
     display: grid; place-items: center;
-    width: 40px; height: 40px;
+    width: 42px; height: 42px;
     border: none; border-radius: var(--radius-pill);
-    background: rgba(255,255,255,0.12); color: #fff; cursor: pointer;
+    background: rgba(8,10,20,0.55); color: #fff; cursor: pointer;
+    backdrop-filter: blur(6px);
     transition: background var(--dur-fast) var(--ease-out);
   }
-  .project-modal__close:hover { background: rgba(255,255,255,0.22); }
+  .project-modal__close:hover { background: rgba(8,10,20,0.85); }
 
-  .project-modal__viewer { display: flex; gap: var(--space-3); background: #05060c; padding: var(--space-3); flex-shrink: 0; }
-  .project-modal__stage { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; }
-  .project-modal__img { display: block; max-width: 100%; max-height: 52vh; object-fit: contain; margin: 0 auto; }
+  /* Escenario de imagen con miniaturas superpuestas */
+  .project-modal__stage {
+    position: relative; flex-shrink: 0;
+    background: #05060c;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 220px;
+  }
+  .project-modal__img { display: block; max-width: 100%; max-height: 60vh; object-fit: contain; margin: 0 auto; }
   .project-modal__img[hidden] { display: none; }
 
   .project-modal__nav {
@@ -468,36 +532,44 @@ categories.forEach((cat) => {
     background: rgba(255,255,255,0.14); color: #fff; cursor: pointer;
     transition: background var(--dur-fast) var(--ease-out);
   }
-  .project-modal__nav:hover { background: rgba(255,255,255,0.26); }
+  .project-modal__nav:hover { background: rgba(255,255,255,0.28); }
   .project-modal__nav--prev { left: var(--space-3); }
   .project-modal__nav--next { right: var(--space-3); }
   .project-modal__nav[hidden] { display: none; }
 
   .project-modal__counter {
-    position: absolute; bottom: var(--space-3); left: 50%; transform: translateX(-50%); z-index: 2;
-    background: rgba(11,12,22,0.7); color: #fff; font-size: var(--fs-text-xs);
-    padding: 3px 10px; border-radius: var(--radius-pill);
+    position: absolute; top: var(--space-4); left: var(--space-4); z-index: 2;
+    background: rgba(8,10,20,0.6); color: #fff; font-size: var(--fs-text-xs);
+    padding: 3px 10px; border-radius: var(--radius-pill); backdrop-filter: blur(6px);
   }
   .project-modal__counter[hidden] { display: none; }
 
+  /* Miniaturas: tira flotante semitransparente sobre la imagen */
   .project-modal__thumbs {
-    flex: 0 0 84px; display: flex; flex-direction: column; gap: var(--space-2);
-    overflow-y: auto; max-height: 52vh; padding-right: 2px;
+    position: absolute; left: 50%; bottom: var(--space-4); transform: translateX(-50%); z-index: 3;
+    display: flex; gap: var(--space-2);
+    max-width: calc(100% - var(--space-8));
+    padding: 6px; border-radius: var(--radius-lg);
+    background: rgba(8, 10, 20, 0.42);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    overflow-x: auto; scrollbar-width: none;
   }
+  .project-modal__thumbs::-webkit-scrollbar { display: none; }
   .project-modal__thumbs[hidden] { display: none; }
   .project-modal__thumbgroup { display: contents; }
   .project-modal__thumbgroup[hidden] { display: none; }
   .project-modal__thumb {
-    flex: 0 0 auto; width: 84px; height: 64px; padding: 0; cursor: pointer;
+    flex: 0 0 auto; width: 54px; height: 40px; padding: 0; cursor: pointer;
     border: 2px solid transparent; border-radius: var(--radius-sm); overflow: hidden;
-    background: #05060c; opacity: 0.55;
-    transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+    background: #05060c; opacity: 0.5;
+    transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
   }
   .project-modal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .project-modal__thumb:hover { opacity: 0.85; }
+  .project-modal__thumb:hover { opacity: 0.9; transform: translateY(-2px); }
   .project-modal__thumb[aria-current='true'] { opacity: 1; border-color: var(--accent); }
 
-  .project-modal__body { padding: var(--space-7); }
+  .project-modal__body { padding: var(--space-7); overflow: hidden; }
   .project-modal__detail { display: flex; flex-direction: column; gap: var(--space-4); }
   .project-modal__detail[hidden] { display: none; }
   .project-modal__cat { color: var(--celeste-300); font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; margin: 0; }
@@ -516,14 +588,10 @@ categories.forEach((cat) => {
   .project-modal__result svg { flex-shrink: 0; margin-top: 2px; }
 
   @media (max-width: 560px) {
+    .project-modal { padding: var(--space-3); }
     .project-modal__body { padding: var(--space-6); }
-    .project-modal__viewer { flex-direction: column; }
-    .project-modal__thumbs {
-      flex-direction: row; flex: 0 0 auto; width: 100%; max-height: none;
-      overflow-x: auto; overflow-y: hidden; padding-right: 0;
-    }
-    .project-modal__thumb { width: 72px; height: 54px; }
-    .project-modal__img { max-height: 40vh; }
+    .project-modal__img { max-height: 46vh; }
+    .project-modal__thumb { width: 46px; height: 34px; }
   }
 </style>
 
@@ -534,7 +602,6 @@ categories.forEach((cat) => {
   const thumbgroups = document.querySelectorAll<HTMLElement>('.project-modal__thumbgroup');
   const thumbs = document.querySelectorAll<HTMLButtonElement>('.project-modal__thumb');
   const details = document.querySelectorAll<HTMLElement>('.project-modal__detail');
-  const dialog = document.querySelector<HTMLElement>('.project-modal__dialog');
   const thumbsBox = modal?.querySelector<HTMLElement>('.project-modal__thumbs') ?? null;
   const prevBtn = modal?.querySelector<HTMLElement>('[data-gallery-prev]') ?? null;
   const nextBtn = modal?.querySelector<HTMLElement>('[data-gallery-next]') ?? null;
@@ -574,7 +641,6 @@ categories.forEach((cat) => {
     render();
     modal?.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
-    if (dialog) dialog.scrollTop = 0;
   };
 
   const close = () => {
