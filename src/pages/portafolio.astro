@@ -56,6 +56,17 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
         ))}
       </div>
 
+      <!-- En mobile los filtros se ven como un select para que entren en una sola fila sin scroll -->
+      <label class="portfolio-filter-select" data-reveal>
+        <span class="sr-only">Filtrar proyectos por tipo</span>
+        <select data-filter-select>
+          <option value="all">Todos ({projects.length})</option>
+          {FILTERS.map((f) => (
+            <option value={f}>{f} ({counts[f]})</option>
+          ))}
+        </select>
+      </label>
+
       <p class="portfolio-empty" data-empty hidden>No hay proyectos en esta categoría.</p>
 
       <div class="portfolio-grid" data-grid>
@@ -159,23 +170,44 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
 <style>
   /* ===== FILTROS ===== */
   .portfolio-filters {
-    display: flex;
+    display: none;
     flex-wrap: nowrap;
-    gap: var(--space-3);
+    gap: var(--space-2);
     margin-bottom: var(--space-8);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
   }
-  .portfolio-filters::-webkit-scrollbar { display: none; }
+
+  /* Por defecto (y hasta pantallas anchas) los filtros se ven como select:
+     los botones en una fila solo entran sin recortarse desde ~1280px. */
+  .portfolio-filter-select { display: block; margin-bottom: var(--space-8); }
+  .portfolio-filter-select select {
+    width: 100%;
+    font: inherit;
+    font-size: var(--fs-text-s);
+    font-weight: var(--fw-semibold);
+    color: var(--text-strong);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23667085' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px;
+  }
+  .portfolio-filter-select select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  @media (min-width: 1280px) {
+    .portfolio-filters { display: flex; }
+    .portfolio-filter-select { display: none; }
+  }
   .portfolio-filter {
-    display: inline-flex; align-items: center; gap: var(--space-2);
-    flex-shrink: 0; white-space: nowrap;
-    font: inherit; font-size: var(--fs-text-s); font-weight: var(--fw-semibold);
+    display: inline-flex; align-items: center; gap: 6px;
+    flex-shrink: 1; min-width: 0; white-space: nowrap;
+    font: inherit; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold);
     color: var(--text-body); cursor: pointer;
     background: var(--surface); border: 1px solid var(--border);
-    padding: 0.55rem 1.1rem; border-radius: var(--radius-pill);
+    padding: 0.5rem 0.8rem; border-radius: var(--radius-pill);
     transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   }
   .portfolio-filter:hover { border-color: var(--accent); color: var(--text-strong); }
@@ -376,6 +408,7 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
 <script>
   // ===== Filtro client-side (refresco interno, sin recargar) =====
   const filterBtns = document.querySelectorAll<HTMLButtonElement>('.portfolio-filter');
+  const filterSelect = document.querySelector<HTMLSelectElement>('[data-filter-select]');
   const cards = document.querySelectorAll<HTMLElement>('.project-card');
   const emptyMsg = document.querySelector<HTMLElement>('[data-empty]');
 
@@ -389,15 +422,27 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
     if (emptyMsg) emptyMsg.hidden = visible > 0;
   };
 
+  const setActive = (filter: string) => {
+    filterBtns.forEach((b) => {
+      const active = (b.dataset.filter ?? 'all') === filter;
+      b.classList.toggle('is-active', active);
+      b.setAttribute('aria-pressed', String(active));
+    });
+    if (filterSelect) filterSelect.value = filter;
+  };
+
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      filterBtns.forEach((b) => {
-        const active = b === btn;
-        b.classList.toggle('is-active', active);
-        b.setAttribute('aria-pressed', String(active));
-      });
-      applyFilter(btn.dataset.filter ?? 'all');
+      const filter = btn.dataset.filter ?? 'all';
+      setActive(filter);
+      applyFilter(filter);
     });
+  });
+
+  filterSelect?.addEventListener('change', () => {
+    const filter = filterSelect.value;
+    setActive(filter);
+    applyFilter(filter);
   });
 
   // ===== Modal / galería =====
