@@ -9,10 +9,16 @@
       "Bash(curl --version)",
       "Bash(curl -sL \"https://relengcorp.com/project/ultrasonido-phase-array-de-ciguenal/\" -o /tmp/proj1.html)",
       "Bash(awk '{print $5, $9}')",
-      "Bash(sort -k2)"
+      "Bash(sort -k2)",
+      "Bash(curl -sL \"https://relengcorp.com/project/elaboracion-de-instructivos-de-trabajo-wis-y-cartillas-resumen-de-equipos-linea-amarilla/\" -o /tmp/p2023.html)",
+      "Bash(cd \"c:/Users/Usuario/relengcorp\" && node -v && rm -f public/images/portafolio/p*.png public/images/portafolio/p*.jpg && echo \"cleaned old flat files\")",
+      "Bash(node \"C:/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-relengcorp/7c57e3fe-87f5-441a-b8f4-51f2f0e0308c/scratchpad/fetch-gallery.mjs\")",
+      "Bash(cp \"C:/Users/Usuario/AppData/Local/Temp/claude/c--Users-Usuario-relengcorp/7c57e3fe-87f5-441a-b8f4-51f2f0e0308c/scratchpad/fetch-gallery.mjs\" \"c:/Users/Usuario/relengcorp/tmp-fetch-gallery.mjs\")",
+      "Bash(node tmp-fetch-gallery.mjs)"
     ],
     "additionalDirectories": [
-      "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios"
+      "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios",
+      "C:\\Users\\Usuario\\relengcorp\\public\\images\\portafolio"
     ]
   }
 }

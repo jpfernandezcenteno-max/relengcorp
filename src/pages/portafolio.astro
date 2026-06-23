@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import galleryManifest from '../data/portafolio-images.json';
 
 // Casos reales de Relengcorp (https://relengcorp.com/portafolio/), organizados por categoría.
 // Datos (cliente, año, ubicación, descripción y logro) tomados de la ficha de cada proyecto.
@@ -15,6 +16,7 @@ interface Project {
   category?: string;
   index?: number;
   image?: string;
+  gallery?: string[];
 }
 
 const categories: { name: string; projects: Project[] }[] = [
@@ -248,20 +250,17 @@ const categories: { name: string; projects: Project[] }[] = [
   },
 ];
 
-// Imágenes reales descargadas de relengcorp.com, en el mismo orden de los proyectos.
-const imageFiles = [
-  'p00.png', 'p01.png', 'p02.png', 'p03.png', 'p04.jpg', 'p05.png', 'p06.jpg', 'p07.png', 'p08.jpg', 'p09.png',
-  'p10.png', 'p11.png', 'p12.png', 'p13.png', 'p14.png', 'p15.png', 'p16.png', 'p17.png', 'p18.png', 'p19.jpg',
-  'p20.png', 'p21.png', 'p22.png', 'p23.png',
-];
+// Galerías reales (optimizadas a WebP) por proyecto, en el mismo orden de los datos.
+const manifest = galleryManifest as Record<string, string[]>;
 
-// Índice global para enlazar tarjeta ↔ ficha del modal.
+// Índice global para enlazar tarjeta ↔ galería/ficha del modal.
 const allProjects: Project[] = [];
 categories.forEach((cat) => {
   cat.projects.forEach((p) => {
     p.category = cat.name;
     p.index = allProjects.length;
-    p.image = `/images/portafolio/${imageFiles[p.index]}`;
+    p.gallery = (manifest[String(p.index)] ?? []).map((f) => `/images/portafolio/${f}`);
+    p.image = p.gallery[0];
     allProjects.push(p);
   });
 });
@@ -317,12 +316,30 @@ categories.forEach((cat) => {
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
 
-      <div class="project-modal__main">
-        {allProjects.map((p) => (
-          <div class="project-modal__image" data-project={p.index} hidden>
-            <img src={p.image} alt={p.title} class="project-modal__img" loading="lazy" decoding="async" />
-          </div>
-        ))}
+      <div class="project-modal__viewer">
+        <div class="project-modal__stage">
+          {allProjects.flatMap((p) => p.gallery!.map((src, ii) => (
+            <img class="project-modal__img" data-project={p.index} data-image={ii} src={src} alt={`${p.title} — imagen ${ii + 1}`} loading="lazy" decoding="async" hidden />
+          )))}
+          <button type="button" class="project-modal__nav project-modal__nav--prev" data-gallery-prev aria-label="Imagen anterior" hidden>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="project-modal__nav project-modal__nav--next" data-gallery-next aria-label="Imagen siguiente" hidden>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="project-modal__counter" hidden><span data-gallery-current>1</span> / <span data-gallery-total>1</span></span>
+        </div>
+        <div class="project-modal__thumbs" hidden>
+          {allProjects.map((p) => (
+            <div class="project-modal__thumbgroup" data-project={p.index} hidden>
+              {p.gallery!.map((src, ii) => (
+                <button type="button" class="project-modal__thumb" data-project={p.index} data-image={ii} aria-label={`Ver imagen ${ii + 1}`}>
+                  <img src={src} alt="" loading="lazy" decoding="async" />
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div class="project-modal__body">
@@ -421,7 +438,7 @@ categories.forEach((cat) => {
   }
   .project-modal__dialog {
     position: relative;
-    width: 100%; max-width: 720px;
+    width: 100%; max-width: 920px;
     max-height: 90vh;
     background: var(--bg-dark);
     border-radius: var(--radius-lg);
@@ -439,10 +456,46 @@ categories.forEach((cat) => {
   }
   .project-modal__close:hover { background: rgba(255,255,255,0.22); }
 
-  .project-modal__main { width: 100%; flex-shrink: 0; background: #05060c; }
-  .project-modal__image { width: 100%; }
-  .project-modal__image[hidden] { display: none; }
-  .project-modal__img { display: block; width: 100%; max-height: 48vh; object-fit: contain; margin: 0 auto; }
+  .project-modal__viewer { display: flex; gap: var(--space-3); background: #05060c; padding: var(--space-3); flex-shrink: 0; }
+  .project-modal__stage { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; justify-content: center; }
+  .project-modal__img { display: block; max-width: 100%; max-height: 52vh; object-fit: contain; margin: 0 auto; }
+  .project-modal__img[hidden] { display: none; }
+
+  .project-modal__nav {
+    position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+    display: grid; place-items: center; width: 40px; height: 40px;
+    border: none; border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.14); color: #fff; cursor: pointer;
+    transition: background var(--dur-fast) var(--ease-out);
+  }
+  .project-modal__nav:hover { background: rgba(255,255,255,0.26); }
+  .project-modal__nav--prev { left: var(--space-3); }
+  .project-modal__nav--next { right: var(--space-3); }
+  .project-modal__nav[hidden] { display: none; }
+
+  .project-modal__counter {
+    position: absolute; bottom: var(--space-3); left: 50%; transform: translateX(-50%); z-index: 2;
+    background: rgba(11,12,22,0.7); color: #fff; font-size: var(--fs-text-xs);
+    padding: 3px 10px; border-radius: var(--radius-pill);
+  }
+  .project-modal__counter[hidden] { display: none; }
+
+  .project-modal__thumbs {
+    flex: 0 0 84px; display: flex; flex-direction: column; gap: var(--space-2);
+    overflow-y: auto; max-height: 52vh; padding-right: 2px;
+  }
+  .project-modal__thumbs[hidden] { display: none; }
+  .project-modal__thumbgroup { display: contents; }
+  .project-modal__thumbgroup[hidden] { display: none; }
+  .project-modal__thumb {
+    flex: 0 0 auto; width: 84px; height: 64px; padding: 0; cursor: pointer;
+    border: 2px solid transparent; border-radius: var(--radius-sm); overflow: hidden;
+    background: #05060c; opacity: 0.55;
+    transition: opacity var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .project-modal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .project-modal__thumb:hover { opacity: 0.85; }
+  .project-modal__thumb[aria-current='true'] { opacity: 1; border-color: var(--accent); }
 
   .project-modal__body { padding: var(--space-7); }
   .project-modal__detail { display: flex; flex-direction: column; gap: var(--space-4); }
@@ -464,20 +517,61 @@ categories.forEach((cat) => {
 
   @media (max-width: 560px) {
     .project-modal__body { padding: var(--space-6); }
+    .project-modal__viewer { flex-direction: column; }
+    .project-modal__thumbs {
+      flex-direction: row; flex: 0 0 auto; width: 100%; max-height: none;
+      overflow-x: auto; overflow-y: hidden; padding-right: 0;
+    }
+    .project-modal__thumb { width: 72px; height: 54px; }
+    .project-modal__img { max-height: 40vh; }
   }
 </style>
 
 <script>
   const triggers = document.querySelectorAll<HTMLButtonElement>('[data-project-trigger]');
   const modal = document.querySelector<HTMLElement>('[data-project-modal]');
-  const images = document.querySelectorAll<HTMLElement>('.project-modal__image');
+  const stageImgs = document.querySelectorAll<HTMLElement>('.project-modal__img');
+  const thumbgroups = document.querySelectorAll<HTMLElement>('.project-modal__thumbgroup');
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.project-modal__thumb');
   const details = document.querySelectorAll<HTMLElement>('.project-modal__detail');
   const dialog = document.querySelector<HTMLElement>('.project-modal__dialog');
+  const thumbsBox = modal?.querySelector<HTMLElement>('.project-modal__thumbs') ?? null;
+  const prevBtn = modal?.querySelector<HTMLElement>('[data-gallery-prev]') ?? null;
+  const nextBtn = modal?.querySelector<HTMLElement>('[data-gallery-next]') ?? null;
+  const counter = modal?.querySelector<HTMLElement>('.project-modal__counter') ?? null;
+  const curEl = modal?.querySelector<HTMLElement>('[data-gallery-current]') ?? null;
+  const totEl = modal?.querySelector<HTMLElement>('[data-gallery-total]') ?? null;
   const closeEls = document.querySelectorAll<HTMLElement>('[data-project-modal-close]');
 
+  let cp = 0; // proyecto actual
+  let ci = 0; // imagen actual
+  let total = 1;
+
+  const render = () => {
+    stageImgs.forEach((img) => {
+      img.hidden = !(img.dataset.project === String(cp) && img.dataset.image === String(ci));
+    });
+    thumbs.forEach((t) => {
+      const isCurrent = t.dataset.project === String(cp) && t.dataset.image === String(ci);
+      if (isCurrent) t.setAttribute('aria-current', 'true');
+      else t.removeAttribute('aria-current');
+    });
+    if (curEl) curEl.textContent = String(ci + 1);
+  };
+
   const open = (index: number) => {
-    images.forEach((img) => { img.hidden = img.dataset.project !== String(index); });
+    cp = index;
+    ci = 0;
+    total = document.querySelectorAll(`.project-modal__img[data-project="${index}"]`).length;
+    thumbgroups.forEach((g) => { g.hidden = g.dataset.project !== String(index); });
     details.forEach((d) => { d.hidden = d.dataset.project !== String(index); });
+    if (totEl) totEl.textContent = String(total);
+    const multi = total > 1;
+    if (prevBtn) prevBtn.hidden = !multi;
+    if (nextBtn) nextBtn.hidden = !multi;
+    if (counter) counter.hidden = !multi;
+    if (thumbsBox) thumbsBox.hidden = !multi;
+    render();
     modal?.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
     if (dialog) dialog.scrollTop = 0;
@@ -488,12 +582,29 @@ categories.forEach((cat) => {
     document.body.style.overflow = '';
   };
 
+  const step = (delta: number) => {
+    if (total < 2) return;
+    ci = (ci + delta + total) % total;
+    render();
+  };
+
   triggers.forEach((btn) => {
     btn.addEventListener('click', () => open(Number(btn.dataset.projectTrigger)));
   });
+  thumbs.forEach((t) => {
+    t.addEventListener('click', () => {
+      if (t.dataset.project !== String(cp)) return;
+      ci = Number(t.dataset.image);
+      render();
+    });
+  });
+  prevBtn?.addEventListener('click', () => step(-1));
+  nextBtn?.addEventListener('click', () => step(1));
   closeEls.forEach((el) => el.addEventListener('click', close));
   document.addEventListener('keydown', (e) => {
     if (modal?.hasAttribute('hidden')) return;
     if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
   });
 </script>
