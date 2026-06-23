@@ -351,21 +351,25 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
   .project-modal__result svg { flex-shrink: 0; margin-top: 2px; }
 
   @media (max-width: 560px) {
-    .project-modal { padding: var(--space-3); }
-    .project-modal__dialog { max-height: 95vh; }
-    .project-modal__stage { max-height: 38vh; min-height: 160px; }
-    .project-modal__body { padding: var(--space-5); gap: var(--space-3); }
-    .project-modal__img { max-height: 38vh; }
-    .project-modal__thumb { width: 42px; height: 32px; }
-    .project-modal__title { font-size: var(--fs-h-xs); }
-    .project-modal__desc { font-size: var(--fs-text-s); }
-    .project-modal__meta { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-3); padding: var(--space-4) 0; }
-    .project-modal__close { width: 36px; height: 36px; top: var(--space-3); right: var(--space-3); }
-    .project-modal__nav { width: 34px; height: 34px; }
+    .project-modal { padding: var(--space-2); }
+    .project-modal__dialog { max-height: 98vh; }
+    .project-modal__stage { max-height: 24vh; min-height: 110px; }
+    .project-modal__body { padding: var(--space-4); }
+    .project-modal__detail { gap: var(--space-2); }
+    .project-modal__img { max-height: 24vh; }
+    .project-modal__thumb { width: 36px; height: 27px; }
+    .project-modal__title { font-size: var(--fs-h-xs); line-height: 1.25; }
+    .project-modal__desc { font-size: var(--fs-text-xs); line-height: 1.5; }
+    .project-modal__result { font-size: var(--fs-text-xs); }
+    .project-modal__meta { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--space-2); padding: var(--space-3) 0; }
+    .project-modal__close { width: 32px; height: 32px; top: var(--space-2); right: var(--space-2); }
+    .project-modal__nav { width: 30px; height: 30px; }
   }
 
   @media (max-width: 360px) {
     .project-modal__meta { grid-template-columns: 1fr 1fr; }
+    .project-modal__stage { max-height: 20vh; min-height: 90px; }
+    .project-modal__img { max-height: 20vh; }
   }
 </style>
 
