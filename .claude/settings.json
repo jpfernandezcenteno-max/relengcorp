@@ -4,7 +4,8 @@
       "Bash(git diff *)",
       "Bash(cd \"c:/Users/Usuario/relengcorp\" && sed -i '267,325d' \"src/pages/servicios/[slug].astro\" && tail -5 \"src/pages/servicios/[slug].astro\")",
       "Bash(npx astro *)",
-      "Bash(git commit -q -m ' *)"
+      "Bash(git commit -q -m ' *)",
+      "WebFetch(domain:relengcorp.com)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios"
