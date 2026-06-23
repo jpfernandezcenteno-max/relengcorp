@@ -17,7 +17,9 @@
       "Bash(node tmp-fetch-gallery.mjs)",
       "Bash(curl -sL \"https://relengcorp.com/portafolio/\" -o /tmp/port.html)",
       "Bash(curl -sL https://relengcorp.com/portafolio/ -o __TRACKED_VAR__/port.html)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(curl -sL https://relengcorp.com/project/servicios-de-preparacion-de-pilas-de-lixiviacion/ -o __TRACKED_VAR__/proj_new.html)",
+      "Bash(node tmp-build-portafolio.mjs)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios",

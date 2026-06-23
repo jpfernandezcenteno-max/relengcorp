@@ -1,0 +1,747 @@
+[
+  {
+    "id": "000",
+    "category": "Servicios Especializados",
+    "slug": "ultrasonido-phase-array-de-ciguenal",
+    "title": "Ultrasonido Phase Array de Cigüeñal",
+    "client": "FLSmidth",
+    "period": "",
+    "description": "Escaneo laser Medición de la elongación de los pernos SPC4 que le permitirán al usuario re apretar los pernos y mantener la tensión en la unión cuantas veces sea necesario. Esto resulta en ahorro en tiempos de mantenimiento, costos y piezas de reemplazo. Los pernos inteligentes SPC4 ofrecen máxima integridad con óptima performance.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/000/00.webp",
+      "/images/portafolio/000/01.webp"
+    ]
+  },
+  {
+    "id": "001",
+    "category": "Servicios Especializados",
+    "slug": "servicio-de-elongacion-de-pernos-quellaveco",
+    "title": "Servicio de elongación de pernos – Quellaveco",
+    "client": "FLSmidth",
+    "period": "",
+    "description": "NDT – Parada de Planta Medición de la elongación de los pernos SPC4 que le permitirán al usuario re apretar los pernos y mantener la tensión en la unión cuantas veces sea necesario. Esto resulta en ahorro en tiempos de mantenimiento, costos y piezas de reemplazo. Los pernos inteligentes SPC4 ofrecen máxima integridad con óptima performance.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/001/00.webp",
+      "/images/portafolio/001/01.webp",
+      "/images/portafolio/001/02.webp"
+    ]
+  },
+  {
+    "id": "002",
+    "category": "Servicios Especializados",
+    "slug": "servicio-de-escaneo-laser-de-reductor_emo",
+    "title": "Servicio de Escaneo laser de reductor_EMO",
+    "client": "Sew Eurodrive del Peru Sac",
+    "period": "10/07/2024(15 DIAS)",
+    "description": "Escaneo laser Inspección y certificación de recipientes a presión (tanque de aire comprimido) de acuerdo con la norma API 540-2022 . Para determinar la condición mecánica-estructural del recipiente a presión, velocidad de corrosión, vida remanente y buen estado de cordones de soldadura del recipiente a presión.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/002/00.webp"
+    ]
+  },
+  {
+    "id": "003",
+    "category": "Servicios Especializados",
+    "slug": "servicios-de-inspeccion-de-tanques-de-aire-comprimido-planta-antapaccay-y-tintaya",
+    "title": "Servicios de inspección de tanques de aire comprimido planta ANTAPACCAY Y TINTAYA",
+    "client": "ANTAPACCAY",
+    "period": "16/09/2024(3 MESES)",
+    "description": "NDT Servicio Especializado Inspección y certificación de recipientes a presión (tanque de aire comprimido) de acuerdo con la norma API 540-2022 . Para determinar la condición mecánica-estructural del recipiente a presión, velocidad de corrosión, vida remanente y buen estado de cordones de soldadura del recipiente a presión.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/003/00.webp",
+      "/images/portafolio/003/01.webp"
+    ]
+  },
+  {
+    "id": "004",
+    "category": "Servicios Especializados",
+    "slug": "srv-inspeccion-certificacion-de-tanques-de-aire-comprimido-planta-oxidos",
+    "title": "SRV Inspección, certificación de tanques de aire comprimido – Planta óxidos",
+    "client": "ANTAPACCAY",
+    "period": "14/07/24 a 14/08/24(1 MES)",
+    "description": "NDT Servicio Especializado Inspección y certificación de recipientes a presión (tanque de aire comprimido) de acuerdo con la norma API 540-2022 . Para determinar la condición mecánica-estructural del recipiente a presión, velocidad de corrosión, vida remanente y buen estado de cordones de soldadura del recipiente a presión.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/004/00.webp",
+      "/images/portafolio/004/01.webp"
+    ]
+  },
+  {
+    "id": "005",
+    "category": "Servicios Especializados",
+    "slug": "srv-inspeccion-presurizacion-certificacion-de-tanques-de-aire-talleres-mina",
+    "title": "SRV Inspección, presurización, certificación de tanques de aire- Talleres mina",
+    "client": "Gemin",
+    "period": "01/06/2024 A 30/06/2024(15 días)",
+    "description": "Escaneo laser Realizar el escaneo 3D de la planta de procesamiento de mineral, procesamiento de nube de puntos en software licenciado formato RECAP, modelado de planta de la planta en 3D CAD, planos generales en AUTOCAD.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/005/00.webp",
+      "/images/portafolio/005/01.webp"
+    ]
+  },
+  {
+    "id": "006",
+    "category": "Servicios Especializados",
+    "slug": "servicio-de-escaneo-laser-minera-las-bravas",
+    "title": "Servicio de Escaneo Laser Minera Las Bravas",
+    "client": "Gemin",
+    "period": "01/06/2024 A 30/06/2024(15 días)",
+    "description": "Escaneo laser Realizar el escaneo 3D de la planta de procesamiento de mineral, procesamiento de nube de puntos en software licenciado formato RECAP, modelado de planta de la planta en 3D CAD, planos generales en AUTOCAD.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/006/00.webp",
+      "/images/portafolio/006/01.webp"
+    ]
+  },
+  {
+    "id": "007",
+    "category": "Servicios Especializados",
+    "slug": "escaneo-laser-procesamiento-de-nube-de-puntos-y-modelado-3d-de-chasis",
+    "title": "Escaneo laser, procesamiento de nube de puntos y modelado 3D de chasis",
+    "client": "Tecpred",
+    "period": "10/04/2024 A 20/04/2024(10 días)",
+    "description": "Escaneo laser Este servicio consta de realizar el escaneo 3D del chasis, procesamiento de nube de puntos en software licenciado, modelado actual del componente en 3D CAD, planos generales de la estructura en AUTOCAD y se brindara nube de puntos en formato RECAP.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/007/00.webp",
+      "/images/portafolio/007/01.webp"
+    ]
+  },
+  {
+    "id": "008",
+    "category": "Servicios Especializados",
+    "slug": "levantamiento-dimensional-mediante-escaneo-laser-3d-de-la-planta-concentradora-cobriza",
+    "title": "Levantamiento Dimensional mediante Escaneo Laser 3D de la Planta Concentradora Cobriza",
+    "client": "Gemin",
+    "period": "01/04/2024 A 15/05/2024(60 días)",
+    "description": "Escaneo laser Servicio de Levantamiento de Escaneo Laser procesamiento de la nube de puntos en formato RECAP , generación de Maquetas 3D CAD ( equipos principales, fajas transportadoras, tolvas, accesos, estructuras de soporte ) en formato NAVISWORKS y plano de las secciones longitudinales y transversales en formato AutoCAD 2D por cada Área de proceso.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/008/00.webp",
+      "/images/portafolio/008/01.webp"
+    ]
+  },
+  {
+    "id": "009",
+    "category": "Servicios Especializados",
+    "slug": "analisis-dimensional-y-medicion-de-dureza-en-liners-molino-sag",
+    "title": "Análisis Dimensional y Medición de Dureza en Liners Molino SAG",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Junio 2021 (1mes)",
+    "description": "Se aplicaron las siguientes técnicas: Inspección Visual (VT). Pruebas de dureza Brinell (HB) de liners de Molino SAG.",
+    "result": "Cumplimiento con lo planificado en el tiempo programado.",
+    "images": [
+      "/images/portafolio/009/00.webp",
+      "/images/portafolio/009/01.webp",
+      "/images/portafolio/009/02.webp"
+    ]
+  },
+  {
+    "id": "010",
+    "category": "Servicios Especializados",
+    "slug": "inspeccion-de-recipientes-a-presion-bajo-la-norma-api-510",
+    "title": "Inspección de Recipientes a Presión bajo la norma API 510",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Setiembre 2022 (3 meses)",
+    "description": "Inspección de Recipientes a Presión de Planta Antapaccay y Tintaya, bajo la norma API 510. Se aplicaron las siguientes técnicas: Inspección Visual. Prueba de Ultrasonido Haz Normal (medición de espesores al cilindro y tapas). Haz angular a uniones soldadas comprometidas. Objetivos cumplidos Determinar la condición mecánica-estructural del recipiente a presión. Identificar las áreas y puntos de desgaste. Determinar la velocidad de corrosión. Determinar el tiempo de vida remanente actual. Ratificar el buen estado de los cordones de soldadura del recipiente a presión.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/010/00.webp",
+      "/images/portafolio/010/01.webp",
+      "/images/portafolio/010/02.webp"
+    ]
+  },
+  {
+    "id": "011",
+    "category": "Servicios Especializados",
+    "slug": "inspeccion-de-recipientes-a-presion-talleres-mina-y-planta",
+    "title": "Inspección de Recipientes a Presión Talleres Mina y Planta",
+    "client": "Antapaccay -GLENCORE",
+    "period": "Marzo 2018 (6 meses)",
+    "description": "Inspección de Recipientes a Presión de Planta Antapaccay y Tintaya, bajo la norma API 510. Se aplicaron las siguientes técnicas: Inspección Visual. Prueba de Ultrasonido Haz Normal (medición de espesores al cilindro y tapas). Haz angular a uniones soldadas comprometidas. Objetivos cumplidos Determinar la condición mecánica-estructural del recipiente a presión. Identificar las áreas y puntos de desgaste. Determinar la velocidad de corrosión. Determinar el tiempo de vida remanente actual. Ratificar el buen estado de los cordones de soldadura del recipiente a presión.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/011/00.webp",
+      "/images/portafolio/011/01.webp"
+    ]
+  },
+  {
+    "id": "012",
+    "category": "Servicios Especializados",
+    "slug": "servicio-integral-de-mantenimiento-predictivo-en-sistemas-de-bombeo-planta",
+    "title": "Servicio Integral de Mantenimiento Predictivo en Sistemas de Bombeo Planta",
+    "client": "Minera ARES Almacenes Logística",
+    "period": "Noviembre 2022 (7 días)",
+    "description": "Monitoreo de condición por análisis de vibraciones y termografía a los principales equipos rotativos en Planta Osmosis y Planta Detoxificación. Inspección visual, verificación de las características técnicas y físicas de la máquina a evaluar (Ubicación, condiciones de montaje, Línea de Producción, Marca, Modelo, Potencia). Elaboración de ruta de monitoreo de vibraciones especificando los puntos y parámetros (velocidad, aceleración, envolvente, etc.) Evaluación y diagnóstico de la condición de los equipos monitoreados.",
+    "result": "Cumplimiento con lo planificado en el tiempo programado.",
+    "images": [
+      "/images/portafolio/012/00.webp",
+      "/images/portafolio/012/01.webp",
+      "/images/portafolio/012/02.webp"
+    ]
+  },
+  {
+    "id": "013",
+    "category": "Confiabilidad",
+    "slug": "servicio-levantamiento-de-condicion-de-equipos-en-minera-cerro-colorado-iquique-chile",
+    "title": "Servicio Levantamiento de Condición de Equipos en Minera Cerro Colorado Iquique – Chile",
+    "client": "Ripp Consulting",
+    "period": "15/05/2024 A 01/07/2024(45 días)",
+    "description": "Levantamiento de observación: 020_220: Leaching (Lixiviacion) 030_230: SX (Extracción por solvente) 040_240: Tank Farm 050_250: Electrowining 220: Piscinas de refino Y PLS con sus respectivas bombas actuales SX 080_280: Sistema recepción, almacenamiento y distribución acido sulfúrico 70_2101: Revisión sistema de control 140: Truck Shop",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/013/00.webp",
+      "/images/portafolio/013/01.webp",
+      "/images/portafolio/013/02.webp"
+    ]
+  },
+  {
+    "id": "014",
+    "category": "Confiabilidad",
+    "slug": "desarrollo-de-los-procesos-de-mantenimiento-estrategia-administracion-del-trabajo-y-mejoramiento-de-la-confiabilidad",
+    "title": "Desarrollo de los Procesos de Mantenimiento – Estrategia, Administración del trabajo y Mejoramiento de la Confiabilidad.",
+    "client": "Minera Cerro Colorado – BHP Billiton IQUIQUE- Chile",
+    "period": "Mayo 2010 (5 meses)",
+    "description": "Levantamiento de información in situ. Modelado de Procesos. Implementación de los Procesos. Definición de KPI´S.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/014/00.webp"
+    ]
+  },
+  {
+    "id": "015",
+    "category": "Confiabilidad",
+    "slug": "implementacion-de-analisis-de-confiabilidad-en-planta-molienda",
+    "title": "Implementación de Análisis de Confiabilidad en Planta Molienda",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Noviembre 2013 (6 meses)",
+    "description": "Análisis y parametrización de la estadística de mantenimiento. Análisis de la disponibilidad, confiabilidad y productividad de planta Molienda equipos-componentes.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/015/00.webp"
+    ]
+  },
+  {
+    "id": "016",
+    "category": "Confiabilidad",
+    "slug": "medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag-2",
+    "title": "Medición de Elongación de Pernos SPC4 Molino SAG/ Ensayos NDT en Trunnion SAG",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Marzo 2017 (8 meses)",
+    "description": "Análisis y parametrización de la estadística de mantenimiento. Análisis de la disponibilidad, confiabilidad y productividad de planta Chancado equipos-componentes.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/016/00.webp"
+    ]
+  },
+  {
+    "id": "017",
+    "category": "Confiabilidad",
+    "slug": "desarrollo-de-los-procesos-de-planeamiento-de-control-de-procesos-cdp-y-kpis",
+    "title": "Desarrollo de los Procesos de Planeamiento de Control de Procesos CdP Y KPI´s",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Agosto 2018 (5 meses)",
+    "description": "Desarrollo de proceso que permita cumplir con las metas de producción mejorando la operatividad de los sistemas.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/017/00.webp"
+    ]
+  },
+  {
+    "id": "018",
+    "category": "Confiabilidad",
+    "slug": "analisis-rcm-y-planes-de-mantenimiento-planta-equipos-criticos-y-estatutorias",
+    "title": "Análisis RCM y Planes de Mantenimiento Planta (equipos críticos y estatutorias)",
+    "client": "Las Bambas – MMG",
+    "period": "Diciembre 2020 (4 meses)",
+    "description": "Desarrollo de Planes de Mantenimiento a través de la utilización de la metodología RCM: Planes de mantenimiento equipos críticos de Molienda. Planes de mantenimiento equipos críticos de Chancado. Planes de mantenimiento equipos críticos de Flotación. Planes de mantenimiento equipos críticos de Espesadores.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/018/00.webp"
+    ]
+  },
+  {
+    "id": "019",
+    "category": "Confiabilidad",
+    "slug": "analisis-rcm-y-planes-de-mantenimiento-planta-puerto",
+    "title": "Análisis RCM y Planes de Mantenimiento Planta – Puerto",
+    "client": "El Pacífico – CMP Chile",
+    "period": "Agosto 2020 (6 meses)",
+    "description": "Desarrollo de Planes de Mantenimiento a través de la utilización de la metodología RCM: Planes de mantenimiento de Shiploader de Puerto Totoralillo. Planes de mantenimiento de Shiploader de Puerto Guacolda. Planes de mantenimiento de Shiploader de Puerto Guayacán.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/019/00.webp",
+      "/images/portafolio/019/01.webp",
+      "/images/portafolio/019/02.webp"
+    ]
+  },
+  {
+    "id": "020",
+    "category": "Confiabilidad",
+    "slug": "elaboracion-de-instructivos-de-trabajo-wis-y-cartillas-resumen-de-equipos-linea-amarilla",
+    "title": "Elaboración de Instructivos de Trabajo WIs, y Cartillas Resumen de equipos línea amarilla",
+    "client": "Las Bambas – MMG",
+    "period": "Julio 2021 (8 meses)",
+    "description": "Se ha desarrollado instructivos de Mantenimiento y Cartillas Resumen para los siguientes equipos: Perforadoras y Palas (Pala 6060FS, Pala 7495HR, Pala 4100XPC, L2350, 320XPC, MD6640, PV 351). Flota Auxiliar (16M, 24M, 374DL/FL, 390 DL/FL, 834H, 844H, 988K-C, D11T, D475A, HD 1500). Camiones (797F, 930E, 980E, 980E4).",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/020/00.webp",
+      "/images/portafolio/020/01.webp",
+      "/images/portafolio/020/02.webp",
+      "/images/portafolio/020/03.webp",
+      "/images/portafolio/020/04.webp",
+      "/images/portafolio/020/05.webp"
+    ]
+  },
+  {
+    "id": "021",
+    "category": "Confiabilidad",
+    "slug": "levantamiento-de-inventario-de-equipos-e-implementacion-de-estrategias-y-planes-de-mantenimiento-de-plantas-nirsa",
+    "title": "Levantamiento de Inventario de equipos e implementación de Estrategias y Planes de Mantenimiento de Plantas NIRSA",
+    "client": "NIRSA – Posorja Ecuador",
+    "period": "Julio 2022 (6 meses)",
+    "description": "Evaluación del nivel de madurez . Implementación y optimización de planes de mantenimiento de equipos industriales. Análisis de criticidad de equipos utilizando metodologías como FMECA y RCM.",
+    "result": "Cumplimiento de la programación y ejecución del proyecto.",
+    "images": [
+      "/images/portafolio/021/00.webp",
+      "/images/portafolio/021/01.webp",
+      "/images/portafolio/021/02.webp"
+    ]
+  },
+  {
+    "id": "022",
+    "category": "Confiabilidad",
+    "slug": "elaboracion-de-instructivos-de-trabajo-wis-pets-y-cartillas-resumen-de-equipos-planta",
+    "title": "Elaboración de Instructivos de Trabajo WIs, PETs y Cartillas Resumen de Equipos Planta",
+    "client": "Las Bambas – MMG",
+    "period": "Abril 2022 (6 meses)",
+    "description": "Elaboración de Work Instruction (WI), PETs (PET) y Cartillas Check List (CL) para un total de 1,000 tareas (actividades) de equipos planta. Tareas de mantenimiento Mecánico, Eléctrico e Instrumentación.",
+    "result": "Entrega completa de los 1,000 instructivos (WIs, PETs y cartillas) para los equipos de la planta.",
+    "images": [
+      "/images/portafolio/022/00.webp",
+      "/images/portafolio/022/01.webp",
+      "/images/portafolio/022/02.webp",
+      "/images/portafolio/022/03.webp",
+      "/images/portafolio/022/04.webp",
+      "/images/portafolio/022/05.webp",
+      "/images/portafolio/022/06.webp",
+      "/images/portafolio/022/07.webp",
+      "/images/portafolio/022/08.webp",
+      "/images/portafolio/022/09.webp",
+      "/images/portafolio/022/10.webp"
+    ]
+  },
+  {
+    "id": "023",
+    "category": "Confiabilidad",
+    "slug": "elaboracion-de-procedimientos-de-mantenimiento-instructivos-de-mantenimiento-e-instructivos-de-bloqueo",
+    "title": "Elaboración de Procedimientos de mantenimiento, Instructivos de mantenimiento e Instructivos de Bloqueo",
+    "client": "Mantoverde – Chile",
+    "period": "Agosto 2022 (6meses)",
+    "description": "Se desarrollaron actividades de mantenimiento: Tareas de mantenimiento Mecánico, Eléctrico e Instrumentación. Instructivos de Aislamiento y Bloqueo de equipos críticos. Instructivos de Aislamiento y Bloqueo para actividades de mantenimiento principales.",
+    "result": "Cumplimiento de la programación y ejecución del proyecto.",
+    "images": [
+      "/images/portafolio/023/00.webp",
+      "/images/portafolio/023/01.webp",
+      "/images/portafolio/023/02.webp",
+      "/images/portafolio/023/03.webp",
+      "/images/portafolio/023/04.webp",
+      "/images/portafolio/023/05.webp",
+      "/images/portafolio/023/06.webp",
+      "/images/portafolio/023/07.webp"
+    ]
+  },
+  {
+    "id": "024",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "servicios-operacionales-en-planta-concentradora",
+    "title": "Servicios Operacionales En Planta Concentradora",
+    "client": "Compañía minera Quebrada Blanca Teck",
+    "period": "2008 – 2013",
+    "description": "Actividades generales: Servicios operacionales en planta de reactivos. Ejecución del plan de muestreo en húmedo.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/024/00.webp"
+    ]
+  },
+  {
+    "id": "025",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "servicios-operacionales-en-planta-chancado-y-molienda-muestreo-en-seco-en-correas-transportadoras-y-humedo-en-planta-concentradora",
+    "title": "Servicios operacionales en planta Chancado y Molienda, muestreo en seco en correas transportadoras y húmedo en planta concentradora",
+    "client": "Compañía minera Collahuasi – Anglo Glencore",
+    "period": "2020 – 2022 (2 años)",
+    "description": "Servicios operacionales en planta concentradora: Ejecución de la rotación de las líneas de relaves. Preparación de pilas de lixiviación ( encarpetado, armado, desarme de sistemas de riego, etc.)",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/025/00.webp"
+    ]
+  },
+  {
+    "id": "026",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "muestreo-de-correas-transportadoras-dosificacion-de-bolas-y-limpieza-de-harneros",
+    "title": "Muestreo de correas transportadoras, dosificación de bolas y limpieza de harneros",
+    "client": "Compañía Minera Escondida BHP Billiton",
+    "period": "2010 – 2012 (2 años)",
+    "description": "Servicios operacionales: Mantenimiento y apoyo en Paradas de Planta. Planificación y Programación del Mantenimiento.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/026/00.webp",
+      "/images/portafolio/026/01.webp"
+    ]
+  },
+  {
+    "id": "027",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "servicio-de-preparacion-transporte-y-limpieza-de-reactivos-muestreo-knelson-y-muestreo-de-planta-concentradora-tintaya",
+    "title": "Servicio de Preparación, Transporte y Limpieza de Reactivos, Muestreo Knelson y Muestreo de Planta Concentradora Tintaya",
+    "client": "Compañía minera Antapaccay – Tintaya- GLENCORE",
+    "period": "2020 – 2022 (2 años)",
+    "description": "Actividades generales: Toma de muestras en los puntos establecidos en cada circuito y preparación de las mismas en el laboratorio. Muestreo y seguimiento diaria de producción del concentrador gravimétrico Knelson. Tomas de muestras cabeza, concentrado, relave cleaner, relave rougher y relave final. Preparación de las muestras, secado, cuarteo, pulverizado y embolsado.",
+    "result": "Cumplimiento de la programación y ejecución del proyecto",
+    "images": [
+      "/images/portafolio/027/00.webp"
+    ]
+  },
+  {
+    "id": "028",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "preparacion-de-reactivos-adicion-de-billas-muestreo-de-planta-cambio-de-mallas-paneles-y-embolsado-de-concentrado-de-au-en-planta-concentradora-tintaya",
+    "title": "Preparación de Reactivos, Adición de Billas, Muestreo de Planta, Cambio de Mallas, Paneles y Embolsado de Concentrado de Au en Planta Concentradora Tintaya",
+    "client": "Compañía minera Antapaccay – Tintaya- GLENCORE",
+    "period": "Diciembre 2022 – Actualidad",
+    "description": "Actividades generales: Cambio de paneles y mallas en chancado secundario. Embolsado de concentrado de Au. Alimentación de bolas a molinos. Preparación de reactivos, colectores de flotación, espumante, cal y floculante. Toma y preparación de muestras diaria en los productos de chancado y molienda. Control de concentrador knelson. Toma y preparación de muestras en los circuitos de la concentradora; overland, chancado, molienda, flotación, filtros y relaves.",
+    "result": "Cumplimiento de la programación y ejecución del proyecto.",
+    "images": [
+      "/images/portafolio/028/00.webp",
+      "/images/portafolio/028/01.webp"
+    ]
+  },
+  {
+    "id": "029",
+    "category": "Operaciones Metalúrgicas",
+    "slug": "servicios-de-preparacion-de-pilas-de-lixiviacion",
+    "title": "Servicios de preparación de pilas de lixiviación",
+    "client": "Compañía Minera Cerro Colorado BHPBilliton",
+    "period": "2011 – 2014",
+    "description": "Servicios operacionales en Planta 1 y 2 (Chancado y Aglomerado). Preparación de las pilas de lixiviación. Encarpetado, Armado, desarme de sistema de riego, etc.",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/029/00.webp"
+    ]
+  },
+  {
+    "id": "030",
+    "category": "Contratos Predictivos / CBM",
+    "slug": "servicio-de-medicion-de-espesores-de-lineas-de-tuberia-conduccion-de-relaves-4-lineas",
+    "title": "Servicio de Medición de Espesores de Líneas de Tubería Conducción de Relaves (4 Líneas)",
+    "client": "Sociedad Minera Corona S.A.",
+    "period": "01/04/2024 A 15/04/2024(15 días)",
+    "description": "NDT – Monitoreo de Condición Se realizo la inspección visual , medición de espesores de las líneas de relave con la finalidad de evaluar el tipo de desgaste y evaluar el cambio de tubería de ser necesario con los siguientes objetivos:",
+    "result": "Cumplimiento de los Resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/030/00.webp",
+      "/images/portafolio/030/01.webp"
+    ]
+  },
+  {
+    "id": "031",
+    "category": "Contratos Predictivos / CBM",
+    "slug": "contrato-de-mantenimiento-predictivo-en-planta-de-tratamiento-de-agua-ptae",
+    "title": "Contrato de Mantenimiento Predictivo en Planta de Tratamiento de Agua Ptae",
+    "client": "Cía. Minera Antapaccay – Planta PTAE",
+    "period": "2021 a la actualidad",
+    "description": "Realizamos el Mantenimiento Predictivo de Sistemas de Bombeo y Monitoreo de Condición en líneas de tuberías utilizando las técnicas de: Análisis Vibracional. Termografía. Detección de Fallas por Ultrasonido Avanzado",
+    "result": "Optimizar las frecuencias de monitoreo y aprovisionar horas hombre para monitoreo en equipos planta.",
+    "images": [
+      "/images/portafolio/031/00.webp",
+      "/images/portafolio/031/01.webp",
+      "/images/portafolio/031/02.webp"
+    ]
+  },
+  {
+    "id": "032",
+    "category": "Contratos Predictivos / CBM",
+    "slug": "evaluacion-integral-de-condicion-y-mantenimiento-predictivo-en-planta-concentradora-y-planta-ptae",
+    "title": "Evaluación Integral de Condición y Mantenimiento Predictivo en Planta Concentradora y Planta PTAE",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Junio 2021 – Actualidad",
+    "description": "Servicio de Mantenimiento Predictivo y Evaluación de Condición de Equipos aplicando técnicas de mantenimiento predictivo programado: Análisis de vibraciones de equipos rotativos. Termografía en equipos rotativos y estáticos. Inspección visual (VT). Medición de espesores con equipo de Ultrasonido Acústico. Aplicación de tintes penetrantes (PT). Alineamiento láser de ejes y poleas.",
+    "result": "Cumplimiento de los resultados esperados. Cumplimiento de la programación y ejecución del servicio. Evaluación de la condición y detección oportuna de fallas.",
+    "images": [
+      "/images/portafolio/032/00.webp",
+      "/images/portafolio/032/01.webp",
+      "/images/portafolio/032/02.webp"
+    ]
+  },
+  {
+    "id": "033",
+    "category": "Contratos Predictivos / CBM",
+    "slug": "evaluacion-integral-de-condicion-y-mantenimiento-predictivo-para-el-arranque-de-planta",
+    "title": "Evaluación Integral de Condición y Mantenimiento Predictivo para el Arranque de Planta",
+    "client": "Mina Justa – MARCOBRE",
+    "period": "Junio 2021 (8 meses)",
+    "description": "Servicio de Mantenimiento Predictivo y Evaluación de Condición de Equipos para el arranque de Planta aplicando técnicas de mantenimiento predictivo programado: Análisis de vibraciones de equipos rotativos. Termografía en equipos rotativos y estáticos. Termografía em sistemas eléctricos. Análisis estático y dinámico de motores eléctricos. Inspección visual (VT). Medición de espesores con equipo de Ultrasonido Acústico. Aplicación de tintes penetrantes (PT). Alineamiento láser de ejes y poleas.",
+    "result": "Ejecución de pruebas para la puesta en marcha de equipos. Cumplimiento de los resultados esperados. Cumplimiento de la programación y ejecución del servicio. Evaluación de la condición y detección oportuna de fallas.",
+    "images": [
+      "/images/portafolio/033/00.webp",
+      "/images/portafolio/033/01.webp"
+    ]
+  },
+  {
+    "id": "034",
+    "category": "Contratos Predictivos / CBM",
+    "slug": "monitoreo-de-condicion-en-tuberias-y-tanques-de-planta-antapaccay-y-tintaya",
+    "title": "Monitoreo de Condición en Tuberías y tanques de Planta Antapaccay y Tintaya",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Junio 2021 – Actualidad",
+    "description": "Monitoreo de la Condición de Tuberías y Tanques de Planta Antapaccay-Tintaya por medio de la aplicación de la técnica de ultrasonido, termografía y con el uso de equipos especializados en este tipo de mediciones: UT convencional y avanzado en tuberías y tanques. Análisis Termográfico. Inspección visual (VT) y por tintes penetrantes",
+    "result": "Cumplimiento de los resultados esperados. Cumplimiento de la programación y ejecución del servicio. Evaluación de la condición y detección oportuna de fallas.",
+    "images": [
+      "/images/portafolio/034/00.webp",
+      "/images/portafolio/034/01.webp",
+      "/images/portafolio/034/02.webp"
+    ]
+  },
+  {
+    "id": "035",
+    "category": "Paradas de Planta",
+    "slug": "medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag",
+    "title": "Medición de Elongación de Pernos SPC4 Molino SAG/ Ensayos NDT en Trunnion SAG",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Agosto 2018 (10 días)",
+    "description": "Inspección visual del estado de los pernos inteligentes. Verificación de tensión en pernos inteligentes SPC4 en molinos SAG y molinos de bolas. Inspección visual y líquidos penetrantes de Trunnion Magnético de molinos de bolas.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución del servicio con los niveles más altos de seguridad, cero incidentes.",
+    "images": [
+      "/images/portafolio/035/00.webp",
+      "/images/portafolio/035/01.webp"
+    ]
+  },
+  {
+    "id": "036",
+    "category": "Paradas de Planta",
+    "slug": "inspeccion-y-deteccion-de-fallas-en-pernos-del-shell-alimentacion-y-descarga-y-tapa-de-descarga-del-molino-sag",
+    "title": "Inspección y Detección de Fallas en Pernos del Shell (Alimentación y Descarga) y Tapa de Descarga del Molino SAG",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Noviembre 2018 (10 días)",
+    "description": "Detección de fallas en pernos de shell y tapas mediante UT.",
+    "result": "Cumplimiento de los resultados esperados en el tiempo programado.",
+    "images": [
+      "/images/portafolio/036/00.webp",
+      "/images/portafolio/036/01.webp"
+    ]
+  },
+  {
+    "id": "037",
+    "category": "Paradas de Planta",
+    "slug": "evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda",
+    "title": "Evaluación de la Condición de los Equipos Principales de las Líneas de Chancado y Molienda",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Enero 2020 (8 días)",
+    "description": "Servicio de evaluación de la condición de equipos principales Chancado y Molienda mediante ensayos no destructivos NDT. Evaluación NDT del Pica rocas. Inspección VT y PT de cúpula y araña de la chancadora primaria. Inspección visual del Apron Feeder. Inspección de cover y de empalme de fajas de faja de sacrificio y Overland. Medición de espesores con UT de cover de poleas. Aplicación de PT de trunnion magnético de molinos de bolas. Inspección de mallas de tromel. Medición de elongación de pernos inteligentes SPC4 de molino de bolas y SAG. Inspección con UT de pernos de Shell de molino SAG. Inspección VT y PT de rastra y castillo de espesadores.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución de Parada de planta con los niveles más altos de seguridad. Cero incidentes",
+    "images": [
+      "/images/portafolio/037/00.webp",
+      "/images/portafolio/037/01.webp",
+      "/images/portafolio/037/02.webp"
+    ]
+  },
+  {
+    "id": "038",
+    "category": "Paradas de Planta",
+    "slug": "evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda-2",
+    "title": "Evaluación de la Condición de los Equipos Principales de las Líneas de Chancado y Molienda",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Setiembre 2019 (10 días)",
+    "description": "Servicio de evaluación de la condición de equipos principales Chancado y Molienda mediante ensayos no destructivos NDT. Evaluación NDT del Pica rocas. Inspección VT y PT de cúpula y araña de la chancadora primaria. Inspección visual del Apron Feeder. Inspección de ultrasonido al eje motriz y ejes de ruedas tensoras. Inspección de cover y de empalme de fajas de faja de sacrificio y Overland. Medición de espesores con UT de cover de poleas. Aplicación de PT de trunnion magnético de molinos de bolas. Inspección de mallas de tromel. Medición de elongación de pernos inteligentes SPC4 de molino de bolas y SAG. Inspección con UT de pernos de Shell de molino SAG. Inspección VT y PT de rastra y castillo de espesadores.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución de Parada de planta con los niveles más altos de seguridad, cero incidentes",
+    "images": [
+      "/images/portafolio/038/00.webp",
+      "/images/portafolio/038/01.webp",
+      "/images/portafolio/038/02.webp",
+      "/images/portafolio/038/03.webp"
+    ]
+  },
+  {
+    "id": "039",
+    "category": "Paradas de Planta",
+    "slug": "evaluacion-de-la-condicion-de-los-equipos-principales-de-la-linea-de-molienda",
+    "title": "Evaluación de la Condición de los Equipos Principales de la Línea de Molienda",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Octubre 2022 (5 días)",
+    "description": "Servicio de evaluación de la condición de equipos principales Molienda mediante ensayos no destructivos NDT. Medición de elongación de pernos SPC4 de los Molinos de Bolas 01 y 02 y molinos SAG. Inspección visual a cadenas y bocinas de alimentador (sproket). Inspección de ultrasonido al eje motriz y ejes de ruedas tensoras. Inspección NDT a ejes y tapas. Inspección de cover y de empalme de fajas. Inspección NDT, VT y PT de guías inferiores, estructuras, soporte de estructura tubo torque, estructura castillo y rastra de espesador de relaves.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución de Parada de planta con los niveles más altos de seguridad. Cero incidentes.",
+    "images": [
+      "/images/portafolio/039/00.webp",
+      "/images/portafolio/039/01.webp"
+    ]
+  },
+  {
+    "id": "040",
+    "category": "Paradas de Planta",
+    "slug": "monitoreo-de-condicion-de-equipos-principales-de-chancado-y-molienda",
+    "title": "Monitoreo de Condición de Equipos Principales de – Chancado y Molienda",
+    "client": "Antapaccay – GLENCORE",
+    "period": "Diciembre 2021 (6 días)",
+    "description": "Servicio de evaluación de la condición de equipos principales Chancado y Molienda mediante ensayos no destructivos NDT. Evaluación NDT del Pica rocas. Inspección VT y PT de cúpula y araña de la chancadora primaria. Inspección visual del Apron Feeder. Inspección de cover y de empalme de fajas de faja de sacrificio y Overland. Medición de espesores con UT de cover de poleas. Aplicación de PT de trunnion magnético de molinos de bolas. Inspección de mallas de tromel. Medición de elongación de pernos inteligentes SPC4 de molino de bolas y SAG. Inspección con UT de pernos de Shell de molino SAG. Inspección VT y PT de rastra y castillo de espesadores.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución de Parada de planta con los niveles más altos de seguridad, cero incidentes.",
+    "images": [
+      "/images/portafolio/040/00.webp",
+      "/images/portafolio/040/01.webp",
+      "/images/portafolio/040/02.webp",
+      "/images/portafolio/040/03.webp"
+    ]
+  },
+  {
+    "id": "041",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-evaluacion-de-condicion-de-equipos-planta-chancado-y-molienda",
+    "title": "Servicio de Monitoreo de Condición de Equipos Principales de Planta Chancado y Molienda",
+    "client": "Minera Antapaccay (Subcontratación de FLSmidth) Parada Mayor de Planta Chancado y Molienda",
+    "period": "Ene 2020",
+    "description": "Realizamos el Monitoreo de Condición utilizando la técnicas de: Ultrasonido UT a cover de poleas. Detección de fallas en ejes de poleas. Inspección de empalmes. Detección de fallas en pernos de shell y tapas Ensayos en trunnion de molinos. Ultrasonido UT para detección de fisuramientos internos MSAG.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/041/00.webp",
+      "/images/portafolio/041/01.webp",
+      "/images/portafolio/041/02.webp"
+    ]
+  },
+  {
+    "id": "042",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-evaluacion-dimensional-y-ensayos-no-destructivos-ndt-en-elementos-de-desgaste-en-equipos-chancado",
+    "title": "Servicio de Evaluación Dimensional y Ensayos no destructivos en Planta Concentradora",
+    "client": "Mina Constancia (Subcontratación de FLSmidth) Parada Mayor de Planta Chancado",
+    "period": "Set 2017",
+    "description": "Realizamos el Monitoreo de Condición utilizando la técnicas de: Evaluación dimensional del buje de la excéntrica. Ensayos No Destructivos (TP) a elementos de desgaste del main shaft. Ensayos No Destructivos (PM) a excéntrica y contraeje.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/042/00.webp",
+      "/images/portafolio/042/01.webp",
+      "/images/portafolio/042/02.webp"
+    ]
+  },
+  {
+    "id": "043",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-mb1",
+    "title": "Servicio de Elongación de Pernos Inteligentes y Ultrasonido en Molinos",
+    "client": "Mina Chinalco (Subcontratación de FLSmidth) Parada Mayor de Planta Molienda",
+    "period": "Set 2020",
+    "description": "Realizamos el Monitoreo de Condición utilizando la técnicas de: Medición de Elongación de Pernos Inteligentes en MB01. Medición de Espesores UT en Lainers MB01",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/043/00.webp",
+      "/images/portafolio/043/01.webp"
+    ]
+  },
+  {
+    "id": "044",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-mb1-planta-concentradora-chinalco-toromocho",
+    "title": "Servicio de Medición de Elongación de Pernos Inteligentes y UT en Molino MB1 – Planta Concentradora Chinalco Toromocho",
+    "client": "Sub_Cont FLSmidth – Chinalco",
+    "period": "Setiembre 2020 (10 días)",
+    "description": "Inspección visual del estado de los pernos inteligentes. Verificación de tensión en pernos inteligentes SPC4 de molino MB1.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución del servicio con los niveles más altos de seguridad, cero incidentes.",
+    "images": [
+      "/images/portafolio/044/00.webp"
+    ]
+  },
+  {
+    "id": "045",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-sag",
+    "title": "Servicio de Medición de Elongación de Pernos Inteligentes en Molinos",
+    "client": "Mina Las Bambas (Subcontratación de FLSmidth) Parada Mayor de Planta Molienda",
+    "period": "Ago 2020",
+    "description": "Realizamos el Monitoreo de Condición utilizando la técnicas de: Medición de Elongación de Pernos Inteligentes en MB01. Medición de Espesores UT en Lainers MSAG.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/045/00.webp",
+      "/images/portafolio/045/01.webp"
+    ]
+  },
+  {
+    "id": "046",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-sag-planta-concentradora-las-bambas",
+    "title": "Servicio de Medición de Elongación de Pernos Inteligentes y UT en Molino SAG – Planta Concentradora Las Bambas",
+    "client": "Sub_Cont FLSmidth – Las Bambas",
+    "period": "Abril 2021 (10 días)",
+    "description": "Inspección visual del estado de los pernos inteligentes Verificación de tensión en pernos inteligentes SPC4 en molinos SAG y molinos de bolas.",
+    "result": "Cumplimiento del plan de parada y re-portabilidad oportuna. Ejecución del servicio con los niveles más altos de seguridad, cero incidentes.",
+    "images": [
+      "/images/portafolio/046/00.webp",
+      "/images/portafolio/046/01.webp",
+      "/images/portafolio/046/02.webp"
+    ]
+  },
+  {
+    "id": "047",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-y-ut-en-molinos",
+    "title": "Servicio de Medición de Elongación de Pernos y UT en Molinos",
+    "client": "Sub_Cont FLSmidth – Quellaveco",
+    "period": "Setiembre 2023 (6 días)",
+    "description": "Inspección visual del estado de los pernos inteligentes. Verificación de tensión en pernos inteligentes SPC4 en molinos SAG y molinos de bolas.",
+    "result": "Cumplimiento del plan de parada y re-portabilidad oportuna. Ejecución del servicio con los niveles más altos de seguridad. Cero incidentes.",
+    "images": [
+      "/images/portafolio/047/00.webp",
+      "/images/portafolio/047/01.webp",
+      "/images/portafolio/047/02.webp"
+    ]
+  },
+  {
+    "id": "048",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-y-ut-en-molinos-2",
+    "title": "Servicio de Monitoreo de Condición de Equipos – MB01",
+    "client": "Sub_Cont FLSmidth – Las Bambas",
+    "period": "Febrero 2022 (10 días)",
+    "description": "Servicio de evaluación de la condición de equipos principales mediante ensayos no destructivos NDT. Ultrasonido UT a cover de poleas. Detección de fallas en ejes de poleas. Inspección de empalmes. Detección de fallas en pernos de shell y tapas. Ensayos en trunnion de molinos. Ultrasonido UT para detección de fisuramientos internos MSA.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna. Ejecución de Parada de planta con los niveles más altos de seguridad, cero incidentes",
+    "images": [
+      "/images/portafolio/048/00.webp",
+      "/images/portafolio/048/01.webp"
+    ]
+  },
+  {
+    "id": "049",
+    "category": "Paradas de Planta",
+    "slug": "servicio-de-medicion-de-elongacion-de-pernos-y-ut-en-molinos-3",
+    "title": "Servicio de Medición de Elongación de Pernos y UT en Molinos",
+    "client": "Sub_Cont FLSmidth – Quellaveco",
+    "period": "Diciembre 2022 (2 días)",
+    "description": "Inspección visual del estado de los pernos inteligentes. Verificación de tensión en pernos inteligentes SPC4 en molinos SAG y molinos de bolas.",
+    "result": "Cumplimiento del plan de parada y reportabilidad oportuna.",
+    "images": [
+      "/images/portafolio/049/00.webp",
+      "/images/portafolio/049/01.webp",
+      "/images/portafolio/049/02.webp"
+    ]
+  },
+  {
+    "id": "050",
+    "category": "Paradas de Planta",
+    "slug": "servicio-medicion-de-elongacion-de-pernos-inteligentes-en-molino-sag-y-ultrasonido-convencional-en-molino-de-bolasplanta-concentradora-minera-las-bambas",
+    "title": "Servicio Medición de Elongación y Ultrasonido Convencional en Molino de Bolas",
+    "client": "Sub-contrato FLSmidth – Las Bambas (MMG)",
+    "period": "2022",
+    "description": "Medición de elongación de pernos inteligentes en el Molino SAG y ultrasonido convencional en el Molino de Bolas de la Planta Concentradora de Minera Las Bambas.",
+    "result": "Ejecución del servicio con los más altos niveles de seguridad y cero incidentes.",
+    "images": [
+      "/images/portafolio/050/00.webp",
+      "/images/portafolio/050/01.webp",
+      "/images/portafolio/050/02.webp",
+      "/images/portafolio/050/03.webp",
+      "/images/portafolio/050/04.webp"
+    ]
+  }
+]

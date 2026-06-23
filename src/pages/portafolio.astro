@@ -1,318 +1,39 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import galleryManifest from '../data/portafolio-images.json';
+import projectsData from '../data/portafolio.json';
 
-// Casos reales de Relengcorp (https://relengcorp.com/portafolio/), organizados por categoría
-// y conteo idénticos a la web: Servicios Especializados (9), Confiabilidad (11),
-// Contratos Predictivos / CBM (1) y Paradas de Planta (5). Se conservan los proyectos
-// que la web lista en más de una categoría o repetidos.
-// Las imágenes (galería WebP optimizada) se enlazan por `slug` desde el manifiesto.
+// Casos reales de Relengcorp, tomados de las 5 páginas de categoría de relengcorp.com:
+// Servicios Especializados, Confiabilidad, Operaciones Metalúrgicas, Contratos Predictivos / CBM
+// y Paradas de Planta. Datos (cliente, año, descripción, logro) e imágenes (galería WebP
+// optimizada) extraídos de la ficha individual de cada proyecto.
 interface Project {
+  id: string;
+  category: string;
   slug: string;
   title: string;
   client: string;
   period: string;
-  location?: string;
   description: string;
   result: string;
-  category?: string;
-  index?: number;
-  image?: string;
-  gallery?: string[];
+  images: string[];
 }
 
-const categories: { name: string; projects: Project[] }[] = [
-  {
-    name: 'Servicios Especializados',
-    projects: [
-      {
-        slug: 'ultrasonido-phase-array-de-ciguenal',
-        title: 'Ultrasonido Phase Array de cigüeñal',
-        client: 'FLSmidth',
-        period: '2024 · 2 días',
-        description:
-          'Inspección por ultrasonido Phase Array (PAUT) de cigüeñal para la detección de discontinuidades internas y la evaluación de su integridad estructural.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'servicio-de-elongacion-de-pernos-quellaveco',
-        title: 'Servicio de elongación de pernos – Quellaveco',
-        client: 'FLSmidth',
-        period: '2024 · 5 días',
-        location: 'Quellaveco',
-        description:
-          'Medición de elongación de pernos inteligentes SPC4, que permiten reapretar y mantener la tensión de la unión cuantas veces sea necesario, reduciendo tiempos de mantenimiento, costos y reemplazo de piezas.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'servicio-de-escaneo-laser-de-reductor_emo',
-        title: 'Servicio de escaneo láser de reductor – EMO',
-        client: 'SEW-Eurodrive del Perú',
-        period: '2024 · 15 días',
-        description:
-          'Escaneo láser 3D del reductor con procesamiento de nube de puntos y modelado CAD para el levantamiento dimensional del componente.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'servicios-de-inspeccion-de-tanques-de-aire-comprimido-planta-antapaccay-y-tintaya',
-        title: 'Inspección de tanques de aire comprimido – Plantas Antapaccay y Tintaya',
-        client: 'Antapaccay – Glencore',
-        period: '2024 · 3 meses',
-        location: 'Plantas Antapaccay y Tintaya',
-        description:
-          'Inspección y certificación de recipientes a presión (tanques de aire comprimido), evaluando condición mecánico-estructural, velocidad de corrosión, vida remanente y estado de los cordones de soldadura.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'srv-inspeccion-certificacion-de-tanques-de-aire-comprimido-planta-oxidos',
-        title: 'Inspección y certificación de tanques de aire comprimido – Planta Óxidos',
-        client: 'Antapaccay – Glencore',
-        period: '2024 · 1 mes',
-        location: 'Planta Óxidos',
-        description:
-          'Inspección y certificación de recipientes a presión (tanque de aire comprimido): condición mecánico-estructural, velocidad de corrosión, vida remanente y estado de soldaduras.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'srv-inspeccion-presurizacion-certificacion-de-tanques-de-aire-talleres-mina',
-        title: 'Inspección, presurización y certificación de tanques de aire – Talleres Mina',
-        client: 'Antapaccay – Glencore',
-        period: '2024',
-        location: 'Talleres Mina',
-        description:
-          'Inspección, presurización y certificación de recipientes a presión (tanques de aire comprimido) en Talleres Mina, verificando su condición estructural y su operatividad segura.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'servicio-de-escaneo-laser-minera-las-bravas',
-        title: 'Servicio de escaneo láser – Minera Las Bravas',
-        client: 'Gemin',
-        period: '2024 · 15 días',
-        location: 'Minera Las Bravas',
-        description:
-          'Escaneo láser 3D de la planta de procesamiento, procesamiento de nube de puntos en formato RECAP, modelado 3D CAD y planos generales en AutoCAD.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'escaneo-laser-procesamiento-de-nube-de-puntos-y-modelado-3d-de-chasis',
-        title: 'Escaneo láser, procesamiento de nube de puntos y modelado 3D de chasis',
-        client: 'Tecpred',
-        period: '2024 · 10 días',
-        description:
-          'Escaneo láser 3D del chasis, procesamiento de nube de puntos y modelado CAD del componente, con entrega de planos en AutoCAD y archivo en formato RECAP.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'levantamiento-dimensional-mediante-escaneo-laser-3d-de-la-planta-concentradora-cobriza',
-        title: 'Levantamiento dimensional con escaneo láser 3D – Planta Concentradora Cobriza',
-        client: 'Gemin',
-        period: '2024 · 60 días',
-        location: 'Planta Concentradora Cobriza',
-        description:
-          'Escaneo láser y procesamiento de nube de puntos (RECAP), maquetas 3D CAD de equipos, fajas, tolvas, accesos y estructuras en Navisworks, y planos de secciones longitudinales y transversales en AutoCAD por área de proceso.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-    ],
-  },
-  {
-    name: 'Confiabilidad',
-    projects: [
-      {
-        slug: 'servicio-levantamiento-de-condicion-de-equipos-en-minera-cerro-colorado-iquique-chile',
-        title: 'Levantamiento de condición de equipos – Minera Cerro Colorado, Iquique (Chile)',
-        client: 'Ripp Consulting',
-        period: '2024 · 45 días',
-        location: 'Minera Cerro Colorado, Iquique – Chile',
-        description:
-          'Inspección de áreas operacionales: lixiviación, extracción por solventes (SX), tank farm, electrowinning, piscinas de refino y sistema de ácido sulfúrico, con revisión de sus sistemas de control.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'desarrollo-de-los-procesos-de-mantenimiento-estrategia-administracion-del-trabajo-y-mejoramiento-de-la-confiabilidad',
-        title:
-          'Desarrollo de los procesos de mantenimiento: estrategia, administración del trabajo y mejora de la confiabilidad',
-        client: 'Minera Cerro Colorado – BHP Billiton, Iquique (Chile)',
-        period: '2010 · 5 meses',
-        location: 'Iquique, Chile',
-        description:
-          'Levantamiento de información in situ, modelado e implementación de los procesos de mantenimiento y definición de KPIs, con enfoque estratégico y de administración del trabajo.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'implementacion-de-analisis-de-confiabilidad-en-planta-molienda',
-        title: 'Implementación de análisis de confiabilidad en Planta Molienda',
-        client: 'Antapaccay – Glencore',
-        period: '2013 · 6 meses',
-        location: 'Planta de Molienda',
-        description:
-          'Análisis y parametrización de la estadística de mantenimiento y evaluación de disponibilidad, confiabilidad y productividad de equipos y componentes.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag-2',
-        title: 'Medición de elongación de pernos SPC4 Molino SAG / Ensayos NDT en trunnion SAG',
-        client: 'Antapaccay – Glencore',
-        period: '2017 · 8 meses',
-        description:
-          'Análisis y parametrización de la estadística de mantenimiento y evaluación de disponibilidad, confiabilidad y productividad de la planta de chancado, junto con la medición de elongación de pernos inteligentes SPC4 y ensayos NDT en el trunnion del Molino SAG.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'desarrollo-de-los-procesos-de-planeamiento-de-control-de-procesos-cdp-y-kpis',
-        title: 'Desarrollo de los procesos de planeamiento, control de procesos (CdP) y KPI’s',
-        client: 'Antapaccay – Glencore',
-        period: '2018 · 5 meses',
-        description:
-          'Desarrollo de procesos de planeamiento y control de procesos (CdP) y definición de KPIs para mejorar la operatividad de los sistemas y cumplir las metas de producción.',
-        result: 'Cumplimiento del plan y reportabilidad oportuna.',
-      },
-      {
-        slug: 'analisis-rcm-y-planes-de-mantenimiento-planta-equipos-criticos-y-estatutorias',
-        title: 'Análisis RCM y planes de mantenimiento de planta (equipos críticos y estatutarias)',
-        client: 'Las Bambas – MMG',
-        period: '2020 · 4 meses',
-        description:
-          'Desarrollo de planes de mantenimiento con metodología RCM para los equipos críticos de molienda, chancado, flotación y espesadores.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'analisis-rcm-y-planes-de-mantenimiento-planta-puerto',
-        title: 'Análisis RCM y planes de mantenimiento – Planta Puerto',
-        client: 'El Pacífico – CMP Chile',
-        period: '2020 · 6 meses',
-        location: 'Puertos Totoralillo, Guacolda y Guayacán (Chile)',
-        description:
-          'Desarrollo de planes de mantenimiento con metodología RCM para los shiploaders de los puertos Totoralillo, Guacolda y Guayacán.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'elaboracion-de-instructivos-de-trabajo-wis-y-cartillas-resumen-de-equipos-linea-amarilla',
-        title: 'Instructivos de trabajo (WIs) y cartillas resumen de equipos de línea amarilla',
-        client: 'Las Bambas – MMG',
-        period: '2021 · 8 meses',
-        description:
-          'Elaboración de instructivos de trabajo (WIs) y cartillas resumen para equipos de línea amarilla: perforadoras, palas, flota auxiliar y camiones.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'levantamiento-de-inventario-de-equipos-e-implementacion-de-estrategias-y-planes-de-mantenimiento-de-plantas-nirsa',
-        title:
-          'Levantamiento de inventario e implementación de estrategias y planes de mantenimiento – Plantas NIRSA',
-        client: 'NIRSA – Posorja (Ecuador)',
-        period: '2022 · 6 meses',
-        location: 'Posorja, Ecuador',
-        description:
-          'Evaluación del nivel de madurez, levantamiento de inventario de equipos, análisis de criticidad (FMECA y RCM) e implementación y optimización de planes de mantenimiento.',
-        result: 'Cumplimiento de la programación y ejecución del proyecto.',
-      },
-      {
-        slug: 'elaboracion-de-instructivos-de-trabajo-wis-pets-y-cartillas-resumen-de-equipos-planta',
-        title: 'Instructivos de trabajo (WIs), PETs y cartillas resumen de equipos de planta',
-        client: 'Las Bambas – MMG',
-        period: '2022 · 6 meses',
-        description:
-          'Elaboración de 1,000 instructivos de trabajo (WIs), PETs y cartillas check-list para tareas de mantenimiento mecánico, eléctrico e instrumentación de equipos de planta.',
-        result: 'Entrega completa de los 1,000 instructivos para los equipos de la planta.',
-      },
-      {
-        slug: 'elaboracion-de-procedimientos-de-mantenimiento-instructivos-de-mantenimiento-e-instructivos-de-bloqueo',
-        title: 'Procedimientos e instructivos de mantenimiento e instructivos de bloqueo',
-        client: 'Mantoverde – Chile',
-        period: '2022 · 6 meses',
-        location: 'Chile',
-        description:
-          'Elaboración de procedimientos e instructivos de mantenimiento (mecánico, eléctrico e instrumentación) e instructivos de aislamiento y bloqueo de equipos críticos.',
-        result: 'Cumplimiento de la programación y ejecución del proyecto.',
-      },
-    ],
-  },
-  {
-    name: 'Contratos Predictivos / CBM',
-    projects: [
-      {
-        slug: 'servicio-de-medicion-de-espesores-de-lineas-de-tuberia-conduccion-de-relaves-4-lineas',
-        title: 'Medición de espesores en líneas de tubería de conducción de relaves (4 líneas)',
-        client: 'Sociedad Minera Corona S.A.',
-        period: '2024 · 15 días',
-        description:
-          'Inspección visual y medición de espesores de cuatro líneas de tubería de conducción de relaves para evaluar el desgaste y determinar la necesidad de reemplazo.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-    ],
-  },
-  {
-    name: 'Paradas de Planta',
-    projects: [
-      {
-        slug: 'medicion-de-elongacion-de-pernos-spc4-molino-sag-ensayos-ndt-en-trunnion-sag-2',
-        title: 'Medición de elongación de pernos SPC4 y ensayos NDT en trunnion del Molino SAG',
-        client: 'Antapaccay – Glencore',
-        period: '2017',
-        description:
-          'Medición de elongación de pernos inteligentes SPC4 del Molino SAG y ensayos no destructivos (NDT) en el trunnion, verificando la tensión de las uniones y la integridad del componente.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'inspeccion-y-deteccion-de-fallas-en-pernos-del-shell-alimentacion-y-descarga-y-tapa-de-descarga-del-molino-sag',
-        title: 'Inspección y detección de fallas en pernos del shell y tapa de descarga del Molino SAG',
-        client: 'Antapaccay – Glencore',
-        period: '2018 · 10 días',
-        description:
-          'Inspección y detección de fallas por ultrasonido (UT) en los pernos del shell (alimentación y descarga) y en la tapa de descarga del Molino SAG.',
-        result: 'Cumplimiento de los resultados esperados en el tiempo programado.',
-      },
-      {
-        slug: 'evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda-2',
-        title: 'Evaluación de la condición de los equipos principales de las líneas de chancado y molienda',
-        client: 'Antapaccay – Glencore',
-        period: '2019 · 10 días',
-        description:
-          'Evaluación de la condición de los equipos principales de chancado y molienda mediante ensayos no destructivos (NDT): pica rocas, chancadora primaria, apron feeder, molinos, espesadores y pernos inteligentes SPC4.',
-        result: 'Ejecución de la parada con los más altos niveles de seguridad y cero incidentes.',
-      },
-      {
-        slug: 'evaluacion-de-la-condicion-de-los-equipos-principales-de-las-lineas-de-chancado-y-molienda-2',
-        title: 'Evaluación de la condición de los equipos principales de las líneas de chancado y molienda',
-        client: 'Antapaccay – Glencore',
-        period: '2019 · 10 días',
-        description:
-          'Evaluación de la condición de los equipos principales de chancado y molienda mediante ensayos no destructivos (NDT): pica rocas, chancadora primaria, apron feeder, molinos, espesadores y pernos inteligentes SPC4.',
-        result: 'Ejecución de la parada con los más altos niveles de seguridad y cero incidentes.',
-      },
-      {
-        slug: 'servicio-de-medicion-de-elongacion-de-pernos-inteligentes-y-ut-en-molino-mb1-planta-concentradora-chinalco-toromocho',
-        title:
-          'Medición de elongación de pernos inteligentes y UT en Molino MB1 – Planta Concentradora Chinalco Toromocho',
-        client: 'Sub-contrato FLSmidth – Chinalco',
-        period: '2020 · 10 días',
-        location: 'Planta Concentradora Toromocho (Molino MB1)',
-        description:
-          'Inspección visual y verificación de tensión de pernos inteligentes SPC4, medición de elongación y ensayos ultrasónicos (UT) en el Molino MB1.',
-        result: 'Ejecución del servicio con los más altos niveles de seguridad y cero incidentes.',
-      },
-    ],
-  },
+const projects = projectsData as Project[];
+
+// Orden de filtros y conteos por categoría.
+const FILTERS = [
+  'Servicios Especializados',
+  'Confiabilidad',
+  'Operaciones Metalúrgicas',
+  'Contratos Predictivos / CBM',
+  'Paradas de Planta',
 ];
-
-// Galerías reales (optimizadas a WebP) enlazadas por slug.
-const manifest = galleryManifest as Record<string, string[]>;
-
-// Índice global para enlazar tarjeta ↔ galería/ficha del modal.
-const allProjects: Project[] = [];
-categories.forEach((cat) => {
-  cat.projects.forEach((p) => {
-    p.category = cat.name;
-    p.index = allProjects.length;
-    p.gallery = (manifest[p.slug] ?? []).map((f) => `/images/portafolio/${f}`);
-    p.image = p.gallery[0];
-    allProjects.push(p);
-  });
-});
+const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => p.category === f).length]));
 ---
 <BaseLayout
   title="Portafolio"
-  description="Casos y proyectos ejecutados por Relengcorp en el sector minero e industrial: integridad estructural, mantenimiento predictivo, confiabilidad y más."
+  description="Casos y proyectos ejecutados por Relengcorp en el sector minero e industrial: servicios especializados, confiabilidad, operaciones metalúrgicas, monitoreo predictivo y paradas de planta."
 >
   <PageHeader
     eyebrow="Portafolio"
@@ -322,40 +43,49 @@ categories.forEach((cat) => {
   />
 
   <section class="section">
-    <div class="container portfolio-cats">
-      {categories.map((cat) => (
-        <div class="portfolio-cat">
-          <h2 class="portfolio-cat__title h-m" data-reveal>{cat.name}</h2>
-          <div class="portfolio-grid">
-            {cat.projects.map((p) => (
-              <button type="button" class="project-card" data-reveal data-project-trigger={p.index} aria-haspopup="dialog">
-                <div class="project-card__inner">
-                  <div class="project-card__media">
-                    <img src={p.image} alt={p.title} class="project-card__img" loading="lazy" decoding="async" />
-                    <span class="project-card__tag">{cat.name}</span>
-                    {p.gallery!.length > 1 && (
-                      <span class="project-card__count">
-                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        {p.gallery!.length}
-                      </span>
-                    )}
-                    <div class="project-card__overlay">
-                      <span class="project-card__overlay-text">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Ver detalle
-                      </span>
-                    </div>
-                  </div>
-                  <div class="project-card__body">
-                    <h3 class="h-xs">{p.title}</h3>
-                    <p class="project-card__meta text-s">{p.client} · {p.period}</p>
-                  </div>
+    <div class="container">
+      <!-- ===== FILTROS (refresco interno, sin recargar) ===== -->
+      <div class="portfolio-filters" role="group" aria-label="Filtrar proyectos por tipo" data-reveal>
+        <button type="button" class="portfolio-filter is-active" data-filter="all" aria-pressed="true">
+          Todos <span class="portfolio-filter__count">{projects.length}</span>
+        </button>
+        {FILTERS.map((f) => (
+          <button type="button" class="portfolio-filter" data-filter={f} aria-pressed="false">
+            {f} <span class="portfolio-filter__count">{counts[f]}</span>
+          </button>
+        ))}
+      </div>
+
+      <p class="portfolio-empty" data-empty hidden>No hay proyectos en esta categoría.</p>
+
+      <div class="portfolio-grid" data-grid>
+        {projects.map((p, i) => (
+          <button type="button" class="project-card" data-reveal data-project-trigger={i} data-category={p.category} aria-haspopup="dialog">
+            <div class="project-card__inner">
+              <div class="project-card__media">
+                <img src={p.images[0]} alt={p.title} class="project-card__img" loading="lazy" decoding="async" />
+                <span class="project-card__tag">{p.category}</span>
+                {p.images.length > 1 && (
+                  <span class="project-card__count">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true"><path d="M3 16l5-5 4 4 3-3 6 6M3 5h18v14H3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    {p.images.length}
+                  </span>
+                )}
+                <div class="project-card__overlay">
+                  <span class="project-card__overlay-text">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Ver detalle
+                  </span>
                 </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      ))}
+              </div>
+              <div class="project-card__body">
+                <h3 class="h-xs">{p.title}</h3>
+                <p class="project-card__meta text-s">{p.client} · {p.period}</p>
+              </div>
+            </div>
+          </button>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -368,8 +98,8 @@ categories.forEach((cat) => {
       </button>
 
       <div class="project-modal__stage">
-        {allProjects.flatMap((p) => p.gallery!.map((src, ii) => (
-          <img class="project-modal__img" data-project={p.index} data-image={ii} src={src} alt={`${p.title} — imagen ${ii + 1}`} loading="lazy" decoding="async" hidden />
+        {projects.flatMap((p, i) => p.images.map((src, ii) => (
+          <img class="project-modal__img" data-project={i} data-image={ii} src={src} alt={`${p.title} — imagen ${ii + 1}`} loading="lazy" decoding="async" hidden />
         )))}
 
         <button type="button" class="project-modal__nav project-modal__nav--prev" data-gallery-prev aria-label="Imagen anterior" hidden>
@@ -381,10 +111,10 @@ categories.forEach((cat) => {
         <span class="project-modal__counter" hidden><span data-gallery-current>1</span> / <span data-gallery-total>1</span></span>
 
         <div class="project-modal__thumbs" hidden>
-          {allProjects.map((p) => (
-            <div class="project-modal__thumbgroup" data-project={p.index} hidden>
-              {p.gallery!.map((src, ii) => (
-                <button type="button" class="project-modal__thumb" data-project={p.index} data-image={ii} aria-label={`Ver imagen ${ii + 1}`}>
+          {projects.map((p, i) => (
+            <div class="project-modal__thumbgroup" data-project={i} hidden>
+              {p.images.map((src, ii) => (
+                <button type="button" class="project-modal__thumb" data-project={i} data-image={ii} aria-label={`Ver imagen ${ii + 1}`}>
                   <img src={src} alt="" loading="lazy" decoding="async" />
                 </button>
               ))}
@@ -394,20 +124,21 @@ categories.forEach((cat) => {
       </div>
 
       <div class="project-modal__body">
-        {allProjects.map((p) => (
-          <div class="project-modal__detail" data-project={p.index} hidden>
+        {projects.map((p, i) => (
+          <div class="project-modal__detail" data-project={i} hidden>
             <p class="project-modal__cat">{p.category}</p>
             <h3 class="project-modal__title">{p.title}</h3>
             <dl class="project-modal__meta">
               <div><dt>Cliente</dt><dd>{p.client}</dd></div>
               <div><dt>Año</dt><dd>{p.period}</dd></div>
-              {p.location && <div><dt>Ubicación</dt><dd>{p.location}</dd></div>}
             </dl>
             <p class="project-modal__desc">{p.description}</p>
-            <p class="project-modal__result">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              {p.result}
-            </p>
+            {p.result && (
+              <p class="project-modal__result">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                {p.result}
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -426,15 +157,36 @@ categories.forEach((cat) => {
 </BaseLayout>
 
 <style>
-  .portfolio-cats { display: flex; flex-direction: column; gap: var(--space-12); }
-  .portfolio-cat__title { color: var(--text-strong); margin-bottom: var(--space-6); }
+  /* ===== FILTROS ===== */
+  .portfolio-filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-8); }
+  .portfolio-filter {
+    display: inline-flex; align-items: center; gap: var(--space-2);
+    font: inherit; font-size: var(--fs-text-s); font-weight: var(--fw-semibold);
+    color: var(--text-body); cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 0.55rem 1.1rem; border-radius: var(--radius-pill);
+    transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  }
+  .portfolio-filter:hover { border-color: var(--accent); color: var(--text-strong); }
+  .portfolio-filter__count {
+    font-size: var(--fs-text-xs); font-weight: var(--fw-bold);
+    background: var(--neutro-100); color: var(--text-muted);
+    padding: 1px 8px; border-radius: var(--radius-pill); transition: inherit;
+  }
+  .portfolio-filter.is-active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .portfolio-filter.is-active .portfolio-filter__count { background: rgba(255,255,255,0.22); color: #fff; }
+  .portfolio-filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
+  .portfolio-empty { color: var(--text-muted); padding: var(--space-8) 0; text-align: center; }
+
+  /* ===== GRID DE CARDS ===== */
   .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-7); }
   .project-card {
     display: block; width: 100%; text-align: left; font: inherit; color: inherit; cursor: pointer;
     background: none; border: none; padding: 0;
     transition: transform var(--dur-base) var(--ease-out);
   }
+  .project-card[hidden] { display: none; }
   .project-card:hover,
   .project-card:focus-visible { transform: translateY(-6px); }
   .project-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -515,7 +267,6 @@ categories.forEach((cat) => {
   }
   .project-modal__close:hover { background: rgba(8,10,20,0.85); }
 
-  /* Escenario de imagen con miniaturas superpuestas */
   .project-modal__stage {
     position: relative; flex-shrink: 0;
     background: #05060c;
@@ -544,7 +295,6 @@ categories.forEach((cat) => {
   }
   .project-modal__counter[hidden] { display: none; }
 
-  /* Miniaturas: tira flotante semitransparente sobre la imagen */
   .project-modal__thumbs {
     position: absolute; left: 50%; bottom: var(--space-4); transform: translateX(-50%); z-index: 3;
     display: flex; gap: var(--space-2);
@@ -596,6 +346,33 @@ categories.forEach((cat) => {
 </style>
 
 <script>
+  // ===== Filtro client-side (refresco interno, sin recargar) =====
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.portfolio-filter');
+  const cards = document.querySelectorAll<HTMLElement>('.project-card');
+  const emptyMsg = document.querySelector<HTMLElement>('[data-empty]');
+
+  const applyFilter = (filter: string) => {
+    let visible = 0;
+    cards.forEach((c) => {
+      const match = filter === 'all' || c.dataset.category === filter;
+      c.hidden = !match;
+      if (match) visible++;
+    });
+    if (emptyMsg) emptyMsg.hidden = visible > 0;
+  };
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => {
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+      applyFilter(btn.dataset.filter ?? 'all');
+    });
+  });
+
+  // ===== Modal / galería =====
   const triggers = document.querySelectorAll<HTMLButtonElement>('[data-project-trigger]');
   const modal = document.querySelector<HTMLElement>('[data-project-modal]');
   const stageImgs = document.querySelectorAll<HTMLElement>('.project-modal__img');
@@ -610,8 +387,8 @@ categories.forEach((cat) => {
   const totEl = modal?.querySelector<HTMLElement>('[data-gallery-total]') ?? null;
   const closeEls = document.querySelectorAll<HTMLElement>('[data-project-modal-close]');
 
-  let cp = 0; // proyecto actual
-  let ci = 0; // imagen actual
+  let cp = 0;
+  let ci = 0;
   let total = 1;
 
   const render = () => {
