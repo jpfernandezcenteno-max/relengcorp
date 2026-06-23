@@ -158,9 +158,20 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
 
 <style>
   /* ===== FILTROS ===== */
-  .portfolio-filters { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-bottom: var(--space-8); }
+  .portfolio-filters {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+  }
+  .portfolio-filters::-webkit-scrollbar { display: none; }
   .portfolio-filter {
     display: inline-flex; align-items: center; gap: var(--space-2);
+    flex-shrink: 0; white-space: nowrap;
     font: inherit; font-size: var(--fs-text-s); font-weight: var(--fw-semibold);
     color: var(--text-body); cursor: pointer;
     background: var(--surface); border: 1px solid var(--border);
@@ -255,6 +266,7 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
     overflow: hidden;
     display: flex; flex-direction: column;
     box-shadow: var(--shadow-5);
+    min-height: 0;
   }
   .project-modal__close {
     position: absolute; top: var(--space-4); right: var(--space-4); z-index: 4;
@@ -272,8 +284,9 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
     background: #05060c;
     display: flex; align-items: center; justify-content: center;
     min-height: 220px;
+    max-height: 50vh;
   }
-  .project-modal__img { display: block; max-width: 100%; max-height: 60vh; object-fit: contain; margin: 0 auto; }
+  .project-modal__img { display: block; max-width: 100%; max-height: 50vh; object-fit: contain; margin: 0 auto; }
   .project-modal__img[hidden] { display: none; }
 
   .project-modal__nav {
@@ -319,7 +332,7 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
   .project-modal__thumb:hover { opacity: 0.9; transform: translateY(-2px); }
   .project-modal__thumb[aria-current='true'] { opacity: 1; border-color: var(--accent); }
 
-  .project-modal__body { padding: var(--space-7); overflow: hidden; }
+  .project-modal__body { padding: var(--space-7); overflow-y: auto; flex: 1; min-height: 0; }
   .project-modal__detail { display: flex; flex-direction: column; gap: var(--space-4); }
   .project-modal__detail[hidden] { display: none; }
   .project-modal__cat { color: var(--celeste-300); font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); letter-spacing: var(--tracking-wide); text-transform: uppercase; margin: 0; }
@@ -339,9 +352,20 @@ const counts = Object.fromEntries(FILTERS.map((f) => [f, projects.filter((p) => 
 
   @media (max-width: 560px) {
     .project-modal { padding: var(--space-3); }
-    .project-modal__body { padding: var(--space-6); }
-    .project-modal__img { max-height: 46vh; }
-    .project-modal__thumb { width: 46px; height: 34px; }
+    .project-modal__dialog { max-height: 95vh; }
+    .project-modal__stage { max-height: 38vh; min-height: 160px; }
+    .project-modal__body { padding: var(--space-5); gap: var(--space-3); }
+    .project-modal__img { max-height: 38vh; }
+    .project-modal__thumb { width: 42px; height: 32px; }
+    .project-modal__title { font-size: var(--fs-h-xs); }
+    .project-modal__desc { font-size: var(--fs-text-s); }
+    .project-modal__meta { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-3); padding: var(--space-4) 0; }
+    .project-modal__close { width: 36px; height: 36px; top: var(--space-3); right: var(--space-3); }
+    .project-modal__nav { width: 34px; height: 34px; }
+  }
+
+  @media (max-width: 360px) {
+    .project-modal__meta { grid-template-columns: 1fr 1fr; }
   }
 </style>
 
