@@ -5,7 +5,11 @@
       "Bash(cd \"c:/Users/Usuario/relengcorp\" && sed -i '267,325d' \"src/pages/servicios/[slug].astro\" && tail -5 \"src/pages/servicios/[slug].astro\")",
       "Bash(npx astro *)",
       "Bash(git commit -q -m ' *)",
-      "WebFetch(domain:relengcorp.com)"
+      "WebFetch(domain:relengcorp.com)",
+      "Bash(curl --version)",
+      "Bash(curl -sL \"https://relengcorp.com/project/ultrasonido-phase-array-de-ciguenal/\" -o /tmp/proj1.html)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(sort -k2)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios"

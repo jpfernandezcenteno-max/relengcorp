@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 
 // Casos reales de Relengcorp (https://relengcorp.com/portafolio/), organizados por categoría.
 // Datos (cliente, año, ubicación, descripción y logro) tomados de la ficha de cada proyecto.
@@ -15,6 +14,7 @@ interface Project {
   result: string;
   category?: string;
   index?: number;
+  image?: string;
 }
 
 const categories: { name: string; projects: Project[] }[] = [
@@ -248,12 +248,20 @@ const categories: { name: string; projects: Project[] }[] = [
   },
 ];
 
+// Imágenes reales descargadas de relengcorp.com, en el mismo orden de los proyectos.
+const imageFiles = [
+  'p00.png', 'p01.png', 'p02.png', 'p03.png', 'p04.jpg', 'p05.png', 'p06.jpg', 'p07.png', 'p08.jpg', 'p09.png',
+  'p10.png', 'p11.png', 'p12.png', 'p13.png', 'p14.png', 'p15.png', 'p16.png', 'p17.png', 'p18.png', 'p19.jpg',
+  'p20.png', 'p21.png', 'p22.png', 'p23.png',
+];
+
 // Índice global para enlazar tarjeta ↔ ficha del modal.
 const allProjects: Project[] = [];
 categories.forEach((cat) => {
   cat.projects.forEach((p) => {
     p.category = cat.name;
     p.index = allProjects.length;
+    p.image = `/images/portafolio/${imageFiles[p.index]}`;
     allProjects.push(p);
   });
 });
@@ -279,7 +287,7 @@ categories.forEach((cat) => {
               <button type="button" class="project-card" data-reveal data-project-trigger={p.index} aria-haspopup="dialog">
                 <div class="project-card__inner">
                   <div class="project-card__media">
-                    <ImagePlaceholder label={`${p.title} — foto del proyecto`} ratio="4/3" tone="dark" />
+                    <img src={p.image} alt={p.title} class="project-card__img" loading="lazy" decoding="async" />
                     <span class="project-card__tag">{cat.name}</span>
                     <div class="project-card__overlay">
                       <span class="project-card__overlay-text">
@@ -312,7 +320,7 @@ categories.forEach((cat) => {
       <div class="project-modal__main">
         {allProjects.map((p) => (
           <div class="project-modal__image" data-project={p.index} hidden>
-            <ImagePlaceholder label={p.title} ratio="16/9" tone="dark" rounded={false} />
+            <img src={p.image} alt={p.title} class="project-modal__img" loading="lazy" decoding="async" />
           </div>
         ))}
       </div>
@@ -372,6 +380,7 @@ categories.forEach((cat) => {
   .project-card:hover .project-card__inner,
   .project-card:focus-visible .project-card__inner { box-shadow: var(--shadow-5); }
   .project-card__media { position: relative; flex-shrink: 0; }
+  .project-card__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg-dark); }
   .project-card__tag { position: absolute; top: var(--space-4); left: var(--space-4); background: var(--accent); color: #fff; font-size: var(--fs-text-xs); font-weight: var(--fw-semibold); padding: 4px 12px; border-radius: var(--radius-pill); }
   .project-card__overlay {
     position: absolute; inset: 0;
@@ -430,10 +439,10 @@ categories.forEach((cat) => {
   }
   .project-modal__close:hover { background: rgba(255,255,255,0.22); }
 
-  .project-modal__main { width: 100%; flex-shrink: 0; }
+  .project-modal__main { width: 100%; flex-shrink: 0; background: #05060c; }
   .project-modal__image { width: 100%; }
   .project-modal__image[hidden] { display: none; }
-  .project-modal__image :global(.ph) { border-radius: 0; }
+  .project-modal__img { display: block; width: 100%; max-height: 48vh; object-fit: contain; margin: 0 auto; }
 
   .project-modal__body { padding: var(--space-7); }
   .project-modal__detail { display: flex; flex-direction: column; gap: var(--space-4); }
