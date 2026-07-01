@@ -47,11 +47,15 @@ export const offices = [
 ] as const;
 
 /* ---------- SERVICIOS ESPECIALIZADOS (cada uno es una landing page) ---------- */
+export type Subservice = { name: string; slogan: string };
+
 export type Service = {
   slug: string;
   title: string;
+  message: string;   // tagline de la línea de negocio (showcase + hero del servicio)
   short: string;
   intro: string;
+  subservices: Subservice[];
   groups: { name: string; items: string[] }[];
 };
 
@@ -59,9 +63,24 @@ export const services: Service[] = [
   {
     slug: 'integridad-estructural',
     title: 'Integridad Estructural',
+    message: 'Protegemos la integridad de los activos que sostienen la operación.',
     short: 'Ingeniería, END avanzado y monitoreo para activos críticos.',
     intro:
       'Combinamos ingeniería especializada, END avanzado, monitoreo de condición y tecnologías digitales para detectar degradación temprana, reducir riesgos estructurales y maximizar la confiabilidad de activos críticos.',
+    subservices: [
+      { name: 'Evaluación de Integridad Estructural Inteligente', slogan: 'Conozca el estado real de sus activos.' },
+      { name: 'NDT Avanzado – Inspección Inteligente de Activos Críticos', slogan: 'Inspección inteligente. Decisiones seguras.' },
+      { name: 'Medición Inteligente de Elongación de Pernos', slogan: 'Precisión que asegura cada unión crítica.' },
+      { name: 'Auditoría de Ajuste de Pernos', slogan: 'Torque correcto. Riesgo mínimo.' },
+      { name: 'Auditoría de Calibración de Herramientas de Ajuste', slogan: 'La confiabilidad comienza en la calibración.' },
+      { name: 'Inspección Phased Array UTPA de Bridadas', slogan: 'Detectamos lo invisible antes de la falla.' },
+      { name: 'Inspección Integral de Liners de Molinos', slogan: 'La información correcta antes de intervenir.' },
+      { name: 'Gestión Inteligente de Revestimientos', slogan: 'Más vida útil. Más productividad.' },
+      { name: 'Certificación de Tanques de Recipientes a Presión', slogan: 'Integridad certificada para operar con confianza.' },
+      { name: 'Certificación de Tuberías de Relaves', slogan: 'Seguridad para cada kilómetro de operación.' },
+      { name: 'Escaneo Láser 3D', slogan: 'La realidad digital de su planta.' },
+      { name: 'Paradas de Planta', slogan: 'Menos tiempo detenido. Más continuidad operacional.' },
+    ],
     groups: [
       {
         name: 'Integridad Estructural',
@@ -96,9 +115,17 @@ export const services: Service[] = [
   {
     slug: 'monitoreo-mantenimiento-predictivo',
     title: 'Monitoreo y Mantenimiento Predictivo',
+    message: 'Anticipamos fallas antes de que afecten su producción.',
     short: 'Anticipación de fallas con analítica y Machine Learning.',
     intro:
       'Integramos mantenimiento predictivo, análisis eléctrico, gestión avanzada de lubricación y modelos de Machine Learning para anticipar fallas, optimizar la confiabilidad y maximizar la continuidad operacional de activos críticos.',
+    subservices: [
+      { name: 'Monitoreo de Condición', slogan: 'Escuchamos sus activos antes que fallen.' },
+      { name: 'Mantenimiento Predictivo', slogan: 'Predicción que maximiza disponibilidad.' },
+      { name: 'Mantenimiento Predictivo Eléctrico', slogan: 'La energía también puede predecirse.' },
+      { name: 'Lubricación', slogan: 'Cada gota protege productividad.' },
+      { name: 'Machine Learning Predictivo', slogan: 'La inteligencia artificial al servicio de la confiabilidad.' },
+    ],
     groups: [
       {
         name: 'Servicios',
@@ -114,9 +141,20 @@ export const services: Service[] = [
   {
     slug: 'ingenieria-de-confiabilidad',
     title: 'Ingeniería de Confiabilidad',
+    message: 'Diseñamos estrategias que eliminan incertidumbre operacional.',
     short: 'De los datos y el riesgo a la continuidad operacional.',
     intro:
       'Convertimos datos, riesgo y estrategia en continuidad operacional. A través de metodologías avanzadas de confiabilidad, readiness operacional y optimización de mantenimiento, ayudamos a las organizaciones a evolucionar hacia operaciones más predictivas, resilientes y orientadas al desempeño.',
+    subservices: [
+      { name: 'Estrategias de Mantenimiento', slogan: 'Mantenimiento diseñado para generar valor.' },
+      { name: 'Readiness Operacional', slogan: 'Listos para producir desde el primer día.' },
+      { name: 'Ingeniería de Confiabilidad', slogan: 'Confiabilidad diseñada desde la ingeniería.' },
+      { name: 'Análisis de Criticidad', slogan: 'Priorice donde realmente importa.' },
+      { name: 'RCM / RCA', slogan: 'La estrategia correcta para cada activo.' },
+      { name: 'RAM', slogan: 'Disponibilidad cuantificada. Decisiones optimizadas.' },
+      { name: 'Gestión del Riesgo', slogan: 'Controle el riesgo antes que el riesgo lo controle.' },
+      { name: 'Optimización Operacional', slogan: 'Más eficiencia. Menor incertidumbre.' },
+    ],
     groups: [
       {
         name: 'Estrategias de Activos',
@@ -144,9 +182,16 @@ export const services: Service[] = [
   {
     slug: 'metalurgia-inteligente',
     title: 'Metalurgia Inteligente',
+    message: 'Transformamos datos metalúrgicos en mayor recuperación.',
     short: 'Laboratorio avanzado y ML para optimizar recuperación.',
     intro:
       'Integramos metalurgia, laboratorio avanzado y Machine Learning para optimizar la recuperación y el desempeño operacional.',
+    subservices: [
+      { name: 'Operaciones Metalúrgicas', slogan: 'Información confiable desde el proceso.' },
+      { name: 'Laboratorio Especializado', slogan: 'Resultados que respaldan decisiones críticas.' },
+      { name: 'Caracterización Avanzada', slogan: 'Conozca su mineral como nunca antes.' },
+      { name: 'Analítica y Machine Learning', slogan: 'Predicción aplicada al proceso metalúrgico.' },
+    ],
     groups: [
       {
         name: 'Servicios',
@@ -162,9 +207,18 @@ export const services: Service[] = [
   {
     slug: 'confiabilidad-inteligente',
     title: 'Confiabilidad Inteligente',
+    message: 'Conectamos activos, datos y decisiones en tiempo real.',
     short: 'IIoT, monitoreo remoto y analítica predictiva.',
     intro:
       'Integramos sensorización inteligente, IIoT, monitoreo remoto y analítica predictiva para transformar datos operacionales en decisiones inteligentes y accionables. A través de modelos de Machine Learning, plataformas IoT y centros de confiabilidad remota, anticipamos anomalías, estimamos vida útil remanente (RUL) y optimizamos la continuidad operacional de activos críticos.',
+    subservices: [
+      { name: 'Sensorización Remota', slogan: 'Los datos nunca descansan.' },
+      { name: 'Centro de Confiabilidad', slogan: 'La operación siempre bajo observación.' },
+      { name: 'Gemelo Digital', slogan: 'Su activo digital antes de intervenir el real.' },
+      { name: 'Modelos Machine Learning', slogan: 'Aprendemos de los datos para anticipar el futuro.' },
+      { name: 'Plataforma IoT', slogan: 'Todo conectado. Todo visible.' },
+      { name: 'Analítica Multivariable', slogan: 'Transformamos datos complejos en decisiones inteligentes.' },
+    ],
     groups: [
       {
         name: 'Sensorización Inteligente',
@@ -187,9 +241,17 @@ export const services: Service[] = [
   {
     slug: 'ingenieria-digital',
     title: 'Ingeniería Digital',
+    message: 'Digitalizamos la operación para acelerar las decisiones.',
     short: 'Digitalización de operación y mantenimiento.',
     intro:
       'Digitalizamos la operación y el mantenimiento mediante aplicaciones inteligentes y tecnologías inmersivas.',
+    subservices: [
+      { name: 'Aplicaciones Digitales', slogan: 'Software diseñado para la industria.' },
+      { name: 'Manuales Interactivos de Operación y Mantenimiento', slogan: 'Información crítica disponible cuando más se necesita.' },
+      { name: 'Plataforma Operacional – Digital Portal', slogan: 'Toda la operación en una sola plataforma.' },
+      { name: 'Aplicaciones con Tecnología RA / RV / RX', slogan: 'La ingeniería inmersiva ya está aquí.' },
+      { name: 'Adquisición e Integración de Datos', slogan: 'Unificamos datos. Simplificamos decisiones.' },
+    ],
     groups: [
       {
         name: 'Servicios',
@@ -206,9 +268,14 @@ export const services: Service[] = [
   {
     slug: 'gestion-de-reparables-criticos',
     title: 'Gestión de Reparables Críticos',
+    message: 'Gestionamos reparables como activos estratégicos.',
     short: 'Disponibilidad, trazabilidad y QA/QC garantizados.',
     intro:
       'Integramos gestión comercial, QA/QC y control técnico para asegurar disponibilidad, trazabilidad y continuidad operacional.',
+    subservices: [
+      { name: 'Gestión Comercial de Reparables', slogan: 'Más control. Menores tiempos.' },
+      { name: 'QA/QC de Reparables Críticos', slogan: 'Cada reparable certificado para volver a producir.' },
+    ],
     groups: [
       {
         name: 'Gestión Comercial',
