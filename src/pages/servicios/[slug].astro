@@ -70,6 +70,27 @@ const schema = {
     </div>
   </section>
 
+  <!-- ===== SUB-SERVICIOS ===== -->
+  <section class="section section--tight svc-subservices">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Lo que hacemos</p>
+        <h2 class="h-l">{service.message}</h2>
+      </div>
+      <ul class="svc-subservices__grid">
+        {service.subservices.map((sub, i) => (
+          <li class="svc-sub-card" data-reveal>
+            <span class="svc-sub-card__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <div class="svc-sub-card__body">
+              <h3 class="svc-sub-card__name">{sub.name}</h3>
+              <p class="svc-sub-card__slogan">{sub.slogan}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <!-- ===== NUESTROS CLIENTES ===== -->
   <section class="section section--tight svc-clients">
     <div class="container">
@@ -166,6 +187,66 @@ const schema = {
   .svc-stat__label { color: var(--text-body); }
 
   .svc-hero__media { box-shadow: var(--shadow-5); }
+
+  /* ===== SUB-SERVICIOS ===== */
+  .svc-subservices { background: var(--bg-subtle); }
+  .svc-subservices .section-head { max-width: 680px; margin-bottom: var(--space-9); }
+  .svc-subservices .section-head h2 { color: var(--text-strong); }
+
+  .svc-subservices__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+  }
+
+  .svc-sub-card {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+  .svc-sub-card:hover {
+    box-shadow: var(--shadow-4);
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+
+  .svc-sub-card__num {
+    font-size: var(--fs-text-xs);
+    font-weight: var(--fw-extrabold);
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+    margin-top: 3px;
+    min-width: 24px;
+  }
+
+  .svc-sub-card__body { display: flex; flex-direction: column; gap: var(--space-2); }
+  .svc-sub-card__name {
+    font-size: var(--fs-text-m);
+    font-weight: var(--fw-semibold);
+    color: var(--text-strong);
+    line-height: var(--lh-snug);
+  }
+  .svc-sub-card__slogan {
+    font-size: var(--fs-text-s);
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: var(--lh-body);
+  }
+
+  @media (max-width: 900px) {
+    .svc-subservices__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .svc-subservices__grid { grid-template-columns: 1fr; }
+  }
 
   /* ===== CLIENTES ===== */
   .svc-clients__logos { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); margin-top: var(--space-7); }
