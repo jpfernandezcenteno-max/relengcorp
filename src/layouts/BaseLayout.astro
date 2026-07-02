@@ -107,6 +107,14 @@ const orgSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
+    <!-- Google Tag Manager -->
+    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PL4TRXX9');</script>
+    <!-- End Google Tag Manager -->
+
     <!-- Detección de JS (quita la clase no-js lo antes posible para evitar flash) -->
     <script is:inline>
       document.documentElement.classList.remove('no-js');
@@ -114,6 +122,11 @@ const orgSchema = {
   </head>
 
   <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PL4TRXX9"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     <div class="page-loader" data-page-loader aria-hidden="true">
       <span class="page-loader__logo" set:html={logoSvg} />
       <span class="page-loader__bar"><span class="page-loader__bar-fill"></span></span>
