@@ -20,7 +20,8 @@
       "Bash(node -e ' *)",
       "Bash(curl -sL https://relengcorp.com/project/servicios-de-preparacion-de-pilas-de-lixiviacion/ -o __TRACKED_VAR__/proj_new.html)",
       "Bash(node tmp-build-portafolio.mjs)",
-      "Bash(curl -sL \"https://relengcorp.com/project/elaboracion-de-instructivos-de-trabajo-wis-pets-y-cartillas-resumen-de-equipos-planta/\")"
+      "Bash(curl -sL \"https://relengcorp.com/project/elaboracion-de-instructivos-de-trabajo-wis-pets-y-cartillas-resumen-de-equipos-planta/\")",
+      "Bash(git pull *)"
     ],
     "additionalDirectories": [
       "C:\\Users\\Usuario\\relengcorp\\src\\pages\\servicios",
