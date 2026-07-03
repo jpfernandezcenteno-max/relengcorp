@@ -124,24 +124,25 @@ const isHome = path === '/';
     isolation: isolate;
 
     background: transparent;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    /* Cristal claro: poco blur para no esmerilarlo, saturate alto para viveza */
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
 
-    /* Borde muy sutil — casi invisible, solo atrapa la luz */
-    border: 0.5px solid rgba(255, 255, 255, 0.14);
+    /* Borde casi imperceptible */
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
 
-    /* Especular superior fino + sombra de elevación limpia */
+    /* Specular muy brillante + sombra mínima de flotación */
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.12),
-      0 1px 4px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+      0 2px 16px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.72);
 
     transition:
+      background var(--dur-base) var(--ease-out),
       box-shadow var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out);
   }
 
-  /* Reflejo interno muy sutil en la parte superior */
+  /* Reflejo en cuña — muy sutil, solo la parte superior capta la luz */
   .site-header::before {
     content: '';
     position: absolute;
@@ -149,50 +150,48 @@ const isHome = path === '/';
     border-radius: inherit;
     background: linear-gradient(
       180deg,
-      rgba(255, 255, 255, 0.07) 0%,
-      transparent 50%
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 40%
     );
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Iridiscencia prismática muy sutil en borde inferior */
+  /* Iridiscencia prismática mínima */
   .site-header::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 10%;
-    right: 10%;
+    left: 12%;
+    right: 12%;
     height: 1px;
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 200, 150, 0.25) 25%,
-      rgba(150, 210, 255, 0.25) 50%,
-      rgba(200, 150, 255, 0.2) 75%,
+      rgba(255, 210, 170, 0.18) 25%,
+      rgba(160, 215, 255, 0.18) 55%,
+      rgba(210, 170, 255, 0.14) 78%,
       transparent
     );
     pointer-events: none;
     z-index: 0;
   }
 
-  /* Scrolled: agrega un leve fondo oscuro para legibilidad al bajar */
+  /* Scrolled: mínimo fondo para que el texto no se pierda al bajar */
   .site-header.is-scrolled {
-    background: rgba(10, 10, 18, 0.45);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(8, 8, 16, 0.3);
+    border-color: rgba(255, 255, 255, 0.08);
     box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.28),
-      0 2px 8px rgba(0, 0, 0, 0.14),
-      inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      0 4px 28px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6);
   }
 
   /* Páginas internas (fondo claro) */
   .site-header--has-light-bg:not(.is-scrolled) {
-    border-color: rgba(0, 0, 0, 0.07);
+    border-color: rgba(0, 0, 0, 0.06);
     box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.07),
-      0 1px 4px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      0 2px 16px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
   }
 
   /* Menú móvil abierto */
