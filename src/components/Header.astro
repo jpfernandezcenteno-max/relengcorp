@@ -116,21 +116,38 @@ const isHome = path === '/';
     height: var(--header-h);
     display: flex;
     align-items: center;
-    transition: background-color var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out),
-      backdrop-filter var(--dur-base) var(--ease-out);
+    /* Base: vidrio oscuro muy sutil — igual a Apple en páginas dark */
+    background: rgba(18, 19, 30, 0.18);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.05);
+    transition:
+      background var(--dur-base) var(--ease-out),
+      backdrop-filter var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
   }
-  /* Estado scrolled (lo activa el script) */
+  /* Scrolled: vidrio Apple completo — más opaco, más blur, borde más visible */
   .site-header.is-scrolled {
-    background: rgba(28, 29, 45, 0.85);
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow-3);
+    background: rgba(18, 19, 30, 0.75);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 32px rgba(0, 0, 0, 0.28);
+  }
+  /* Páginas internas (fondo claro): vidrio claro estilo Apple light */
+  .site-header--has-light-bg:not(.is-scrolled) {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
   }
   /* Con el menú móvil abierto, quitamos el backdrop-filter: en Chromium crea un
      containing block para los descendientes "fixed" (.mobile-menu), lo que
      rompe su `inset` y le impide ocupar todo el viewport. */
-  .site-header.menu-open.is-scrolled {
+  .site-header.menu-open {
     backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .site-header__inner {
