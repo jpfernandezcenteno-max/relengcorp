@@ -123,19 +123,13 @@ const isHome = path === '/';
     border-radius: 100px;
     isolation: isolate;
 
-    /* Gradiente vertical: más claro arriba (reflejo de luz) → más oscuro abajo
-       Este gradiente es lo que da la ilusión de superficie curva/volumétrica */
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.18) 0%,
-      rgba(20, 22, 36, 0.04) 40%,
-      rgba(20, 22, 36, 0.22) 100%
-    );
+    /* Sin color de fondo — el volumen viene solo de los highlights y el blur */
+    background: transparent;
     backdrop-filter: blur(32px) saturate(220%) brightness(1.06);
     -webkit-backdrop-filter: blur(32px) saturate(220%) brightness(1.06);
 
-    /* Borde luminoso */
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    /* Borde neutro sin color */
+    border: 1px solid rgba(255, 255, 255, 0.18);
 
     /* Capas de sombra que dan el volumen del cristal */
     box-shadow:
@@ -207,15 +201,10 @@ const isHome = path === '/';
     z-index: 0;
   }
 
-  /* Scrolled: gradiente más opaco pero mantiene el volumen cristalino */
+  /* Scrolled: fondo muy sutil para legibilidad, sin color */
   .site-header.is-scrolled {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.14) 0%,
-      rgba(20, 22, 36, 0.38) 45%,
-      rgba(20, 22, 36, 0.58) 100%
-    );
-    border-color: rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.18);
+    border-color: rgba(255, 255, 255, 0.15);
     box-shadow:
       0 28px 72px rgba(0, 0, 0, 0.48),
       0 10px 28px rgba(0, 0, 0, 0.28),
@@ -227,25 +216,20 @@ const isHome = path === '/';
       inset -2px 0 0 rgba(255, 255, 255, 0.1);
   }
 
-  /* Páginas internas (fondo claro): cristal blanco voluminoso */
+  /* Páginas internas (fondo claro): cristal neutro sin color */
   .site-header--has-light-bg:not(.is-scrolled) {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.65) 0%,
-      rgba(255, 255, 255, 0.25) 45%,
-      rgba(220, 225, 240, 0.45) 100%
-    );
+    background: transparent;
     backdrop-filter: blur(32px) saturate(220%) brightness(1.04);
     -webkit-backdrop-filter: blur(32px) saturate(220%) brightness(1.04);
-    border-color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 0, 0, 0.1);
     box-shadow:
-      0 20px 56px rgba(0, 0, 0, 0.14),
-      0 6px 18px rgba(0, 0, 0, 0.08),
+      0 20px 56px rgba(0, 0, 0, 0.1),
+      0 6px 18px rgba(0, 0, 0, 0.06),
       inset 0 2px 0 rgba(255, 255, 255, 0.95),
-      inset 0 8px 18px rgba(255, 255, 255, 0.45),
-      inset 0 -3px 8px rgba(180, 185, 210, 0.3),
+      inset 0 8px 18px rgba(255, 255, 255, 0.35),
+      inset 0 -3px 8px rgba(0, 0, 0, 0.06),
       inset 2px 0 0 rgba(255, 255, 255, 0.6),
-      inset -2px 0 0 rgba(255, 255, 255, 0.35);
+      inset -2px 0 0 rgba(255, 255, 255, 0.3);
   }
 
   /* Menú móvil abierto: quitar backdrop-filter (Chromium containing-block bug) */
