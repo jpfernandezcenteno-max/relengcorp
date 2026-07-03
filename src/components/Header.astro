@@ -120,56 +120,118 @@ const isHome = path === '/';
     height: var(--header-h);
     display: flex;
     align-items: center;
-    border-radius: 18px;
-    /* Vidrio flotante: suficiente opacidad para verse como cápsula flotante */
-    background: rgba(18, 19, 30, 0.58);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 0.5px solid rgba(255, 255, 255, 0.12);
-    /* Alto relieve: highlight interior en el borde superior + sombra de profundidad */
+    border-radius: 20px;
+    isolation: isolate;
+
+    /* Cristal: casi transparente — el efecto viene de los highlights y el blur */
+    background: rgba(20, 22, 36, 0.12);
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.04);
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.04);
+
+    /* Borde cristalino */
+    border: 1px solid rgba(255, 255, 255, 0.22);
+
+    /* Capas de inset que simulan el grosor del cristal */
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      0 2px 8px rgba(0, 0, 0, 0.2);
+      /* Profundidad externa */
+      0 8px 40px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.1),
+      /* Especular superior — la luz que "rebota" en el borde de arriba */
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.52),
+      /* Borde inferior interno */
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      /* Borde lateral izquierdo */
+      inset 1.5px 0 0 rgba(255, 255, 255, 0.18),
+      /* Borde lateral derecho */
+      inset -1px 0 0 rgba(255, 255, 255, 0.08);
+
     transition:
       background var(--dur-base) var(--ease-out),
       box-shadow var(--dur-base) var(--ease-out),
       border-color var(--dur-base) var(--ease-out);
   }
-  /* Scrolled: más opaco, sombra más profunda */
+
+  /* Reflejo interno diagonal (simula la refracción de luz en el cristal) */
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+      130deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.05) 30%,
+      transparent 60%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Efecto iridiscente / prismático en el borde inferior */
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 8%;
+    right: 8%;
+    height: 1.5px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      hsla(30, 90%, 72%, 0.6) 18%,
+      hsla(195, 85%, 68%, 0.6) 42%,
+      hsla(265, 75%, 72%, 0.5) 68%,
+      transparent 100%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scrolled: un poco más opaco para legibilidad al desplazarse */
   .site-header.is-scrolled {
-    background: rgba(18, 19, 30, 0.82);
-    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(20, 22, 36, 0.52);
+    border-color: rgba(255, 255, 255, 0.18);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.12),
-      0 16px 48px rgba(0, 0, 0, 0.5),
-      0 4px 12px rgba(0, 0, 0, 0.25);
+      0 16px 48px rgba(0, 0, 0, 0.35),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.42),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+      inset 1.5px 0 0 rgba(255, 255, 255, 0.14),
+      inset -1px 0 0 rgba(255, 255, 255, 0.06);
   }
-  /* Páginas internas: vidrio claro flotante */
+
+  /* Páginas internas (fondo claro): cristal blanco */
   .site-header--has-light-bg:not(.is-scrolled) {
-    background: rgba(255, 255, 255, 0.78);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-color: rgba(0, 0, 0, 0.07);
+    background: rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(28px) saturate(200%) brightness(1.02);
+    -webkit-backdrop-filter: blur(28px) saturate(200%) brightness(1.02);
+    border-color: rgba(255, 255, 255, 0.5);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.95),
-      0 8px 32px rgba(0, 0, 0, 0.12),
-      0 2px 6px rgba(0, 0, 0, 0.06);
+      0 8px 40px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.05),
+      inset 0 1.5px 0 rgba(255, 255, 255, 0.85),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.35),
+      inset 1.5px 0 0 rgba(255, 255, 255, 0.45),
+      inset -1px 0 0 rgba(255, 255, 255, 0.2);
   }
-  /* Con el menú móvil abierto, quitamos backdrop-filter (Chromium containing-block bug)
-     y aplanamos el borde inferior para que el drawer se sienta conectado */
+
+  /* Menú móvil abierto: quitar backdrop-filter (Chromium containing-block bug) */
   .site-header.menu-open {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border-radius: 18px 18px 0 0;
+    border-radius: 20px 20px 0 0;
     border-bottom-color: transparent;
   }
+  .site-header.menu-open::after { display: none; }
 
   .site-header__inner {
     display: flex;
     align-items: center;
     gap: var(--space-6);
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
   .site-header__logo {
