@@ -188,8 +188,9 @@ const isHome = path === '/';
       inset 0 8px 14px rgba(255, 255, 255, 0.06);
   }
 
-  /* Páginas internas (fondo blanco siempre, con o sin scroll) */
-  .site-header--has-light-bg {
+  /* Páginas internas (fondo blanco siempre — selector más específico para ganar a is-scrolled) */
+  .site-header.site-header--has-light-bg,
+  .site-header.site-header--has-light-bg.is-scrolled {
     background: rgba(255, 255, 255, 0.82);
     border-color: rgba(0, 0, 0, 0.06);
     box-shadow:
@@ -244,11 +245,16 @@ const isHome = path === '/';
 
   /* Páginas internas: el header arranca sobre un fondo claro, así que
      el logo y los enlaces necesitan tono oscuro hasta hacer scroll. */
-  .site-header--has-light-bg .site-header__logo { color: var(--accent); }
-  .site-header--has-light-bg .site-nav__link { color: var(--text-body); }
-  .site-header--has-light-bg .site-nav__link:hover,
-  .site-header--has-light-bg .site-nav__link.is-active { color: var(--text-strong); }
-  .site-header--has-light-bg .site-header__burger span { background: var(--text-strong); }
+  .site-header.site-header--has-light-bg .site-header__logo,
+  .site-header.site-header--has-light-bg.is-scrolled .site-header__logo { color: var(--accent); }
+  .site-header.site-header--has-light-bg .site-nav__link,
+  .site-header.site-header--has-light-bg.is-scrolled .site-nav__link { color: var(--text-body); }
+  .site-header.site-header--has-light-bg .site-nav__link:hover,
+  .site-header.site-header--has-light-bg .site-nav__link.is-active,
+  .site-header.site-header--has-light-bg.is-scrolled .site-nav__link:hover,
+  .site-header.site-header--has-light-bg.is-scrolled .site-nav__link.is-active { color: var(--text-strong); }
+  .site-header.site-header--has-light-bg .site-header__burger span,
+  .site-header.site-header--has-light-bg.is-scrolled .site-header__burger span { background: var(--text-strong); }
 
   .site-nav { margin-inline: auto; }
   .site-nav__list { display: flex; align-items: center; gap: var(--space-2); }
