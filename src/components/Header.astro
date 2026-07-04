@@ -244,11 +244,11 @@ const isHome = path === '/';
 
   /* Páginas internas: el header arranca sobre un fondo claro, así que
      el logo y los enlaces necesitan tono oscuro hasta hacer scroll. */
-  .site-header--has-light-bg:not(.is-scrolled) .site-header__logo { color: var(--accent); }
-  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link { color: var(--text-body); }
-  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link:hover,
-  .site-header--has-light-bg:not(.is-scrolled) .site-nav__link.is-active { color: var(--text-strong); }
-  .site-header--has-light-bg:not(.is-scrolled) .site-header__burger span { background: var(--text-strong); }
+  .site-header--has-light-bg .site-header__logo { color: var(--accent); }
+  .site-header--has-light-bg .site-nav__link { color: var(--text-body); }
+  .site-header--has-light-bg .site-nav__link:hover,
+  .site-header--has-light-bg .site-nav__link.is-active { color: var(--text-strong); }
+  .site-header--has-light-bg .site-header__burger span { background: var(--text-strong); }
 
   .site-nav { margin-inline: auto; }
   .site-nav__list { display: flex; align-items: center; gap: var(--space-2); }
