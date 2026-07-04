@@ -134,7 +134,8 @@ const isHome = path === '/';
     /* Specular muy brillante + sombra mínima de flotación */
     box-shadow:
       0 2px 16px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 8px 14px rgba(255, 255, 255, 0.07);
 
     transition:
       background var(--dur-base) var(--ease-out),
@@ -183,7 +184,8 @@ const isHome = path === '/';
     border-color: rgba(255, 255, 255, 0.08);
     box-shadow:
       0 4px 28px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 8px 14px rgba(255, 255, 255, 0.06);
   }
 
   /* Páginas internas (fondo claro) */
@@ -191,7 +193,8 @@ const isHome = path === '/';
     border-color: rgba(0, 0, 0, 0.06);
     box-shadow:
       0 2px 16px rgba(0, 0, 0, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 8px 14px rgba(255, 255, 255, 0.1);
   }
 
   /* Menú móvil abierto */
