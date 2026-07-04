@@ -120,7 +120,7 @@ const isHome = path === '/';
     height: var(--header-h);
     display: flex;
     align-items: center;
-    border-radius: 100px;
+    border-radius: var(--radius-md);
     isolation: isolate;
 
     background: transparent;
@@ -201,7 +201,7 @@ const isHome = path === '/';
   .site-header.menu-open {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border-radius: 100px 100px 0 0;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
     border-bottom-color: transparent;
   }
   .site-header.menu-open::after { display: none; }
@@ -356,7 +356,7 @@ const isHome = path === '/';
     max-width: 1360px;
     bottom: 0;
     background: var(--bg-dark);
-    border-radius: 0 0 100px 100px;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
     border: 0.5px solid rgba(255, 255, 255, 0.12);
     border-top: none;
     padding: var(--space-7) var(--container-pad) var(--space-9);
