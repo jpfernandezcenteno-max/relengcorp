@@ -190,21 +190,24 @@ const isHome = path === '/';
 
   /* Páginas internas (fondo claro) */
   .site-header--has-light-bg:not(.is-scrolled) {
-    border-color: rgba(0, 0, 0, 0.06);
-    box-shadow:
-      0 2px 16px rgba(0, 0, 0, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 8px 14px rgba(255, 255, 255, 0.1);
-  }
-
-  /* Pasado el hero en home → mismo efecto cristal claro que páginas internas */
-  .site-header.is-past-hero {
+    background: rgba(255, 255, 255, 0.82);
     border-color: rgba(0, 0, 0, 0.06);
     box-shadow:
       0 4px 24px rgba(0, 0, 0, 0.07),
       0 1px 4px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 8px 14px rgba(255, 255, 255, 0.1);
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 8px 14px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Pasado el hero en home → fondo blanco con efecto cristal claro */
+  .site-header.is-past-hero {
+    background: rgba(255, 255, 255, 0.82);
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.07),
+      0 1px 4px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 8px 14px rgba(255, 255, 255, 0.3);
   }
   .site-header.is-past-hero .site-header__logo { color: var(--accent); }
   .site-header.is-past-hero .site-nav__link { color: var(--text-body); }
