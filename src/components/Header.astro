@@ -197,6 +197,21 @@ const isHome = path === '/';
       inset 0 8px 14px rgba(255, 255, 255, 0.1);
   }
 
+  /* Pasado el hero en home → mismo efecto cristal claro que páginas internas */
+  .site-header.is-past-hero {
+    border-color: rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.07),
+      0 1px 4px rgba(0, 0, 0, 0.04),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 8px 14px rgba(255, 255, 255, 0.1);
+  }
+  .site-header.is-past-hero .site-header__logo { color: var(--accent); }
+  .site-header.is-past-hero .site-nav__link { color: var(--text-body); }
+  .site-header.is-past-hero .site-nav__link:hover,
+  .site-header.is-past-hero .site-nav__link.is-active { color: var(--text-strong); }
+  .site-header.is-past-hero .site-header__burger span { background: var(--text-strong); }
+
   /* Menú móvil abierto */
   .site-header.menu-open {
     backdrop-filter: none;
@@ -421,6 +436,16 @@ const isHome = path === '/';
       { rootMargin: '0px' }
     );
     io.observe(sentinel);
+
+    // Cuando el hero principal sale del viewport → header cambia a modo claro
+    const hero = document.querySelector<HTMLElement>('.hero');
+    if (hero) {
+      const heroObserver = new IntersectionObserver(
+        ([entry]) => header.classList.toggle('is-past-hero', !entry.isIntersecting),
+        { rootMargin: '0px', threshold: 0 }
+      );
+      heroObserver.observe(hero);
+    }
 
     // ---- Menú móvil ----
     const burger = header.querySelector<HTMLButtonElement>('[data-burger]');
