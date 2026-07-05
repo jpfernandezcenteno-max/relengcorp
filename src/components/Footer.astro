@@ -92,7 +92,9 @@ const year = new Date().getFullYear();
 
   <div class="container site-footer__bottom">
     <p>&copy; {year} {site.legalName}. Todos los derechos reservados.</p>
-    <p class="site-footer__credit">Confiabilidad inteligente para la minería.</p>
+    <nav class="site-footer__legal" aria-label="Políticas">
+      <a href="/politica-de-privacidad">Política de Privacidad y Protección de Datos</a>
+    </nav>
   </div>
 </footer>
 
@@ -199,6 +201,12 @@ const year = new Date().getFullYear();
     color: var(--azul-200);
     font-size: var(--fs-text-xs);
   }
+  .site-footer__legal a {
+    color: var(--azul-200);
+    font-size: var(--fs-text-xs);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .site-footer__legal a:hover { color: var(--accent); }
 
   @media (max-width: 980px) {
     .site-footer__grid { grid-template-columns: 1fr 1fr; }
@@ -207,7 +215,8 @@ const year = new Date().getFullYear();
   @media (max-width: 760px) {
     .site-footer__grid { grid-template-columns: 1fr; gap: 0; padding-bottom: var(--space-6); }
     .site-footer__brand { padding-bottom: var(--space-8); }
-    .site-footer__bottom { justify-content: center; text-align: center; }
+    .site-footer__bottom { justify-content: center; text-align: center; flex-direction: column; align-items: center; }
+    .site-footer__legal { text-align: center; }
 
     /* Servicios, Empresa y Contacto se vuelven acordeones para ocupar menos espacio */
     .footer-accordion {
