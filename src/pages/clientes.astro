@@ -134,8 +134,18 @@ const sectors = [
   .clients-carousel.is-static .clients-slide { grid-area: auto; opacity: 1; visibility: visible; }
 
   .sectors { background: var(--bg-subtle); }
-  .sectors-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
-  .sector-chip { padding: var(--space-4) var(--space-7); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-pill); font-weight: var(--fw-semibold); color: var(--text-strong); }
+  .sectors-grid {
+    display: flex; flex-wrap: nowrap; gap: var(--space-3);
+    width: max-content; max-width: 100%; margin-inline: auto;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .sectors-grid::-webkit-scrollbar { display: none; }
+  .sector-chip {
+    flex: 0 0 auto; white-space: nowrap;
+    padding: var(--space-3) var(--space-5);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-pill); font-weight: var(--fw-semibold); color: var(--text-strong);
+  }
 
   @media (max-width: 900px) { .clients-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 560px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
