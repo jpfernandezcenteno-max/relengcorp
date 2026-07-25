@@ -324,10 +324,14 @@ export const nav: NavItem[] = [
 
 /* Certificaciones ISO (Trinorma) */
 export const certifications = [
-  { code: 'ISO 9001', scope: 'Gestión de la Calidad' },
-  { code: 'ISO 14001', scope: 'Gestión Ambiental' },
-  { code: 'ISO 45001', scope: 'Seguridad y Salud en el Trabajo' },
+  { code: 'ISO 9001', scope: 'Gestión de la Calidad', logo: '/logos/iso-9001.png' },
+  { code: 'ISO 14001', scope: 'Gestión Ambiental', logo: '/logos/iso-14001.png' },
+  { code: 'ISO 45001', scope: 'Seguridad y Salud en el Trabajo', logo: '/logos/iso-45001.png' },
 ] as const;
 
-/* Homologaciones */
-export const homologations = ['CIAL', 'SGS', 'Bureau Veritas'] as const;
+/* Homologaciones (logo cuando exista) */
+export const homologations = [
+  { name: 'CIAL' },
+  { name: 'SGS', logo: '/logos/sgs.jpg' },
+  { name: 'Bureau Veritas' },
+] as const;

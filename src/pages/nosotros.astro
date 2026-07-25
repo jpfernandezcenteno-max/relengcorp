@@ -139,7 +139,7 @@ const policies = [
       <ul class="trinorma">
         {certifications.map((c) => (
           <li class="trinorma__item" data-reveal>
-            <span class="trinorma__check" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="trinorma__logo"><img src={c.logo} alt={`Certificación ${c.code}`} loading="lazy" decoding="async" /></span>
             <span class="trinorma__code">{c.code}</span>
             <span class="trinorma__scope text-s">{c.scope}</span>
           </li>
@@ -147,7 +147,9 @@ const policies = [
       </ul>
       <div class="homolog" data-reveal>
         <p class="homolog__label">Homologaciones y evaluaciones empresariales:</p>
-        <ul>{homologations.map((h) => <li>{h}</li>)}</ul>
+        <ul>{homologations.map((h) => (
+          <li>{'logo' in h ? <img class="homolog__logo" src={h.logo} alt={h.name} loading="lazy" decoding="async" /> : h.name}</li>
+        ))}</ul>
       </div>
     </div>
   </section>
@@ -194,14 +196,16 @@ const policies = [
 
   .trinorma { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-top: var(--space-2); }
   .trinorma__item { display: flex; flex-direction: column; gap: var(--space-3); align-items: center; text-align: center; padding: var(--space-8); border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-2); }
-  .trinorma__check { display: grid; place-items: center; width: 52px; height: 52px; border-radius: var(--radius-md); background: var(--accent); color: #fff; }
+  .trinorma__logo { display: grid; place-items: center; width: 110px; height: 110px; }
+  .trinorma__logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
   .trinorma__code { font-size: var(--fs-h-s); font-weight: var(--fw-extrabold); color: var(--text-strong); }
   .trinorma__scope { color: var(--text-body); }
 
   .homolog { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-5); margin-top: var(--space-9); }
   .homolog__label { color: var(--text-muted); font-size: var(--fs-text-s); }
-  .homolog ul { display: flex; flex-wrap: wrap; gap: var(--space-6); }
-  .homolog li { font-weight: var(--fw-bold); letter-spacing: var(--tracking-wide); color: var(--text-strong); }
+  .homolog ul { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-6); }
+  .homolog li { display: inline-flex; align-items: center; font-weight: var(--fw-bold); letter-spacing: var(--tracking-wide); color: var(--text-strong); }
+  .homolog__logo { display: block; height: 40px; width: auto; }
 
   @media (max-width: 900px) {
     .about-intro, .mv-grid, .values-grid, .policies-grid, .trinorma { grid-template-columns: 1fr; }

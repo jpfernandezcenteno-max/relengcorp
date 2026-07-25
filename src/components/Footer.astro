@@ -19,7 +19,9 @@ const year = new Date().getFullYear();
         digital para la industria minera e industrial.
       </p>
       <ul class="site-footer__certs" aria-label="Certificaciones">
-        {certifications.map((c) => <li>{c.code}</li>)}
+        {certifications.map((c) => (
+          <li><img src={c.logo} alt={`Certificación ${c.code}`} loading="lazy" decoding="async" /></li>
+        ))}
       </ul>
       <ul class="site-footer__social" aria-label="Redes sociales">
         <li>
@@ -121,14 +123,13 @@ const year = new Date().getFullYear();
     margin-top: var(--space-6);
   }
   .site-footer__certs li {
-    padding: var(--space-2) var(--space-4);
-    border: 1px solid var(--border-dark);
-    border-radius: var(--radius-pill);
-    font-size: var(--fs-text-xs);
-    font-weight: var(--fw-semibold);
-    letter-spacing: var(--tracking-wide);
-    color: #fff;
+    display: grid;
+    place-items: center;
+    padding: 6px 10px;
+    border-radius: var(--radius-md);
+    background: #fff;
   }
+  .site-footer__certs li img { display: block; height: 46px; width: auto; }
 
   .site-footer__social {
     display: flex;
