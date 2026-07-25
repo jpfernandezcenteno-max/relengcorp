@@ -140,8 +140,6 @@ const policies = [
         {certifications.map((c) => (
           <li class="trinorma__item" data-reveal>
             <span class="trinorma__logo"><img src={c.logo} alt={`Certificación ${c.code}`} loading="lazy" decoding="async" /></span>
-            <span class="trinorma__code">{c.code}</span>
-            <span class="trinorma__scope text-s">{c.scope}</span>
           </li>
         ))}
       </ul>
@@ -195,11 +193,9 @@ const policies = [
   .policy-card h3:not(:last-child) { margin-bottom: var(--space-3); }
 
   .trinorma { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-top: var(--space-2); }
-  .trinorma__item { display: flex; flex-direction: column; gap: var(--space-3); align-items: center; text-align: center; padding: var(--space-8); border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-2); }
-  .trinorma__logo { display: grid; place-items: center; width: 110px; height: 110px; }
+  .trinorma__item { display: grid; place-items: center; padding: var(--space-7); border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-2); }
+  .trinorma__logo { display: grid; place-items: center; width: 150px; height: 150px; }
   .trinorma__logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-  .trinorma__code { font-size: var(--fs-h-s); font-weight: var(--fw-extrabold); color: var(--text-strong); }
-  .trinorma__scope { color: var(--text-body); }
 
   .homolog { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-5); margin-top: var(--space-9); }
   .homolog__label { color: var(--text-muted); font-size: var(--fs-text-s); }

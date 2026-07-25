@@ -19,8 +19,6 @@ import { certifications, homologations } from '../../data/site';
         {certifications.map((c) => (
           <li class="certs__item" data-reveal>
             <span class="certs__logo"><img src={c.logo} alt={`Certificación ${c.code}`} loading="lazy" decoding="async" /></span>
-            <span class="certs__code">{c.code}</span>
-            <span class="certs__scope text-s">{c.scope}</span>
           </li>
         ))}
       </ul>
@@ -59,10 +57,9 @@ import { certifications, homologations } from '../../data/site';
     margin-top: var(--space-9);
   }
   .certs__item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-7);
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
     border-radius: var(--radius-lg);
     background: rgba(255,255,255,0.06);
     border: 1px solid rgba(255,255,255,0.12);
@@ -70,14 +67,12 @@ import { certifications, homologations } from '../../data/site';
   }
   .certs__logo {
     display: grid; place-items: center;
-    width: 96px; height: 96px;
-    padding: var(--space-3);
+    width: 140px; height: 140px;
+    padding: var(--space-4);
     border-radius: var(--radius-md);
     background: #fff;
   }
   .certs__logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-  .certs__code { font-size: var(--fs-h-s); font-weight: var(--fw-extrabold); margin-top: var(--space-2); }
-  .certs__scope { color: rgba(255,255,255,0.75); }
 
   .certs__homolog {
     display: flex; align-items: center; flex-wrap: wrap;
