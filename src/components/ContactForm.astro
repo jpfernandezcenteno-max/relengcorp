@@ -8,6 +8,7 @@
    NOTA backend: el envío real se conecta cuando se defina hosting/correo.
    Por ahora valida en frontend y confirma (y descarga brochure en 'service').
    ============================================================ */
+interface Subservice { name: string; slogan?: string }
 interface Props {
   variant?: 'contact' | 'service' | 'job';
   title?: string;
@@ -16,6 +17,8 @@ interface Props {
   serviceName?: string;
   brochureUrl?: string; // PDF a descargar (placeholder hasta que el cliente lo suba)
   compact?: boolean;
+  subservices?: Subservice[]; // sub-servicios del servicio (dropdown en variant 'service')
+  serviceSlug?: string;       // para construir la ruta de la ficha técnica de cada sub-servicio
 }
 const {
   variant = 'contact',
@@ -25,10 +28,21 @@ const {
   serviceName,
   brochureUrl = '/brochures/relengcorp-brochure.pdf',
   compact = false,
+  subservices = [],
+  serviceSlug,
 } = Astro.props;
 const showMessage = variant === 'contact' || variant === 'job';
 const showCompany = variant === 'contact' || variant === 'service';
 const showCV = variant === 'job';
+
+// Dropdown de sub-servicios (solo variant 'service'). Cada opción apunta a su ficha técnica.
+// Las fichas se suben a /public/fichas/<slug-servicio>/<slug-subservicio>.pdf
+const slugify = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+const showSubservices = variant === 'service' && subservices.length > 0;
+const subOptions = showSubservices
+  ? subservices.map((s) => ({ name: s.name, ficha: `/fichas/${serviceSlug ?? 'general'}/${slugify(s.name)}.pdf` }))
+  : [];
 ---
 <form
   class:list={['cform', { 'cform--compact': compact }]}
@@ -42,6 +56,20 @@ const showCV = variant === 'job';
   {serviceName && <input type="hidden" name="servicio" value={serviceName} />}
 
   <div class="cform__grid">
+    {showSubservices && (
+      <div class="field field--full">
+        <label for="cf-subservice">Sub-servicio de interés *</label>
+        <select id="cf-subservice" name="subservicio" required data-ficha-select>
+          <option value="" disabled selected>Selecciona un sub-servicio…</option>
+          {subOptions.map((o) => (
+            <option value={o.name} data-ficha={o.ficha}>{o.name}</option>
+          ))}
+        </select>
+        <p class="field__error" data-error></p>
+        <p class="cform__ficha-hint text-xs">Al enviar recibirás la ficha técnica del sub-servicio seleccionado.</p>
+      </div>
+    )}
+
     <div class="field">
       <label for="cf-name">Nombre completo *</label>
       <input type="text" id="cf-name" name="nombre" required autocomplete="name" />
@@ -151,6 +179,25 @@ const showCV = variant === 'job';
   .field input[type='file'] { padding: 0.6rem; background: var(--neutro-100); cursor: pointer; }
   .field__error { color: #e5484d; font-size: var(--fs-text-xs); min-height: 1em; }
 
+  .field select {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    background-color: var(--neutro-50);
+    color: var(--text-strong);
+    font: inherit;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 9l6 6 6-6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  }
+  .field select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,172,229,0.15); }
+  .field select[aria-invalid='true'] { border-color: #e5484d; }
+  .cform__ficha-hint { color: var(--text-muted); }
+
   .cform__consent {
     display: flex;
     align-items: flex-start;
@@ -184,7 +231,7 @@ const showCV = variant === 'job';
 
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
-    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input:not([type="checkbox"]), textarea');
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('input:not([type="checkbox"]), textarea, select');
     const successBox = form.querySelector<HTMLElement>('[data-success]');
     const variant = form.dataset.variant;
     const brochure = form.dataset.brochure;
@@ -240,19 +287,24 @@ const showCV = variant === 'job';
 
       // TODO(backend): enviar datos a comercial@relengcorp.com cuando se defina hosting.
 
-      // Variante 'service': disparar descarga del brochure.
-      if (variant === 'service' && brochure) {
-        const a = document.createElement('a');
-        a.href = brochure;
-        a.download = '';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
+      // Variante 'service': descargar la ficha técnica del sub-servicio elegido
+      // (o el brochure general como respaldo).
+      if (variant === 'service') {
+        const sel = form.querySelector<HTMLSelectElement>('[data-ficha-select]');
+        const ficha = sel?.selectedOptions[0]?.dataset.ficha || brochure;
+        if (ficha) {
+          const a = document.createElement('a');
+          a.href = ficha;
+          a.download = '';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        }
       }
 
       const msg =
         variant === 'service'
-          ? '¡Gracias! Tu brochure se está descargando y un especialista te contactará pronto.'
+          ? '¡Gracias! La ficha técnica se está descargando y un especialista te contactará pronto.'
           : variant === 'job'
             ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
             : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
