@@ -122,14 +122,11 @@ const year = new Date().getFullYear();
     gap: var(--space-3);
     margin-top: var(--space-6);
   }
-  .site-footer__certs li {
-    display: grid;
-    place-items: center;
-    padding: 6px 10px;
-    border-radius: var(--radius-md);
-    background: #fff;
+  .site-footer__certs li { display: grid; place-items: center; }
+  .site-footer__certs li img {
+    display: block; height: 48px; width: auto;
+    filter: brightness(0) invert(1); /* logo en blanco sobre el footer oscuro */
   }
-  .site-footer__certs li img { display: block; height: 46px; width: auto; }
 
   .site-footer__social {
     display: flex;
