@@ -15,16 +15,16 @@ const values = [
 ];
 
 const policies = [
-  { title: 'Integrada', desc: 'Calidad, Medio Ambiente, Seguridad y Salud en el Trabajo.' },
-  { title: 'Anticorrupción', desc: '' },
-  { title: 'Igualdad de Género', desc: '' },
-  { title: 'Prevención Sexual y Hostigamiento Laboral', desc: '' },
-  { title: 'Derechos Humanos', desc: '' },
-  { title: 'Relaciones Comunitarias', desc: '' },
-  { title: 'Responsabilidad Social', desc: '' },
-  { title: 'Control de Alcohol y Drogas', desc: '' },
-  { title: 'Sostenibilidad', desc: '' },
-  { title: 'Prevención y Prohibición del Trabajo Infantil', desc: '' },
+  { icon: 'clipboard-check', title: 'Integrada', desc: 'Calidad, Medio Ambiente, Seguridad y Salud en el Trabajo.' },
+  { icon: 'scale', title: 'Anticorrupción', desc: '' },
+  { icon: 'equality', title: 'Igualdad de Género', desc: '' },
+  { icon: 'hand', title: 'Prevención Sexual y Hostigamiento Laboral', desc: '' },
+  { icon: 'globe', title: 'Derechos Humanos', desc: '' },
+  { icon: 'people', title: 'Relaciones Comunitarias', desc: '' },
+  { icon: 'heart', title: 'Responsabilidad Social', desc: '' },
+  { icon: 'no-drink', title: 'Control de Alcohol y Drogas', desc: '' },
+  { icon: 'leaf', title: 'Sostenibilidad', desc: '' },
+  { icon: 'child', title: 'Prevención y Prohibición del Trabajo Infantil', desc: '' },
 ];
 ---
 <BaseLayout
@@ -112,9 +112,9 @@ const policies = [
         <h2 class="h-l">Compromiso con la gestión responsable</h2>
       </div>
       <div class="policies-grid">
-        {policies.map((p, i) => (
+        {policies.map((p) => (
           <article class="policy-card" data-reveal>
-            <span class="policy-card__num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="policy-card__icon"><UiIcon name={p.icon} size={24} /></span>
             <div>
               <h3 class="h-xs">{p.title}</h3>
               {p.desc && <p class="text-s">{p.desc}</p>}
@@ -181,8 +181,15 @@ const policies = [
 
   .policies { background: var(--bg-subtle); }
   .policies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
-  .policy-card { display: flex; gap: var(--space-5); padding: var(--space-6); background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); }
-  .policy-card__num { font-size: var(--fs-h-s); font-weight: var(--fw-extrabold); color: var(--accent-soft); -webkit-text-stroke: 1px var(--accent); color: transparent; line-height: 1; }
+  .policy-card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-6); background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .policy-card__icon {
+    display: grid; place-items: center; flex-shrink: 0;
+    width: 48px; height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--accent-soft); color: var(--accent);
+    transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+  }
+  .policy-card:hover .policy-card__icon { background: var(--accent); color: #fff; }
   .policy-card h3 { margin-bottom: var(--space-3); }
 
   .trinorma { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-top: var(--space-2); }
