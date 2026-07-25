@@ -122,9 +122,9 @@ const year = new Date().getFullYear();
     gap: var(--space-3);
     margin-top: var(--space-6);
   }
-  .site-footer__certs li { display: grid; place-items: center; }
+  .site-footer__certs li { display: grid; place-items: center; width: 92px; height: 42px; }
   .site-footer__certs li img {
-    display: block; height: 48px; width: auto;
+    max-width: 100%; max-height: 100%; object-fit: contain;
     filter: brightness(0) invert(1); /* logo en blanco sobre el footer oscuro */
   }
 
