@@ -15,7 +15,7 @@ const values = [
 ];
 
 const policies = [
-  { icon: 'clipboard-check', title: 'Integrada', desc: 'Calidad, Medio Ambiente, Seguridad y Salud en el Trabajo.' },
+  { icon: 'clipboard-check', title: 'Integrada', desc: '' },
   { icon: 'scale', title: 'Anticorrupción', desc: '' },
   { icon: 'equality', title: 'Igualdad de Género', desc: '' },
   { icon: 'hand', title: 'Prevención Sexual y Hostigamiento Laboral', desc: '' },
@@ -180,8 +180,8 @@ const policies = [
   .value-card__tag { font-size: var(--fs-text-s); font-weight: var(--fw-medium); color: var(--accent); }
 
   .policies { background: var(--bg-subtle); }
-  .policies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); }
-  .policy-card { display: flex; gap: var(--space-5); align-items: flex-start; padding: var(--space-6); background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); }
+  .policies-grid { display: grid; grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; gap: var(--space-6); }
+  .policy-card { display: flex; gap: var(--space-5); align-items: center; padding: var(--space-6); background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); }
   .policy-card__icon {
     display: grid; place-items: center; flex-shrink: 0;
     width: 48px; height: 48px;
@@ -190,7 +190,7 @@ const policies = [
     transition: background-color var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
   }
   .policy-card:hover .policy-card__icon { background: var(--accent); color: #fff; }
-  .policy-card h3 { margin-bottom: var(--space-3); }
+  .policy-card h3:not(:last-child) { margin-bottom: var(--space-3); }
 
   .trinorma { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6); margin-top: var(--space-2); }
   .trinorma__item { display: flex; flex-direction: column; gap: var(--space-3); align-items: center; text-align: center; padding: var(--space-8); border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-2); }
