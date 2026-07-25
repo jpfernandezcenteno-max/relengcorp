@@ -3,7 +3,7 @@
    HERO — banner principal del Home.
    - Título con efecto TYPEWRITER (palabra rotativa).
    - Fondo industrial (placeholder de mina) + overlay azul.
-   - Marquee de aliados estratégicos (carrusel de logos).
+   - Marquee de socios estratégicos (carrusel de logos).
    Fiel al Figma: texto a la izquierda, imagen a la derecha.
    ============================================================ */
 import { Image } from 'astro:assets';
@@ -19,8 +19,15 @@ const typewriterWords = [
   'ingeniería digital',
 ];
 
-// Aliados estratégicos (marquee). PLACEHOLDER: reemplazar por logos reales del cliente.
-const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1'];
+// Socios estratégicos (marquee) — logos reales en /public/images/socios.
+const socios = [
+  { name: 'Andritz', logo: '/images/socios/andritz.png' },
+  { name: 'FLSmidth', logo: '/images/socios/flsmidth.png' },
+  { name: 'MBC', logo: '/images/socios/mbc.png' },
+  { name: 'Metso', logo: '/images/socios/metso.png' },
+  { name: 'RIPP', logo: '/images/socios/ripp.png' },
+  { name: 'WEG', logo: '/images/socios/weg.png' },
+];
 ---
 
 <section class="hero" aria-label="Presentación de Relengcorp">
@@ -65,15 +72,15 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
         <a href="/servicios" class="btn btn--lg btn--outline-light" data-gtm-id="hero-cta-servicios">Conoce nuestros servicios</a>
       </div>
 
-      <!-- Aliados estratégicos: marquee -->
+      <!-- Socios estratégicos: marquee -->
       <div class="hero__allies" data-reveal>
-        <p class="hero__allies-label">Contamos con aliados estratégicos A1:</p>
-        <div class="marquee" aria-label="Aliados estratégicos">
+        <p class="hero__allies-label">Contamos con socios estratégicos A1:</p>
+        <div class="marquee" aria-label="Socios estratégicos">
           <ul class="marquee__track">
-            {allies.map((a) => <li class="marquee__item">{a}</li>)}
+            {socios.map((s) => <li class="marquee__item"><img src={s.logo} alt={s.name} loading="lazy" decoding="async" /></li>)}
             {/* duplicado para loop continuo */}
-            {allies.map((a) => (
-              <li class="marquee__item" aria-hidden="true">{a}</li>
+            {socios.map((s) => (
+              <li class="marquee__item" aria-hidden="true"><img src={s.logo} alt="" loading="lazy" decoding="async" /></li>
             ))}
           </ul>
         </div>
@@ -203,14 +210,14 @@ const allies = ['WEG Digital', 'Aliado A1', 'Aliado A1', 'Aliado A1', 'Aliado A1
     animation: marquee 24s linear infinite;
   }
   .marquee:hover .marquee__track { animation-play-state: paused; }
-  .marquee__item {
-    font-size: var(--fs-text-m);
-    font-weight: var(--fw-bold);
-    letter-spacing: var(--tracking-wide);
-    color: rgba(255, 255, 255, 0.7);
-    white-space: nowrap;
-    filter: grayscale(1);
+  .marquee__item { display: grid; place-items: center; flex: 0 0 auto; }
+  .marquee__item img {
+    height: 40px; width: auto; object-fit: contain;
+    filter: brightness(0) invert(1); /* logos en blanco sobre el hero oscuro */
+    opacity: 0.8;
+    transition: opacity var(--dur-base) var(--ease-out);
   }
+  .marquee__item img:hover { opacity: 1; }
   @keyframes marquee {
     to { transform: translateX(-50%); }
   }
