@@ -6,22 +6,25 @@ import UiIcon from '../components/UiIcon.astro';
 import { certifications, homologations } from '../data/site';
 
 const values = [
-  { icon: 'shield', title: 'Seguridad', tagline: 'Primero', desc: 'La seguridad es nuestra prioridad en cada actividad y decisión. Protegemos a las personas, promoviendo una cultura preventiva y responsable orientada al cero daño.' },
-  { icon: 'check-circle', title: 'Integridad', tagline: 'Siempre', desc: 'Actuamos con honestidad, transparencia y coherencia en todo momento. Cumplimos nuestros compromisos y hacemos lo correcto, generando confianza con clientes y colaboradores.' },
-  { icon: 'spark', title: 'Innovación', tagline: 'Que genere valor', desc: 'Impulsamos soluciones que integran tecnología, digitalización e inteligencia artificial para resolver desafíos reales y generar valor sostenible en las operaciones de nuestros clientes.' },
-  { icon: 'target', title: 'Enfoque al cliente', tagline: 'Soluciones que transforman', desc: 'Entendemos las necesidades de nuestros clientes para entregar soluciones confiables, eficientes y de alto impacto, mejorando su productividad y competitividad.' },
-  { icon: 'spark', title: 'Excelencia', tagline: 'En todo lo que hacemos', desc: 'Trabajamos con disciplina, calidad y mejora continua para superar expectativas y entregar servicios de alto nivel en cada proyecto y operación.' },
-  { icon: 'user', title: 'Actitud', tagline: 'Trabajo en equipo', desc: 'Trabajamos juntos para crear una cultura basada en la confianza y el respeto.' },
+  { icon: 'shield', title: 'Seguridad', desc: 'Nada justifica el daño.' },
+  { icon: 'spark', title: 'Ingenio', desc: 'Conectamos lo que otros ven separado.' },
+  { icon: 'target', title: 'Curiosidad', desc: 'Siempre existe algo que todavía no vemos.' },
+  { icon: 'check-circle', title: 'Compromiso', desc: 'Hacemos que suceda.' },
+  { icon: 'gear', title: 'Integridad', desc: 'Hacemos lo correcto.' },
+  { icon: 'layers', title: 'Trascendencia', desc: 'Creamos valor que permanece.' },
 ];
 
 const policies = [
-  { title: 'Integrada de Gestión', desc: 'Brindamos servicios con calidad, promoviendo la seguridad, el cuidado del medio ambiente y la mejora continua en nuestras operaciones.' },
-  { title: 'Igualdad de Género', desc: 'Promovemos la igualdad de oportunidades y el respeto, garantizando un entorno laboral inclusivo y libre de discriminación.' },
-  { title: 'Hostigamiento Sexual', desc: 'Rechazamos todo acto de hostigamiento, promoviendo un ambiente laboral seguro, respetuoso y libre de violencia.' },
-  { title: 'Sostenibilidad', desc: 'Desarrollamos nuestras actividades de manera responsable, promoviendo el cuidado ambiental, social y económico.' },
-  { title: 'Derechos Humanos', desc: 'Respetamos y promovemos los derechos humanos, garantizando un trato digno, justo y equitativo para todas las personas.' },
-  { title: 'Responsabilidad Social', desc: 'Impulsamos la contratación local y la capacitación técnica para generar mayores oportunidades laborales.' },
-  { title: 'Anticorrupción', desc: 'Nuestro éxito se basa en la confianza de nuestros clientes, construida con honestidad y seriedad comercial.' },
+  { title: 'Integrada', desc: 'Calidad, Medio Ambiente, Seguridad y Salud en el Trabajo.' },
+  { title: 'Anticorrupción', desc: '' },
+  { title: 'Igualdad de Género', desc: '' },
+  { title: 'Prevención Sexual y Hostigamiento Laboral', desc: '' },
+  { title: 'Derechos Humanos', desc: '' },
+  { title: 'Relaciones Comunitarias', desc: '' },
+  { title: 'Responsabilidad Social', desc: '' },
+  { title: 'Control de Alcohol y Drogas', desc: '' },
+  { title: 'Sostenibilidad', desc: '' },
+  { title: 'Prevención y Prohibición del Trabajo Infantil', desc: '' },
 ];
 ---
 <BaseLayout
@@ -63,10 +66,9 @@ const policies = [
         </span>
         <h2 class="h-s">Misión</h2>
         <p class="text-m">
-          Transformar la confiabilidad en una gestión inteligente, predictiva y digital,
-          integrando el monitoreo de condición especializado, sensorización remota e
-          inteligencia artificial aplicada para anticiparnos a las fallas y maximizar la
-          disponibilidad y confiabilidad de los activos críticos de nuestros clientes.
+          Somos una empresa de Ingeniería Inteligente que transforma la información de los
+          activos en conocimiento para impulsar decisiones estratégicas que generan valor
+          sostenible a nuestros socios estratégicos.
         </p>
       </article>
       <article class="mv-card" data-reveal>
@@ -75,9 +77,9 @@ const policies = [
         </span>
         <h2 class="h-s">Visión</h2>
         <p class="text-m">
-          Ser líderes en confiabilidad inteligente e integridad estructural para la minería,
-          desarrollando soluciones predictivas y tecnologías avanzadas que transformen la
-          manera en que se gestionan los activos críticos.
+          Redefinir la Ingeniería de Confiabilidad para que la gestión de activos evolucione
+          desde una gestión basada en datos hacia una gestión basada en conocimiento,
+          decisiones y generación de valor.
         </p>
       </article>
     </div>
@@ -94,7 +96,7 @@ const policies = [
         {values.map((v) => (
           <article class="value-card" data-reveal>
             <span class="value-card__icon"><UiIcon name={v.icon} size={26} /></span>
-            <h3 class="value-card__title h-xs">{v.title}<span class="value-card__tag">{v.tagline}</span></h3>
+            <h3 class="value-card__title h-xs">{v.title}</h3>
             <p class="text-s">{v.desc}</p>
           </article>
         ))}
@@ -115,7 +117,7 @@ const policies = [
             <span class="policy-card__num">{String(i + 1).padStart(2, '0')}</span>
             <div>
               <h3 class="h-xs">{p.title}</h3>
-              <p class="text-s">{p.desc}</p>
+              {p.desc && <p class="text-s">{p.desc}</p>}
             </div>
           </article>
         ))}
