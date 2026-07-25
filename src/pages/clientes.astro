@@ -2,8 +2,37 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 
-// PLACEHOLDER: reemplazar por logos reales de clientes (subir a /public/images/clientes/).
-const clients = Array.from({ length: 12 }, (_, i) => `Cliente ${i + 1}`);
+// Logos reales de clientes (en /public/images/clientes).
+const clients = [
+  { name: 'Altonorte', logo: '/images/clientes/altonorte.png' },
+  { name: 'Antamina', logo: '/images/clientes/antamina.png' },
+  { name: 'Antapaccay', logo: '/images/clientes/antapaccay.png' },
+  { name: 'Bechtel', logo: '/images/clientes/bechtel.png' },
+  { name: 'Capstone', logo: '/images/clientes/capstone.png' },
+  { name: 'Chinalco', logo: '/images/clientes/chinalco.png' },
+  { name: 'Codelco', logo: '/images/clientes/codelco.png' },
+  { name: 'Grupo México Southern', logo: '/images/clientes/grupo-mexico-southern.png' },
+  { name: 'Hudbay', logo: '/images/clientes/hudbay.png' },
+  { name: 'Las Bambas', logo: '/images/clientes/las-bambas.png' },
+  { name: 'Lomas Bayas', logo: '/images/clientes/lomas-bayas.png' },
+  { name: 'Marcobre', logo: '/images/clientes/marcobre.png' },
+  { name: 'Minera Ares', logo: '/images/clientes/minera-ares.png' },
+  { name: 'Newmont', logo: '/images/clientes/newmont.png' },
+  { name: 'Nexa', logo: '/images/clientes/nexa.png' },
+  { name: 'Nirsa', logo: '/images/clientes/nirsa.png' },
+  { name: 'OCP Cobriza', logo: '/images/clientes/ocp-cobriza.png' },
+  { name: 'Panamerican', logo: '/images/clientes/panamerican.png' },
+  { name: 'Pelambres', logo: '/images/clientes/pelambres.png' },
+  { name: 'Teck', logo: '/images/clientes/teck.png' },
+  { name: 'Tintaya', logo: '/images/clientes/tintaya.png' },
+  { name: 'Volcan', logo: '/images/clientes/volcan.png' },
+];
+
+// Se muestran de a 8 (4 columnas x 2 filas) y rotan en loop.
+const perSlide = 8;
+const slides: (typeof clients)[] = [];
+for (let i = 0; i < clients.length; i += perSlide) slides.push(clients.slice(i, i + perSlide));
+
 const sectors = [
   'Minería de cobre', 'Minería de oro', 'Plantas concentradoras',
   'Transporte de relaves', 'Energía', 'Industria pesada',
@@ -26,11 +55,24 @@ const sectors = [
         <p class="eyebrow eyebrow--center">Algunos de nuestros clientes</p>
         <h2 class="h-l">Marcas que confían en nosotros</h2>
       </div>
-      <ul class="clients-grid">
-        {clients.map((c) => (
-          <li class="client-logo" data-reveal>{c}</li>
+
+      <div class="clients-carousel" data-clients-carousel data-reveal>
+        {slides.map((slide, si) => (
+          <ul class:list={['clients-grid', 'clients-slide', { 'is-active': si === 0 }]} data-slide={si}>
+            {slide.map((c) => (
+              <li class="client-logo"><img src={c.logo} alt={c.name} loading="lazy" decoding="async" /></li>
+            ))}
+          </ul>
         ))}
-      </ul>
+      </div>
+
+      {slides.length > 1 && (
+        <div class="clients-dots" aria-label="Grupos de clientes">
+          {slides.map((_, si) => (
+            <button type="button" class:list={['clients-dot', { 'is-active': si === 0 }]} data-dot={si} aria-label={`Ver grupo ${si + 1} de ${slides.length}`}></button>
+          ))}
+        </div>
+      )}
     </div>
   </section>
 
@@ -50,20 +92,46 @@ const sectors = [
 </BaseLayout>
 
 <style>
+  /* Carrusel: los grupos se apilan en la misma celda y hacen crossfade */
+  .clients-carousel { display: grid; }
+  .clients-slide {
+    grid-area: 1 / 1;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s var(--ease-out), visibility 0.6s var(--ease-out);
+  }
+  .clients-slide.is-active { opacity: 1; visibility: visible; }
+
   .clients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
   .client-logo {
     display: grid; place-items: center;
-    height: 110px;
+    height: 120px; padding: var(--space-6);
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    color: var(--neutro-300);
-    font-weight: var(--fw-bold);
-    letter-spacing: var(--tracking-wide);
-    filter: grayscale(1);
-    transition: filter var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    transition: box-shadow var(--dur-base) var(--ease-out);
   }
-  .client-logo:hover { filter: grayscale(0); color: var(--accent); box-shadow: var(--shadow-3); }
+  .client-logo:hover { box-shadow: var(--shadow-3); }
+  .client-logo img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    filter: grayscale(1); opacity: 0.8;
+    transition: filter var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+  }
+  .client-logo:hover img { filter: grayscale(0); opacity: 1; }
+
+  .clients-dots { display: flex; justify-content: center; gap: var(--space-3); margin-top: var(--space-8); }
+  .clients-dot {
+    width: 10px; height: 10px; padding: 0;
+    border: none; border-radius: 50%;
+    background: var(--border); cursor: pointer;
+    transition: background var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+  }
+  .clients-dot:hover { background: var(--neutro-300); }
+  .clients-dot.is-active { background: var(--accent); transform: scale(1.25); }
+
+  /* Sin animación: se muestran todos los grupos apilados */
+  .clients-carousel.is-static { display: flex; flex-direction: column; gap: var(--space-6); }
+  .clients-carousel.is-static .clients-slide { grid-area: auto; opacity: 1; visibility: visible; }
 
   .sectors { background: var(--bg-subtle); }
   .sectors-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; }
@@ -72,3 +140,32 @@ const sectors = [
   @media (max-width: 900px) { .clients-grid { grid-template-columns: repeat(3, 1fr); } }
   @media (max-width: 560px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
+
+<script>
+  const carousel = document.querySelector<HTMLElement>('[data-clients-carousel]');
+  if (carousel) {
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('.clients-slide'));
+    const dots = Array.from(document.querySelectorAll<HTMLButtonElement>('.clients-dot'));
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (slides.length > 1 && !reduce) {
+      let idx = 0;
+      let timer: number | undefined;
+
+      const show = (i: number) => {
+        idx = (i + slides.length) % slides.length;
+        slides.forEach((s, n) => s.classList.toggle('is-active', n === idx));
+        dots.forEach((d, n) => d.classList.toggle('is-active', n === idx));
+      };
+      const start = () => { timer = window.setInterval(() => show(idx + 1), 4500); };
+      const stop = () => { if (timer) window.clearInterval(timer); };
+
+      dots.forEach((d, n) => d.addEventListener('click', () => { show(n); stop(); start(); }));
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      start();
+    } else if (reduce) {
+      carousel.classList.add('is-static');
+    }
+  }
+</script>
