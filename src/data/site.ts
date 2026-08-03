@@ -331,7 +331,7 @@ export const certifications = [
 
 /* Homologaciones (logo cuando exista) */
 export const homologations = [
-  { name: 'CIAL' },
+  { name: 'CIAL', logo: '/logos/cial.png' },
   { name: 'SGS', logo: '/logos/sgs.jpg' },
-  { name: 'Bureau Veritas' },
+  { name: 'Bureau Veritas', logo: '/logos/bureau-veritas.png' },
 ] as const;
