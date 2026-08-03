@@ -68,26 +68,28 @@ import { certifications, homologations } from '../../data/site';
   }
 
   .certs__homolog {
-    display: flex; align-items: center; flex-wrap: wrap;
-    gap: var(--space-5);
     margin-top: var(--space-9);
     padding-top: var(--space-7);
     border-top: 1px solid rgba(255,255,255,0.14);
   }
-  .certs__homolog-label { color: rgba(255,255,255,0.7); font-size: var(--fs-text-s); }
-  .certs__homolog ul { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-5); }
-  .certs__homolog li {
-    display: inline-flex; align-items: center;
-    font-weight: var(--fw-bold);
-    letter-spacing: var(--tracking-wide);
-    color: rgba(255,255,255,0.9);
+  .certs__homolog-label {
+    display: block; text-align: center;
+    color: rgba(255,255,255,0.7); font-size: var(--fs-text-s);
+    margin-bottom: var(--space-6);
   }
+  .certs__homolog ul {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6); align-items: center; justify-items: center;
+  }
+  .certs__homolog li { display: flex; justify-content: center; }
   .certs__homolog-logo {
-    display: block; height: 68px; width: auto;
-    padding: 8px 12px; border-radius: var(--radius-md);
+    display: block; height: 84px; width: auto; max-width: 100%;
+    padding: 10px 16px; border-radius: var(--radius-md);
     background: #fff;
   }
 
-  @media (max-width: 900px) { .certs__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) {
+    .certs__grid, .certs__homolog ul { grid-template-columns: 1fr; }
+  }
   @media (max-width: 744px) { .certs__panel { padding: var(--space-8) var(--space-6); } }
 </style>
