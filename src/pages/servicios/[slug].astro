@@ -30,8 +30,36 @@ const benefits = [
   { title: 'Especialistas en faena', text: 'Acompañamiento experto con experiencia comprobada en terreno.' },
 ];
 
-// PLACEHOLDER: logos reales de clientes.
-const clients = Array.from({ length: 6 }, (_, i) => `Cliente ${i + 1}`);
+const clientSlugs = [
+  'altonorte', 'antamina', 'antapaccay', 'bechtel', 'capstone', 'chinalco', 'codelco',
+  'grupo-mexico-southern', 'hudbay', 'las-bambas', 'lomas-bayas', 'marcobre', 'minera-ares',
+  'newmont', 'nexa', 'nirsa', 'ocp-cobriza', 'panamerican', 'pelambres', 'teck', 'tintaya', 'volcan',
+];
+const nameFor = (s: string) => ({
+  'grupo-mexico-southern': 'Grupo México Southern',
+  'ocp-cobriza': 'OCP Cobriza',
+  'minera-ares': 'Minera Ares',
+  'las-bambas': 'Las Bambas',
+  'lomas-bayas': 'Lomas Bayas',
+}[s] ?? s.charAt(0).toUpperCase() + s.slice(1));
+
+// Shuffle determinístico por slug — cada página muestra logos distintos de forma consistente
+function seededShuffle<T>(arr: T[], seed: string): T[] {
+  const copy = [...arr];
+  let h = seed.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0x9e3779b9);
+  for (let i = copy.length - 1; i > 0; i--) {
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+    h ^= h >>> 16;
+    const j = Math.abs(h) % (i + 1);
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+}
+
+const clients = seededShuffle(clientSlugs, service.slug)
+  .slice(0, 8)
+  .map((s) => ({ name: nameFor(s), logo: `/images/clientes/${s}.png` }));
 
 const schema = {
   '@context': 'https://schema.org',
@@ -103,7 +131,11 @@ const schema = {
         </p>
       </div>
       <ul class="svc-clients__logos" data-reveal>
-        {clients.map((c) => <li class="svc-client-logo">{c}</li>)}
+        {clients.map((c) => (
+          <li class="svc-client-logo">
+            <img src={c.logo} alt={c.name} loading="lazy" decoding="async" />
+          </li>
+        ))}
       </ul>
     </div>
   </section>
@@ -253,16 +285,29 @@ const schema = {
   }
 
   /* ===== CLIENTES ===== */
-  .svc-clients__logos { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); margin-top: var(--space-7); }
+  .svc-clients__logos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+  }
   .svc-client-logo {
     display: grid; place-items: center;
-    height: 64px; min-width: 150px; padding-inline: var(--space-6);
+    height: 80px; padding: var(--space-4) var(--space-5);
     border: 1px solid var(--border); border-radius: var(--radius-md);
-    color: var(--neutro-300); font-weight: var(--fw-bold); letter-spacing: var(--tracking-wide);
-    filter: grayscale(1);
-    transition: filter var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
+    background: var(--surface);
+    filter: grayscale(1) opacity(0.7);
+    transition: filter var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out);
   }
-  .svc-client-logo:hover { filter: grayscale(0); color: var(--accent); box-shadow: var(--shadow-3); }
+  .svc-client-logo:hover { filter: grayscale(0) opacity(1); box-shadow: var(--shadow-3); }
+  .svc-client-logo img { max-height: 44px; max-width: 100%; width: auto; object-fit: contain; }
+
+  @media (max-width: 700px) {
+    .svc-clients__logos { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .svc-clients__logos { grid-template-columns: repeat(2, 1fr); }
+  }
 
   /* ===== BENEFICIOS ===== */
   .svc-benefits__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); }
