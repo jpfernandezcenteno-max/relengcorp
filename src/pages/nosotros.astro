@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import UiIcon from '../components/UiIcon.astro';
 import { certifications, homologations } from '../data/site';
+import { generalImg } from '../lib/img';
 
 const values = [
   { icon: 'shield', title: 'Seguridad', desc: 'Nada justifica el daño.' },
@@ -35,14 +37,14 @@ const policies = [
     title="Transformamos la confiabilidad en una gestión inteligente y predictiva"
     subtitle="Ayudamos a nuestros clientes a maximizar la disponibilidad de sus activos, optimizar sus procesos y mejorar su desempeño operativo mediante servicios especializados, tecnologías avanzadas e inteligencia aplicada."
     imageLabel="Equipo Relengcorp en operación"
-    image="/images/general/16.webp"
+    image="16.webp"
   />
 
   <!-- Quiénes somos -->
   <section class="section">
     <div class="container about-intro">
       <figure class="about-intro__media zoom-img" data-reveal>
-        <img class="about-intro__media-img" src="/images/general/22.webp" alt="Equipo Relengcorp en operación" loading="lazy" decoding="async" />
+        <Image class="about-intro__media-img" src={generalImg('22.webp')} alt="Equipo Relengcorp en operación" widths={[400, 700, 1000]} sizes="(max-width: 900px) 100vw, 45vw" quality={70} loading="lazy" />
       </figure>
       <div class="about-intro__text" data-reveal>
         <p class="eyebrow">Sobre Relengcorp</p>

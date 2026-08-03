@@ -1,13 +1,15 @@
 ---
 /* SECCIÓN SOCIOS ESTRATÉGICOS — card oscura sobre fondo blanco (Home).
    Imagen a la izquierda + texto y botones a la derecha. */
+import { Image } from 'astro:assets';
+import { generalImg } from '../../lib/img';
 const brochureUrl = '/brochures/brochure-relengcorp.pdf';
 ---
 <section class="section socios">
   <div class="container">
     <div class="socios__card">
       <figure class="socios__media zoom-img" data-reveal>
-        <img class="socios__media-img" src="/images/general/12.webp" alt="Operación minera / planta" loading="lazy" decoding="async" />
+        <Image class="socios__media-img" src={generalImg('12.webp')} alt="Operación minera / planta" widths={[500, 800, 1100]} sizes="(max-width: 900px) 100vw, 50vw" quality={70} loading="lazy" />
       </figure>
       <div class="socios__content">
         <h2 class="h-l socios__title" data-reveal>

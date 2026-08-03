@@ -1,10 +1,12 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import UiIcon from '../../components/UiIcon.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import CertificacionesSection from '../../components/sections/CertificacionesSection.astro';
 import { services, site } from '../../data/site';
 import serviceImages from '../../data/service-images.json';
+import { servicioImg } from '../../lib/img';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -14,7 +16,8 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
-const gallery = (serviceImages as Record<string, string[]>)[service.slug] ?? [];
+const gallery = ((serviceImages as Record<string, string[]>)[service.slug] ?? [])
+  .map((p) => servicioImg(service.slug, p.split('/').pop()!));
 
 // Número de servicios realizados — varía por servicio (70-150), determinístico por slug
 function seededInt(seed: string, min: number, max: number): number {
@@ -103,7 +106,7 @@ const schema = {
       </div>
 
       <figure class="svc-hero__media zoom-img" data-reveal>
-        <img class="svc-media-img" style="aspect-ratio:1/1" src={gallery[0]} alt={`${service.title} en operación`} loading="lazy" decoding="async" />
+        <Image class="svc-media-img" style="aspect-ratio:1/1" src={gallery[0]} alt={`${service.title} en operación`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="eager" fetchpriority="high" />
       </figure>
     </div>
   </section>
@@ -182,7 +185,7 @@ const schema = {
         />
       </div>
       <figure class="svc-features__media zoom-img" data-reveal>
-        <img class="svc-media-img" style="aspect-ratio:4/5" src={gallery[1] ?? gallery[0]} alt={`${service.title} — detalle técnico`} loading="lazy" decoding="async" />
+        <Image class="svc-media-img" style="aspect-ratio:4/5" src={gallery[1] ?? gallery[0]} alt={`${service.title} — detalle técnico`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="lazy" />
       </figure>
     </div>
   </section>
@@ -193,7 +196,7 @@ const schema = {
       <div class="svc-gallery__track">
         {[...gallery, ...gallery].map((src, i) => (
           <figure class="svc-gallery__item" aria-hidden={i >= gallery.length ? 'true' : undefined}>
-            <img class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${(i % gallery.length) + 1}`} loading="lazy" decoding="async" />
+            <Image class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${(i % gallery.length) + 1}`} widths={[300, 450, 600]} sizes="340px" quality={70} loading="lazy" />
           </figure>
         ))}
       </div>

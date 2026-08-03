@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import { getCollection, render } from 'astro:content';
 import { site } from '../../data/site';
+import { resolveImg } from '../../lib/img';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -13,6 +15,7 @@ const { post } = Astro.props;
 const { Content } = await render(post);
 const { title, description, pubDate, updatedDate, category, author, cover, coverAlt } = post.data;
 const date = pubDate.toLocaleDateString('es-PE', { day: '2-digit', month: 'long', year: 'numeric' });
+const coverImg = cover ? resolveImg(cover) : undefined;
 
 // Schema.org Article para SEO
 const schema = {
@@ -52,8 +55,10 @@ const schema = {
 
     <!-- Imagen de portada -->
     <div class="container post-cover" data-reveal>
-      {cover ? (
-        <img src={cover} alt={coverAlt || title} width="1200" height="600" />
+      {coverImg ? (
+        <Image src={coverImg} alt={coverAlt || title} widths={[600, 900, 1200]} sizes="(max-width: 980px) 100vw, 980px" quality={72} loading="eager" fetchpriority="high" />
+      ) : cover ? (
+        <img src={cover} alt={coverAlt || title} width="1200" height="600" decoding="async" />
       ) : (
         <ImagePlaceholder label={coverAlt || 'Imagen de portada del artículo'} ratio="2/1" tone="dark" />
       )}

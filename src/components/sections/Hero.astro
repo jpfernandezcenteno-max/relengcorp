@@ -8,6 +8,7 @@
    ============================================================ */
 import { Image } from 'astro:assets';
 import heroImage from '../../assets/images/hero-mineria.jpg';
+import { generalImg } from '../../lib/img';
 
 // Palabras que rotan en el typewriter (servicios clave de Relengcorp)
 const typewriterWords = [
@@ -88,7 +89,7 @@ const socios = [
 
     <!-- Imagen destacada -->
     <div class="hero__figure" data-reveal>
-      <img class="hero__figure-img" src="/images/general/19.webp" alt="Técnico Relengcorp en faena" loading="eager" decoding="async" />
+      <Image class="hero__figure-img" src={generalImg('19.webp')} alt="Técnico Relengcorp en faena" widths={[400, 600, 800, 1000]} sizes="(max-width: 980px) 90vw, 40vw" quality={70} loading="eager" fetchpriority="high" />
     </div>
   </div>
 </section>

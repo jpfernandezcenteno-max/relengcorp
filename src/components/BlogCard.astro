@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import ImagePlaceholder from './ImagePlaceholder.astro';
+import { resolveImg } from '../lib/img';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -18,12 +20,15 @@ const badgeByCategory: Record<string, string> = {
 };
 const badgeClass = badgeByCategory[category] ?? 'badge--neutro';
 const imgRatio = variant === 'side' ? '8/5' : '12/5';
+const coverImg = cover ? resolveImg(cover) : undefined;
 ---
 <article class:list={['blog-card', `blog-card--${variant}`]} data-reveal>
   <a href={`/blog/${post.id}`} class="blog-card__link">
     <div class="blog-card__media">
-      {cover ? (
-        <img src={cover} alt={coverAlt || title} loading="lazy" />
+      {coverImg ? (
+        <Image src={coverImg} alt={coverAlt || title} widths={[400, 700, 1000]} sizes="(max-width: 900px) 100vw, 45vw" quality={70} loading="lazy" />
+      ) : cover ? (
+        <img src={cover} alt={coverAlt || title} loading="lazy" decoding="async" />
       ) : (
         <ImagePlaceholder label={coverAlt || 'Portada del artículo'} ratio={imgRatio} tone="dark" />
       )}

@@ -4,7 +4,9 @@
    Fondo oscuro industrial + título + imagen. Consistente
    con la identidad del Home.
    ============================================================ */
+import { Image } from 'astro:assets';
 import ImagePlaceholder from './ImagePlaceholder.astro';
+import { generalImg } from '../lib/img';
 
 interface Props {
   eyebrow?: string;
@@ -12,12 +14,13 @@ interface Props {
   subtitle?: string;
   /** Descripción de la imagen (alt) junto al título */
   imageLabel?: string;
-  /** Ruta de la imagen real; si se omite, muestra el placeholder */
+  /** Nombre de archivo en /assets/general (ej. "13.webp"); si se omite, muestra el placeholder */
   image?: string;
   /** 'light' (por defecto, fondo claro) o 'dark' */
   tone?: 'dark' | 'light';
 }
 const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', image, tone = 'light' } = Astro.props;
+const headerImg = image ? generalImg(image) : undefined;
 ---
 <header class:list={['page-header', `page-header--${tone}`]}>
   <div class="page-header__bg" aria-hidden="true">
@@ -30,8 +33,8 @@ const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', image, t
       {subtitle && <p class="page-header__sub text-l" data-reveal>{subtitle}</p>}
     </div>
     <div class="page-header__figure" data-reveal>
-      {image
-        ? <img class="page-header__img" src={image} alt={imageLabel} loading="eager" decoding="async" />
+      {headerImg
+        ? <Image class="page-header__img" src={headerImg} alt={imageLabel} widths={[400, 640, 900, 1200]} sizes="(max-width: 980px) 92vw, 45vw" quality={70} loading="eager" fetchpriority="high" />
         : <ImagePlaceholder label={imageLabel} ratio="4/3" tone={tone === 'dark' ? 'dark' : 'light'} />}
     </div>
   </div>
