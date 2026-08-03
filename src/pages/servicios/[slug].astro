@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ImagePlaceholder from '../../components/ImagePlaceholder.astro';
 import UiIcon from '../../components/UiIcon.astro';
 import ContactForm from '../../components/ContactForm.astro';
 import CertificacionesSection from '../../components/sections/CertificacionesSection.astro';
 import { services, site } from '../../data/site';
+import serviceImages from '../../data/service-images.json';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -14,6 +14,7 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+const gallery = (serviceImages as Record<string, string[]>)[service.slug] ?? [];
 
 // Stats del hero. PLACEHOLDER: confirmar cifras reales por servicio con el cliente.
 const stats = [
@@ -65,7 +66,7 @@ const schema = {
       </div>
 
       <figure class="svc-hero__media zoom-img" data-reveal>
-        <ImagePlaceholder label={`${service.title} en operación`} ratio="1/1" tone="dark" />
+        <img class="svc-media-img" style="aspect-ratio:1/1" src={gallery[0]} alt={`${service.title} en operación`} loading="lazy" decoding="async" />
       </figure>
     </div>
   </section>
@@ -140,7 +141,7 @@ const schema = {
         />
       </div>
       <figure class="svc-features__media zoom-img" data-reveal>
-        <ImagePlaceholder label={`${service.title} — detalle técnico`} ratio="4/5" tone="dark" />
+        <img class="svc-media-img" style="aspect-ratio:4/5" src={gallery[1] ?? gallery[0]} alt={`${service.title} — detalle técnico`} loading="lazy" decoding="async" />
       </figure>
     </div>
   </section>
@@ -149,9 +150,9 @@ const schema = {
   <section class="section section--tight svc-gallery" data-reveal>
     <div class="container svc-gallery__viewport">
       <div class="svc-gallery__track">
-        {[1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6].map((n, i) => (
-          <figure class="svc-gallery__item" aria-hidden={i >= 6 ? 'true' : undefined}>
-            <ImagePlaceholder label={`${service.title} — foto ${n}`} ratio="4/3" tone="dark" />
+        {[...gallery, ...gallery].map((src, i) => (
+          <figure class="svc-gallery__item" aria-hidden={i >= gallery.length ? 'true' : undefined}>
+            <img class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${(i % gallery.length) + 1}`} loading="lazy" decoding="async" />
           </figure>
         ))}
       </div>
@@ -189,6 +190,7 @@ const schema = {
   .svc-stat__label { color: var(--text-body); }
 
   .svc-hero__media { box-shadow: var(--shadow-5); }
+  .svc-media-img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
   /* ===== SUB-SERVICIOS ===== */
   .svc-subservices { background: var(--bg-subtle); }
@@ -283,8 +285,7 @@ const schema = {
   .svc-features__list { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-5); width: 100%; }
   .svc-features__list li { display: flex; gap: var(--space-3); align-items: flex-start; color: var(--text-body); font-size: var(--fs-text-s); }
   .svc-features__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
-  .svc-features__media { min-height: 440px; box-shadow: var(--shadow-4); }
-  .svc-features__media :global(.ph) { height: 100%; }
+  .svc-features__media { box-shadow: var(--shadow-4); }
 
   /* ===== GALERÍA: roll banner ===== */
   .svc-gallery__viewport {
@@ -302,28 +303,14 @@ const schema = {
   .svc-gallery__item {
     flex: 0 0 340px;
     margin: 0;
-  }
-  .svc-gallery__item :global(.ph) {
-    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
     box-shadow: var(--shadow-3);
     transition: box-shadow var(--dur-base) var(--ease-out);
   }
-  .svc-gallery__item :global(.ph)::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: inherit;
-    transition: transform var(--dur-base) var(--ease-out);
-  }
-  .svc-gallery__item:hover {
-    z-index: 1;
-  }
-  .svc-gallery__item:hover :global(.ph) {
-    box-shadow: var(--shadow-5);
-  }
-  .svc-gallery__item:hover :global(.ph)::before {
-    transform: scale(1.1);
-  }
+  .svc-gallery__item img { transition: transform var(--dur-base) var(--ease-out); }
+  .svc-gallery__item:hover { z-index: 1; box-shadow: var(--shadow-5); }
+  .svc-gallery__item:hover img { transform: scale(1.08); }
   @keyframes svc-gallery-scroll {
     to { transform: translateX(-50%); }
   }
