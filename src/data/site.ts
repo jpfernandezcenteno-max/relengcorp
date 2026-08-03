@@ -333,6 +333,6 @@ export const certifications = [
    sobre fondos oscuros; SGS es una placa con fondo blanco (va en chip). */
 export const homologations: { name: string; logo: string; white?: boolean }[] = [
   { name: 'CIAL', logo: '/logos/cial.png', white: true },
-  { name: 'SGS', logo: '/logos/sgs.jpg' },
+  { name: 'SGS', logo: '/logos/sgs.png' },
   { name: 'Bureau Veritas', logo: '/logos/bureau-veritas.png', white: true },
 ];
