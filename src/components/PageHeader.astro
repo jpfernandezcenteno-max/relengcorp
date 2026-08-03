@@ -10,12 +10,14 @@ interface Props {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  /** Descripción de la imagen sugerida junto al título */
+  /** Descripción de la imagen (alt) junto al título */
   imageLabel?: string;
+  /** Ruta de la imagen real; si se omite, muestra el placeholder */
+  image?: string;
   /** 'light' (por defecto, fondo claro) o 'dark' */
   tone?: 'dark' | 'light';
 }
-const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', tone = 'light' } = Astro.props;
+const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', image, tone = 'light' } = Astro.props;
 ---
 <header class:list={['page-header', `page-header--${tone}`]}>
   <div class="page-header__bg" aria-hidden="true">
@@ -28,7 +30,9 @@ const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', tone = '
       {subtitle && <p class="page-header__sub text-l" data-reveal>{subtitle}</p>}
     </div>
     <div class="page-header__figure" data-reveal>
-      <ImagePlaceholder label={imageLabel} ratio="4/3" tone={tone === 'dark' ? 'dark' : 'light'} />
+      {image
+        ? <img class="page-header__img" src={image} alt={imageLabel} loading="eager" decoding="async" />
+        : <ImagePlaceholder label={imageLabel} ratio="4/3" tone={tone === 'dark' ? 'dark' : 'light'} />}
     </div>
   </div>
 </header>
@@ -64,6 +68,7 @@ const { eyebrow, title, subtitle, imageLabel = 'Imagen representativa', tone = '
   .page-header__sub { color: var(--azul-100); max-width: 62ch; }
   .page-header__figure { width: 100%; }
   :global(.page-header__figure .ph) { box-shadow: var(--shadow-6); }
+  .page-header__img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-6); }
 
   /* ---- Variante clara (fondo blanco) ---- */
   .page-header--light {

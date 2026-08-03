@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import ImagePlaceholder from '../components/ImagePlaceholder.astro';
 import UiIcon from '../components/UiIcon.astro';
 import { certifications, homologations } from '../data/site';
 
@@ -36,6 +35,7 @@ const policies = [
     title="Transformamos la confiabilidad en una gestión inteligente y predictiva"
     subtitle="Ayudamos a nuestros clientes a maximizar la disponibilidad de sus activos, optimizar sus procesos y mejorar su desempeño operativo mediante servicios especializados, tecnologías avanzadas e inteligencia aplicada."
     imageLabel="Equipo Relengcorp en operación"
+    image="/images/general/16.webp"
   />
 
   <!-- Quiénes somos -->
@@ -52,7 +52,7 @@ const policies = [
         </p>
       </div>
       <figure class="about-intro__media zoom-img" data-reveal>
-        <ImagePlaceholder label="Equipo Relengcorp / instalaciones" ratio="4/3" tone="dark" />
+        <img class="about-intro__media-img" src="/images/general/22.webp" alt="Equipo Relengcorp en operación" loading="lazy" decoding="async" />
       </figure>
     </div>
   </section>
@@ -156,6 +156,7 @@ const policies = [
 <style>
   .about-intro { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-9); align-items: center; }
   .about-intro__text { display: flex; flex-direction: column; gap: var(--space-5); }
+  .about-intro__media-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 
   .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); }
   .mv-card { padding: var(--space-8); border-radius: var(--radius-lg); background: rgba(255,255,255,0.04); border: 1px solid var(--border-dark); display: flex; flex-direction: column; gap: var(--space-4); }

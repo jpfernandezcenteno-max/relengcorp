@@ -1,14 +1,13 @@
 ---
 /* SECCIÓN SOCIOS ESTRATÉGICOS — card oscura sobre fondo blanco (Home).
    Imagen a la izquierda + texto y botones a la derecha. */
-import ImagePlaceholder from '../ImagePlaceholder.astro';
 const brochureUrl = '/brochures/relengcorp-brochure.pdf';
 ---
 <section class="section socios">
   <div class="container">
     <div class="socios__card">
       <figure class="socios__media zoom-img" data-reveal>
-        <ImagePlaceholder label="Operación minera / planta" ratio="16/10" tone="dark" />
+        <img class="socios__media-img" src="/images/general/12.webp" alt="Operación minera / planta" loading="lazy" decoding="async" />
       </figure>
       <div class="socios__content">
         <h2 class="h-l socios__title" data-reveal>
@@ -64,6 +63,7 @@ const brochureUrl = '/brochures/relengcorp-brochure.pdf';
     -webkit-mask-image: radial-gradient(ellipse 52% 85% at 68% 50%, black 0%, rgba(0,0,0,0.6) 45%, transparent 100%);
   }
   .socios__media { position: relative; z-index: 1; box-shadow: var(--shadow-4); border: 1px solid var(--morado-500); border-radius: var(--radius-lg); }
+  .socios__media-img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
   .socios__content { position: relative; z-index: 1; display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; }
   .socios__title { color: #fff; }
   .socios__desc { color: var(--azul-100); }

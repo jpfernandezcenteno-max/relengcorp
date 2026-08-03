@@ -7,7 +7,6 @@
    Fiel al Figma: texto a la izquierda, imagen a la derecha.
    ============================================================ */
 import { Image } from 'astro:assets';
-import ImagePlaceholder from '../ImagePlaceholder.astro';
 import heroImage from '../../assets/images/hero-mineria.jpg';
 
 // Palabras que rotan en el typewriter (servicios clave de Relengcorp)
@@ -89,7 +88,7 @@ const socios = [
 
     <!-- Imagen destacada -->
     <div class="hero__figure" data-reveal>
-      <ImagePlaceholder label="Trabajador / equipo técnico en faena" ratio="4/5" tone="dark" />
+      <img class="hero__figure-img" src="/images/general/19.webp" alt="Técnico Relengcorp en faena" loading="eager" decoding="async" />
     </div>
   </div>
 </section>
@@ -224,6 +223,7 @@ const socios = [
 
   .hero__figure { width: 100%; }
   :global(.hero__figure .ph) { box-shadow: var(--shadow-6); }
+  .hero__figure-img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-6); }
 
   /* ---- Responsive ---- */
   @media (max-width: 980px) {
