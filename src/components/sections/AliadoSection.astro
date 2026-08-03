@@ -1,8 +1,24 @@
 ---
 /* SECCIÓN ALIADO CONFIABLE — fondo blanco, centrado, con logos de clientes (Home). */
 
-// PLACEHOLDER: reemplazar por logos reales de clientes.
-const clients = Array.from({ length: 8 }, (_, i) => `Cliente ${i + 1}`);
+const clientSlugs = [
+  'altonorte', 'antamina', 'antapaccay', 'bechtel', 'capstone', 'chinalco', 'codelco',
+  'grupo-mexico-southern', 'hudbay', 'las-bambas', 'lomas-bayas', 'marcobre', 'minera-ares',
+  'newmont', 'nexa', 'nirsa', 'ocp-cobriza', 'panamerican', 'pelambres', 'teck', 'tintaya', 'volcan',
+];
+const nameFor = (s: string) => ({
+  'grupo-mexico-southern': 'Grupo México Southern',
+  'ocp-cobriza':           'OCP Cobriza',
+  'minera-ares':           'Minera Ares',
+  'las-bambas':            'Las Bambas',
+  'lomas-bayas':           'Lomas Bayas',
+}[s] ?? s.charAt(0).toUpperCase() + s.slice(1));
+
+// Shuffle aleatorio en cada build, muestra 8
+const clients = [...clientSlugs]
+  .sort(() => Math.random() - 0.5)
+  .slice(0, 8)
+  .map((s) => ({ name: nameFor(s), logo: `/images/clientes/${s}.png` }));
 ---
 <section class="section aliado">
   <div class="container">
@@ -18,7 +34,11 @@ const clients = Array.from({ length: 8 }, (_, i) => `Cliente ${i + 1}`);
     <div class="aliado__clients" data-reveal>
       <p class="aliado__clients-label text-s">Conoce algunos de nuestros clientes:</p>
       <ul class="aliado__logos">
-        {clients.map((c) => <li class="aliado__logo">{c}</li>)}
+        {clients.map((c) => (
+          <li class="aliado__logo">
+            <img src={c.logo} alt={c.name} loading="lazy" decoding="async" />
+          </li>
+        ))}
       </ul>
     </div>
   </div>
@@ -40,14 +60,23 @@ const clients = Array.from({ length: 8 }, (_, i) => `Cliente ${i + 1}`);
   }
   .aliado__logo {
     display: grid; place-items: center;
-    height: 56px;
-    color: var(--neutro-300);
-    font-weight: var(--fw-bold);
-    letter-spacing: var(--tracking-wide);
-    filter: grayscale(1);
-    transition: filter var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
+    height: 72px;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
   }
-  .aliado__logo:hover { filter: grayscale(0); color: var(--accent); transform: translateY(-3px); }
+  .aliado__logo:hover { box-shadow: var(--shadow-3); transform: translateY(-3px); }
+  .aliado__logo img {
+    max-height: 40px;
+    max-width: 120px;
+    width: auto; height: auto;
+    object-fit: contain;
+    filter: grayscale(1) opacity(0.7);
+    transition: filter var(--dur-base) var(--ease-out);
+  }
+  .aliado__logo:hover img { filter: grayscale(0) opacity(1); }
 
   @media (max-width: 760px) { .aliado__logos { grid-template-columns: repeat(2, 1fr); } }
 </style>
