@@ -38,6 +38,25 @@ const policies = [
     image="/images/general/16.webp"
   />
 
+  <!-- Quiénes somos -->
+  <section class="section">
+    <div class="container about-intro">
+      <figure class="about-intro__media zoom-img" data-reveal>
+        <img class="about-intro__media-img" src="/images/general/22.webp" alt="Equipo Relengcorp en operación" loading="lazy" decoding="async" />
+      </figure>
+      <div class="about-intro__text" data-reveal>
+        <p class="eyebrow">Sobre Relengcorp</p>
+        <h2 class="h-m">Confiabilidad, integridad y transformación digital para la industria</h2>
+        <p class="text-m">
+          Relengcorp es una empresa especializada en soluciones integrales de confiabilidad,
+          mantenimiento, monitoreo de condición y transformación digital para la industria
+          minera e industrial. Nuestro compromiso es generar valor sostenible, reducir riesgos
+          operacionales y contribuir al crecimiento eficiente y seguro de las organizaciones.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- Misión / Visión -->
   <section class="section section--tight section-dark on-dark">
     <div class="container mv-grid">
@@ -82,25 +101,6 @@ const policies = [
           </article>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- Quiénes somos -->
-  <section class="section">
-    <div class="container about-intro">
-      <div class="about-intro__text" data-reveal>
-        <p class="eyebrow">Sobre Relengcorp</p>
-        <h2 class="h-m">Confiabilidad, integridad y transformación digital para la industria</h2>
-        <p class="text-m">
-          Relengcorp es una empresa especializada en soluciones integrales de confiabilidad,
-          mantenimiento, monitoreo de condición y transformación digital para la industria
-          minera e industrial. Nuestro compromiso es generar valor sostenible, reducir riesgos
-          operacionales y contribuir al crecimiento eficiente y seguro de las organizaciones.
-        </p>
-      </div>
-      <figure class="about-intro__media zoom-img" data-reveal>
-        <img class="about-intro__media-img" src="/images/general/22.webp" alt="Equipo Relengcorp en operación" loading="lazy" decoding="async" />
-      </figure>
     </div>
   </section>
 
@@ -154,7 +154,7 @@ const policies = [
 </BaseLayout>
 
 <style>
-  .about-intro { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-9); align-items: center; }
+  .about-intro { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: var(--space-9); align-items: center; }
   .about-intro__text { display: flex; flex-direction: column; gap: var(--space-5); }
   .about-intro__media-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 
