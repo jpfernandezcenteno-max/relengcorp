@@ -4,6 +4,7 @@ description: "Servicio de Confiabilidad Remota: un enfoque anticipativo que inte
 pubDate: 2026-06-05
 category: "Confiabilidad"
 author: "Relengcorp"
+cover: "/images/servicios/confiabilidad-inteligente/00.webp"
 coverAlt: "Centro de confiabilidad remota monitoreando activos con inteligencia artificial"
 draft: false
 ---

@@ -4,6 +4,7 @@ description: "Fuimos parte de uno de los encuentros más importantes del sector 
 pubDate: 2026-06-10
 category: "Industria"
 author: "Relengcorp"
+cover: "/images/general/15.webp"
 coverAlt: "Stand de Relengcorp en EXPOMANT Arequipa 2026"
 draft: false
 ---

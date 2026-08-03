@@ -4,6 +4,7 @@ description: "Sensorización, plataformas IoT y centros de confiabilidad remota 
 pubDate: 2026-04-22
 category: "Transformación Digital"
 author: "Relengcorp"
+cover: "/images/servicios/confiabilidad-inteligente/06.webp"
 coverAlt: "Centro de confiabilidad remota con monitoreo en tiempo real"
 draft: false
 ---

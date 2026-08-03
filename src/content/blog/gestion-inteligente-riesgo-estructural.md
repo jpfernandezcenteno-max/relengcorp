@@ -4,6 +4,7 @@ description: "Servicio de Integridad Estructural para equipos críticos de miner
 pubDate: 2026-05-28
 category: "Integridad"
 author: "Relengcorp"
+cover: "/images/servicios/integridad-estructural/00.webp"
 coverAlt: "Inspección estructural de equipo crítico minero"
 draft: false
 ---

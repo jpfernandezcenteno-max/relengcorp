@@ -4,6 +4,7 @@ description: "La renovación de nuestras certificaciones refleja nuestro enfoque
 pubDate: 2026-06-02
 category: "Industria"
 author: "Relengcorp"
+cover: "/images/general/04.webp"
 coverAlt: "Certificaciones ISO 9001, ISO 14001 e ISO 45001 de Relengcorp"
 draft: false
 ---

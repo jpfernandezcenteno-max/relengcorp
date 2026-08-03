@@ -4,6 +4,7 @@ description: "Nuestra primera promesa de marca ante nuestros clientes es el 'Cer
 pubDate: 2026-06-14
 category: "Industria"
 author: "Relengcorp"
+cover: "/images/general/08.webp"
 coverAlt: "Supervisora de seguridad de Relengcorp en faena minera"
 draft: false
 ---

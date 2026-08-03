@@ -4,6 +4,7 @@ description: "Cómo la analítica avanzada y el monitoreo de condición permiten
 pubDate: 2026-05-20
 category: "Confiabilidad"
 author: "Relengcorp"
+cover: "/images/servicios/monitoreo-mantenimiento-predictivo/00.webp"
 coverAlt: "Equipo de monitoreo de condición en planta minera"
 draft: false
 ---

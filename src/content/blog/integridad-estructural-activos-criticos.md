@@ -4,6 +4,7 @@ description: "END avanzado, monitoreo de condición y tecnologías digitales par
 pubDate: 2026-05-08
 category: "Integridad"
 author: "Relengcorp"
+cover: "/images/servicios/integridad-estructural/03.webp"
 coverAlt: "Inspección de integridad estructural en equipo minero"
 draft: false
 ---
