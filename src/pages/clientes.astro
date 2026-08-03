@@ -3,32 +3,22 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 
 // Logos reales de clientes (en /public/images/clientes).
-// `mh` = altura máxima (px) individual, para equilibrar el tamaño óptico:
-// los wordmarks anchos llenan el ancho; los compactos/apilados se topan más bajo.
-const clients = [
-  { name: 'Altonorte', logo: '/images/clientes/altonorte.png', mh: 54 },
-  { name: 'Antamina', logo: '/images/clientes/antamina.png', mh: 50 },
-  { name: 'Antapaccay', logo: '/images/clientes/antapaccay.png', mh: 50 },
-  { name: 'Bechtel', logo: '/images/clientes/bechtel.png', mh: 50 },
-  { name: 'Capstone', logo: '/images/clientes/capstone.png', mh: 54 },
-  { name: 'Chinalco', logo: '/images/clientes/chinalco.png', mh: 50 },
-  { name: 'Codelco', logo: '/images/clientes/codelco.png', mh: 56 },
-  { name: 'Grupo México Southern', logo: '/images/clientes/grupo-mexico-southern.png', mh: 56 },
-  { name: 'Hudbay', logo: '/images/clientes/hudbay.png', mh: 56 },
-  { name: 'Las Bambas', logo: '/images/clientes/las-bambas.png', mh: 54 },
-  { name: 'Lomas Bayas', logo: '/images/clientes/lomas-bayas.png', mh: 54 },
-  { name: 'Marcobre', logo: '/images/clientes/marcobre.png', mh: 56 },
-  { name: 'Minera Ares', logo: '/images/clientes/minera-ares.png', mh: 50 },
-  { name: 'Newmont', logo: '/images/clientes/newmont.png', mh: 56 },
-  { name: 'Nexa', logo: '/images/clientes/nexa.png', mh: 54 },
-  { name: 'Nirsa', logo: '/images/clientes/nirsa.png', mh: 56 },
-  { name: 'OCP Cobriza', logo: '/images/clientes/ocp-cobriza.png', mh: 50 },
-  { name: 'Panamerican', logo: '/images/clientes/panamerican.png', mh: 56 },
-  { name: 'Pelambres', logo: '/images/clientes/pelambres.png', mh: 56 },
-  { name: 'Teck', logo: '/images/clientes/teck.png', mh: 54 },
-  { name: 'Tintaya', logo: '/images/clientes/tintaya.png', mh: 50 },
-  { name: 'Volcan', logo: '/images/clientes/volcan.png', mh: 54 },
+// Medida estándar: todos comparten la misma altura máxima (--client-logo-h en el CSS)
+// y max-width 100%. Los logos altos/cuadrados se topan a esa altura y los muy anchos
+// los limita el ancho del contenedor, de modo que todos se ven de tamaño parecido.
+const clientSlugs = [
+  'altonorte', 'antamina', 'antapaccay', 'bechtel', 'capstone', 'chinalco', 'codelco',
+  'grupo-mexico-southern', 'hudbay', 'las-bambas', 'lomas-bayas', 'marcobre', 'minera-ares',
+  'newmont', 'nexa', 'nirsa', 'ocp-cobriza', 'panamerican', 'pelambres', 'teck', 'tintaya', 'volcan',
 ];
+const nameFor = (s: string) => ({
+  'grupo-mexico-southern': 'Grupo México Southern',
+  'ocp-cobriza': 'OCP Cobriza',
+  'minera-ares': 'Minera Ares',
+  'las-bambas': 'Las Bambas',
+  'lomas-bayas': 'Lomas Bayas',
+}[s] ?? s.charAt(0).toUpperCase() + s.slice(1));
+const clients = clientSlugs.map((s) => ({ name: nameFor(s), logo: `/images/clientes/${s}.png` }));
 
 // Se muestran de a 8 (4 columnas x 2 filas) y rotan en loop.
 const perSlide = 8;
@@ -62,7 +52,7 @@ const sectors = [
         {slides.map((slide, si) => (
           <ul class:list={['clients-grid', 'clients-slide', { 'is-active': si === 0 }]} data-slide={si}>
             {slide.map((c) => (
-              <li class="client-logo"><img src={c.logo} alt={c.name} style={`--mh:${c.mh}px`} loading="lazy" decoding="async" /></li>
+              <li class="client-logo"><img src={c.logo} alt={c.name} loading="lazy" decoding="async" /></li>
             ))}
           </ul>
         ))}
@@ -107,7 +97,7 @@ const sectors = [
   .clients-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-6); }
   .client-logo {
     display: grid; place-items: center;
-    height: 104px; padding: var(--space-3) var(--space-4);
+    height: 92px; padding: var(--space-3) var(--space-4);
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
@@ -115,7 +105,7 @@ const sectors = [
   }
   .client-logo:hover { box-shadow: var(--shadow-3); }
   .client-logo img {
-    max-width: 100%; max-height: var(--mh, 52px);
+    max-width: 100%; max-height: 46px;
     width: auto; height: auto; object-fit: contain;
     filter: grayscale(1); opacity: 0.8;
     transition: filter var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
