@@ -329,10 +329,10 @@ export const certifications = [
   { code: 'ISO 45001', scope: 'Seguridad y Salud en el Trabajo', logo: '/logos/iso-45001.png' },
 ] as const;
 
-/* Homologaciones — `white:true` = logo transparente que se puede pintar en blanco
-   sobre fondos oscuros; SGS es una placa con fondo blanco (va en chip). */
-export const homologations: { name: string; logo: string; white?: boolean }[] = [
-  { name: 'CIAL', logo: '/logos/cial.png', white: true },
-  { name: 'SGS', logo: '/logos/sgs.png' },
-  { name: 'Bureau Veritas', logo: '/logos/bureau-veritas.png', white: true },
+/* Homologaciones — `nochip:true` = la imagen ya trae su propio fondo (SGS),
+   así que se muestra sin chip blanco; CIAL y Bureau son transparentes (van en chip). */
+export const homologations: { name: string; logo: string; nochip?: boolean }[] = [
+  { name: 'CIAL', logo: '/logos/cial.png' },
+  { name: 'SGS', logo: '/logos/sgs.jpg', nochip: true },
+  { name: 'Bureau Veritas', logo: '/logos/bureau-veritas.png' },
 ];

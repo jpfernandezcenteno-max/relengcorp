@@ -27,7 +27,7 @@ import { certifications, homologations } from '../../data/site';
         <span class="certs__homolog-label">Empresa homologada por:</span>
         <ul>
           {homologations.map((h) => (
-            <li><img class="certs__homolog-logo" src={h.logo} alt={h.name} loading="lazy" decoding="async" /></li>
+            <li><img class:list={['certs__homolog-logo', { 'certs__homolog-logo--nochip': h.nochip }]} src={h.logo} alt={h.name} loading="lazy" decoding="async" /></li>
           ))}
         </ul>
       </div>
@@ -87,6 +87,8 @@ import { certifications, homologations } from '../../data/site';
     padding: 12px 18px; border-radius: var(--radius-md);
     background: #fff;
   }
+  /* SGS ya trae su propio fondo: sin chip */
+  .certs__homolog-logo--nochip { padding: 0; background: none; }
 
   @media (max-width: 900px) {
     .certs__grid, .certs__homolog ul { grid-template-columns: 1fr; }
