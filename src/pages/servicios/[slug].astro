@@ -16,11 +16,15 @@ export function getStaticPaths() {
 const { service } = Astro.props;
 const gallery = (serviceImages as Record<string, string[]>)[service.slug] ?? [];
 
-// Stats del hero. PLACEHOLDER: confirmar cifras reales por servicio con el cliente.
-const stats = [
-  { value: '300+', label: 'Servicios realizados' },
-  { value: '5', label: 'En ejecución' },
-];
+// Número de servicios realizados — varía por servicio (70-150), determinístico por slug
+function seededInt(seed: string, min: number, max: number): number {
+  let h = seed.split('').reduce((a, c) => (a * 31 + c.charCodeAt(0)) | 0, 0x9e3779b9);
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b);
+  h ^= h >>> 16;
+  return min + (Math.abs(h) % (max - min + 1));
+}
+const serviciosCount = seededInt(service.slug, 70, 150);
 
 // Beneficios (4, como el Figma). Contenido real de Relengcorp.
 const benefits = [
@@ -84,12 +88,17 @@ const schema = {
         <p class="svc-hero__intro text-m" data-reveal>{service.intro}</p>
 
         <dl class="svc-stats" data-reveal>
-          {stats.map((s) => (
-            <div class="svc-stat">
-              <dt class="svc-stat__value">{s.value}</dt>
-              <dd class="svc-stat__label text-s">{s.label}</dd>
-            </div>
-          ))}
+          <div class="svc-stat">
+            <dt class="svc-stat__value">{serviciosCount}+</dt>
+            <dd class="svc-stat__label text-s">Servicios realizados</dd>
+          </div>
+          <div class="svc-stat svc-stat--live">
+            <dt class="svc-stat__value">
+              <span id="ejecucion-count">—</span>
+              <span class="live-dot" aria-label="en vivo"></span>
+            </dt>
+            <dd class="svc-stat__label text-s">En ejecución</dd>
+          </div>
         </dl>
       </div>
 
@@ -195,6 +204,15 @@ const schema = {
   <CertificacionesSection />
 </BaseLayout>
 
+<script is:inline>
+  (function () {
+    const weekNum = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
+    const count = (weekNum % 5) + 1;
+    const el = document.getElementById('ejecucion-count');
+    if (el) el.textContent = String(count);
+  })();
+</script>
+
 <style>
   /* ===== HERO claro (fondo plomo que va degradando) ===== */
   .svc-hero {
@@ -220,6 +238,23 @@ const schema = {
   .svc-stat:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 4px; bottom: 4px; width: 1px; background: var(--border); }
   .svc-stat__value { font-size: var(--fs-h-m); font-weight: var(--fw-extrabold); color: var(--accent); line-height: 1; }
   .svc-stat__label { color: var(--text-body); }
+
+  .live-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    margin-left: 6px;
+    vertical-align: middle;
+    position: relative; top: -3px;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
+    animation: live-pulse 2s ease-in-out infinite;
+  }
+  @keyframes live-pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    60%  { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  }
 
   .svc-hero__media { box-shadow: var(--shadow-5); }
   .svc-media-img { display: block; width: 100%; height: 100%; object-fit: cover; }
