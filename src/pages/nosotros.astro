@@ -146,7 +146,7 @@ const policies = [
       <div class="homolog" data-reveal>
         <p class="homolog__label">Homologaciones y evaluaciones empresariales:</p>
         <ul>{homologations.map((h) => (
-          <li>{'logo' in h ? <img class="homolog__logo" src={h.logo} alt={h.name} loading="lazy" decoding="async" /> : h.name}</li>
+          <li><img class="homolog__logo" src={h.logo} alt={h.name} loading="lazy" decoding="async" /></li>
         ))}</ul>
       </div>
     </div>

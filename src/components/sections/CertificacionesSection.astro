@@ -27,7 +27,7 @@ import { certifications, homologations } from '../../data/site';
         <span class="certs__homolog-label">Empresa homologada por:</span>
         <ul>
           {homologations.map((h) => (
-            <li>{'logo' in h ? <img class="certs__homolog-logo" src={h.logo} alt={h.name} loading="lazy" decoding="async" /> : h.name}</li>
+            <li><img class:list={['certs__homolog-logo', { 'certs__homolog-logo--white': h.white }]} src={h.logo} alt={h.name} loading="lazy" decoding="async" /></li>
           ))}
         </ul>
       </div>
@@ -86,6 +86,11 @@ import { certifications, homologations } from '../../data/site';
     display: block; height: 48px; width: auto;
     padding: 6px 10px; border-radius: var(--radius-sm);
     background: #fff;
+  }
+  /* Logos transparentes (CIAL, Bureau Veritas): en blanco, sin chip */
+  .certs__homolog-logo--white {
+    height: 40px; padding: 0; background: none;
+    filter: brightness(0) invert(1);
   }
 
   @media (max-width: 900px) { .certs__grid { grid-template-columns: 1fr; } }
