@@ -54,6 +54,11 @@ const subOptions = showSubservices
   {title && <h3 class="cform__title h-s" data-reveal>{title}</h3>}
   {description && <p class="cform__desc text-s" data-reveal>{description}</p>}
   {serviceName && <input type="hidden" name="servicio" value={serviceName} />}
+  <input type="hidden" name="variant" value={variant} />
+  {/* Honeypot anti-spam: invisible para humanos; si un bot lo llena, se descarta */}
+  <input type="text" name="website" class="cform__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <p class="cform__error-general" data-form-error hidden role="alert"></p>
 
   <div class="cform__grid">
     {showSubservices && (
@@ -218,6 +223,9 @@ const subOptions = showSubservices
     color: var(--success);
     font-weight: var(--fw-semibold);
   }
+  .cform__hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .cform__error-general { color: #e5484d; font-weight: var(--fw-medium); font-size: var(--fs-text-s); }
+  .cform__error-general[hidden] { display: none; }
 
   .cform__grid[hidden],
   .cform__consent-wrap[hidden],
@@ -231,8 +239,13 @@ const subOptions = showSubservices
 
 <script>
   document.querySelectorAll<HTMLFormElement>('[data-form]').forEach((form) => {
-    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>('input:not([type="checkbox"]), textarea, select');
+    // Se excluye el honeypot (name="website") de la validación visible.
+    const fields = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+      'input:not([type="checkbox"]):not([name="website"]), textarea, select',
+    );
     const successBox = form.querySelector<HTMLElement>('[data-success]');
+    const errorBox = form.querySelector<HTMLElement>('[data-form-error]');
+    const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     const variant = form.dataset.variant;
     const brochure = form.dataset.brochure;
 
@@ -246,8 +259,16 @@ const subOptions = showSubservices
       const err = field.parentElement?.querySelector<HTMLElement>('[data-error]');
       if (err) err.textContent = '';
     };
+    const download = (href: string) => {
+      const a = document.createElement('a');
+      a.href = href;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    };
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
       let valid = true;
       let firstInvalid: HTMLElement | null = null;
@@ -285,35 +306,44 @@ const subOptions = showSubservices
 
       if (!valid) { firstInvalid?.focus(); return; }
 
-      // TODO(backend): enviar datos a comercial@relengcorp.com cuando se defina hosting.
+      // Envío real al backend PHP.
+      if (errorBox) errorBox.hidden = true;
+      const label = submitBtn?.textContent ?? 'Enviar';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Enviando…'; }
 
-      // Variante 'service': descargar la ficha técnica del sub-servicio elegido
-      // (o el brochure general como respaldo).
-      if (variant === 'service') {
-        const sel = form.querySelector<HTMLSelectElement>('[data-ficha-select]');
-        const ficha = sel?.selectedOptions[0]?.dataset.ficha || brochure;
-        if (ficha) {
-          const a = document.createElement('a');
-          a.href = ficha;
-          a.download = '';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
+      try {
+        const res = await fetch('/enviar.php', { method: 'POST', body: new FormData(form) });
+        let json: { ok?: boolean; error?: string } = {};
+        try { json = await res.json(); } catch { /* respuesta no-JSON */ }
+        if (!res.ok || !json.ok) throw new Error(json.error || 'No se pudo enviar el mensaje.');
+
+        // Éxito. Variante 'service': descargar la ficha del sub-servicio (o brochure).
+        if (variant === 'service') {
+          const sel = form.querySelector<HTMLSelectElement>('[data-ficha-select]');
+          const ficha = sel?.selectedOptions[0]?.dataset.ficha || brochure;
+          if (ficha) download(ficha);
         }
-      }
 
-      const msg =
-        variant === 'service'
-          ? '¡Gracias! La ficha técnica se está descargando y un especialista te contactará pronto.'
-          : variant === 'job'
-            ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
-            : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
+        const msg =
+          variant === 'service'
+            ? '¡Gracias! La ficha técnica se está descargando y un especialista te contactará pronto.'
+            : variant === 'job'
+              ? '¡Gracias por postular! Revisaremos tu información y te contactaremos.'
+              : '¡Gracias! Hemos recibido tu mensaje. Te contactaremos muy pronto.';
 
-      form.querySelectorAll('.cform__grid, .cform__consent-wrap, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
-      if (successBox) {
-        successBox.textContent = msg;
-        successBox.hidden = false;
-        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        form.querySelectorAll('.cform__grid, .cform__consent-wrap, .cform__actions').forEach((el) => el.setAttribute('hidden', ''));
+        if (successBox) {
+          successBox.textContent = msg;
+          successBox.hidden = false;
+          successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } catch (err) {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = label; }
+        if (errorBox) {
+          errorBox.textContent =
+            (err instanceof Error ? err.message : 'No se pudo enviar el mensaje.') + ' Por favor, inténtalo de nuevo.';
+          errorBox.hidden = false;
+        }
       }
     });
   });
