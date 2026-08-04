@@ -34,6 +34,7 @@ const morePosts = rest.slice(2);
           required
           aria-label="Correo electrónico"
         />
+        <input type="text" name="website" class="blog-hero__hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <button type="submit" class="btn" data-gtm-id="blog-subscribe-submit">Suscribirse</button>
       </form>
       <p class="blog-hero__capture-success" data-subscribe-success hidden role="status">
@@ -122,6 +123,7 @@ const morePosts = rest.slice(2);
   }
   .blog-hero__capture:hover,
   .blog-hero__capture:focus-within { border-color: var(--accent); }
+  .blog-hero__hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
   .blog-hero__capture-input {
     flex: 1;
     min-width: 0;
@@ -190,18 +192,40 @@ const morePosts = rest.slice(2);
 </style>
 
 <script>
+  // URL del Google Apps Script (Web App) que agrega la fila a la hoja de cálculo.
+  // Pega aquí la URL de tu implementación (termina en /exec). Mientras esté vacía,
+  // el formulario confirma al usuario pero NO guarda nada.
+  const SUBSCRIBE_URL = '';
+
   const form = document.querySelector<HTMLFormElement>('[data-subscribe]');
   const success = document.querySelector<HTMLElement>('[data-subscribe-success]');
 
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const email = form.querySelector<HTMLInputElement>('input[name="email"]');
-    if (!email || !email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-      email?.focus();
+    const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]');
+    const email = emailInput?.value.trim() ?? '';
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput?.focus();
       return;
     }
+    const hp = form.querySelector<HTMLInputElement>('input[name="website"]')?.value ?? '';
+    const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.textContent = 'Enviando…'; }
 
-    // TODO(backend): enviar email a la lista de suscripción cuando se defina hosting.
+    try {
+      if (SUBSCRIBE_URL) {
+        // mode 'no-cors': Apps Script no devuelve cabeceras CORS; enviamos y asumimos éxito.
+        await fetch(SUBSCRIBE_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: new URLSearchParams({ email, website: hp }),
+        });
+      } else {
+        console.warn('[suscripción] Falta configurar SUBSCRIBE_URL con la URL del Apps Script.');
+      }
+    } catch (_) {
+      /* no-cors no permite leer la respuesta; se asume enviado */
+    }
 
     form.setAttribute('hidden', '');
     if (success) success.hidden = false;
