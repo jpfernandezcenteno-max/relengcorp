@@ -192,13 +192,15 @@ const schema = {
 
   <!-- ===== GALERÍA: roll banner de fotografías ===== -->
   <section class="section section--tight svc-gallery" data-reveal>
-    <div class="container svc-gallery__viewport">
-      <div class="svc-gallery__track">
-        {[...gallery, ...gallery].map((src, i) => (
-          <figure class="svc-gallery__item" aria-hidden={i >= gallery.length ? 'true' : undefined}>
-            <Image class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${(i % gallery.length) + 1}`} widths={[300, 450, 600]} sizes="340px" quality={70} loading="lazy" />
-          </figure>
-        ))}
+    <div class="container">
+      <div class="svc-gallery__viewport" data-gallery-scroll>
+        <div class="svc-gallery__track">
+          {gallery.map((src, i) => (
+            <figure class="svc-gallery__item">
+              <Image class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${i + 1}`} widths={[300, 450, 600]} sizes="(max-width: 620px) 80vw, 340px" quality={70} loading="lazy" />
+            </figure>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -214,6 +216,37 @@ const schema = {
     const el = document.getElementById('ejecucion-count');
     if (el) el.textContent = String(count);
   })();
+</script>
+
+<script>
+  // Carrusel de la galería: deslizable (swipe) + auto-avance. Respeta reduce-motion.
+  const viewport = document.querySelector<HTMLElement>('[data-gallery-scroll]');
+  const track = viewport?.querySelector<HTMLElement>('.svc-gallery__track');
+  if (viewport && track && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let timer: number | undefined;
+    const stepWidth = () => {
+      const item = track.querySelector<HTMLElement>('.svc-gallery__item');
+      const gap = parseFloat(getComputedStyle(track).columnGap || '0') || 0;
+      return item ? item.getBoundingClientRect().width + gap : viewport.clientWidth;
+    };
+    const advance = () => {
+      if (viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 4) {
+        viewport.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        viewport.scrollBy({ left: stepWidth(), behavior: 'smooth' });
+      }
+    };
+    const stop = () => { if (timer) window.clearInterval(timer); timer = undefined; };
+    const start = () => { stop(); timer = window.setInterval(advance, 3500); };
+
+    start();
+    viewport.addEventListener('pointerenter', stop);
+    viewport.addEventListener('pointerleave', start);
+    viewport.addEventListener('pointerdown', stop);
+    viewport.addEventListener('touchstart', stop, { passive: true });
+    viewport.addEventListener('touchend', () => { stop(); window.setTimeout(start, 4000); }, { passive: true });
+    document.addEventListener('visibilitychange', () => { document.hidden ? stop() : start(); });
+  }
 </script>
 
 <style>
@@ -370,38 +403,34 @@ const schema = {
   .svc-features__list svg { color: var(--accent); flex-shrink: 0; margin-top: 2px; }
   .svc-features__media { box-shadow: var(--shadow-4); }
 
-  /* ===== GALERÍA: roll banner ===== */
+  /* ===== GALERÍA: carrusel deslizable (swipe) con auto-avance ===== */
   .svc-gallery__viewport {
-    overflow: hidden;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .svc-gallery__viewport::-webkit-scrollbar { display: none; }
   .svc-gallery__track {
     display: flex;
     gap: var(--space-6);
     width: max-content;
-    padding-block: var(--space-6);
-    margin-block: calc(var(--space-6) * -1);
-    animation: svc-gallery-scroll 45s linear infinite;
+    padding-block: var(--space-2);
   }
-  .svc-gallery__track:hover { animation-play-state: paused; }
   .svc-gallery__item {
     flex: 0 0 340px;
+    scroll-snap-align: start;
     margin: 0;
     border-radius: var(--radius-md);
     overflow: hidden;
     box-shadow: var(--shadow-3);
     transition: box-shadow var(--dur-base) var(--ease-out);
   }
-  .svc-gallery__item img { transition: transform var(--dur-base) var(--ease-out); }
+  .svc-gallery__item img { display: block; transition: transform var(--dur-base) var(--ease-out); }
   .svc-gallery__item:hover { z-index: 1; box-shadow: var(--shadow-5); }
-  .svc-gallery__item:hover img { transform: scale(1.08); }
-  @keyframes svc-gallery-scroll {
-    to { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .svc-gallery__track { animation: none; }
-  }
+  .svc-gallery__item:hover img { transform: scale(1.05); }
   @media (max-width: 620px) {
-    .svc-gallery__item { flex: 0 0 260px; }
+    .svc-gallery__item { flex: 0 0 80%; }
   }
 
   /* ===== Responsive ===== */
