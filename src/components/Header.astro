@@ -378,7 +378,10 @@ const isHome = path === '/';
     transform: translateX(-50%) translateX(100vw);
     width: calc(100% - clamp(24px, 4vw, 64px));
     max-width: 1360px;
-    bottom: 0;
+    /* Alto del contenido, acotado al viewport visible (dvh evita que la barra
+       del navegador móvil corte los últimos items). Con scroll si no entra. */
+    max-height: calc(100vh - 12px - var(--header-h));
+    max-height: calc(100dvh - 12px - var(--header-h));
     background: var(--bg-dark);
     border-radius: 0 0 var(--radius-md) var(--radius-md);
     border: 0.5px solid rgba(255, 255, 255, 0.12);
