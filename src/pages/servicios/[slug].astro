@@ -430,7 +430,7 @@ const schema = {
   .svc-gallery__item:hover { z-index: 1; box-shadow: var(--shadow-5); }
   .svc-gallery__item:hover img { transform: scale(1.05); }
   @media (max-width: 620px) {
-    .svc-gallery__item { flex: 0 0 80%; }
+    .svc-gallery__item { flex: 0 0 min(78vw, 320px); }
   }
 
   /* ===== Responsive ===== */
