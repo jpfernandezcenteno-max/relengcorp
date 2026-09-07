@@ -1,5 +1,5 @@
 ---
-/* SECCIÓN SERVICIOS — carrusel de áreas de servicio (Home). */
+/* SECCIÓN SOLUCIONES ESTRATÉGICAS — carrusel corporativo (Home). */
 import Carousel from '../Carousel.astro';
 import ServiceCard from '../ServiceCard.astro';
 import { services } from '../../data/site';
@@ -8,14 +8,13 @@ import { services } from '../../data/site';
   <div class="container">
     <div class="section-head section-head--center">
       <p class="eyebrow eyebrow--center" data-reveal>Ingeniería que anticipa resultados</p>
-      <h2 id="servicios-title" class="h-l" data-reveal>Soluciones integrales de confiabilidad</h2>
+      <h2 id="servicios-title" class="h-l" data-reveal>Siete Soluciones Estratégicas para Operaciones Críticas</h2>
       <p class="text-m" data-reveal>
-        Anticipamos, conectamos y optimizamos operaciones críticas mediante inteligencia
-        aplicada para asegurar mayor disponibilidad y confiabilidad.
+        Integramos capacidades especializadas para anticipar riesgos, sostener la confiabilidad y transformar conocimiento técnico en decisiones de valor.
       </p>
     </div>
 
-    <Carousel id="services-carousel" label="Servicios especializados" controls="sides">
+    <Carousel id="services-carousel" label="Soluciones Estratégicas" controls="sides">
       {services.map((s) => <ServiceCard service={s} carousel />)}
     </Carousel>
   </div>

@@ -29,30 +29,30 @@ export const offices = [
   {
     city: 'Arequipa',
     label: 'Oficina Central',
-    address: 'Urb. Magisterial III Etapa – Yanahuara, Arequipa – Perú',
+    address: 'Urb. Magisterial III Etapa A-17, Yanahuara, Arequipa – Perú',
     country: 'Perú',
   },
   {
     city: 'Lima',
     label: 'Oficina Lima',
-    address: 'Av. El Derby 77, Torre 1, Piso 7, Surco',
+    address: 'Av. El Derby 55, Torre 1, Piso 7, Santiago de Surco, Lima – Perú',
     country: 'Perú',
   },
   {
     city: 'Antofagasta',
     label: 'Oficina Chile',
-    address: 'Av. Ascotán 155, Edificio Faro Norte 1812-B, La Chimba',
+    address: 'Av. Ascotán 155, Edificio Faro Norte 1812-B, La Chimba, Antofagasta – Chile',
     country: 'Chile',
   },
 ] as const;
 
-/* ---------- SERVICIOS ESPECIALIZADOS (cada uno es una landing page) ---------- */
+/* ---------- SOLUCIONES ESTRATÉGICAS (cada una es una landing page) ---------- */
 export type Subservice = { name: string; slogan: string };
 
 export type Service = {
   slug: string;
   title: string;
-  message: string;   // tagline de la línea de negocio (showcase + hero del servicio)
+  message: string;   // tagline de la solución estratégica (showcase + hero)
   short: string;
   intro: string;
   subservices: Subservice[];
@@ -64,7 +64,7 @@ export const services: Service[] = [
     slug: 'integridad-estructural',
     title: 'Integridad Estructural',
     message: 'Protegemos la integridad de los activos que sostienen la operación.',
-    short: 'Ingeniería, END avanzado y monitoreo para activos críticos.',
+    short: 'Integridad, END avanzado y evaluación especializada de activos críticos.',
     intro:
       'Combinamos ingeniería especializada, END avanzado, monitoreo de condición y tecnologías digitales para detectar degradación temprana, reducir riesgos estructurales y maximizar la confiabilidad de activos críticos.',
     subservices: [
@@ -116,7 +116,7 @@ export const services: Service[] = [
     slug: 'monitoreo-mantenimiento-predictivo',
     title: 'Monitoreo y Mantenimiento Predictivo',
     message: 'Anticipamos fallas antes de que afecten su producción.',
-    short: 'Anticipación de fallas con analítica y Machine Learning.',
+    short: 'Vibraciones, termografía, lubricación y diagnóstico de condición para anticipar fallas.',
     intro:
       'Integramos mantenimiento predictivo, análisis eléctrico, gestión avanzada de lubricación y modelos de Machine Learning para anticipar fallas, optimizar la confiabilidad y maximizar la continuidad operacional de activos críticos.',
     subservices: [
@@ -142,7 +142,7 @@ export const services: Service[] = [
     slug: 'ingenieria-de-confiabilidad',
     title: 'Ingeniería de Confiabilidad',
     message: 'Diseñamos estrategias que eliminan incertidumbre operacional.',
-    short: 'De los datos y el riesgo a la continuidad operacional.',
+    short: 'RCM, RCFA, RAM, criticidad, riesgo y optimización de estrategias de activos.',
     intro:
       'Convertimos datos, riesgo y estrategia en continuidad operacional. A través de metodologías avanzadas de confiabilidad, readiness operacional y optimización de mantenimiento, ayudamos a las organizaciones a evolucionar hacia operaciones más predictivas, resilientes y orientadas al desempeño.',
     subservices: [
@@ -183,7 +183,7 @@ export const services: Service[] = [
     slug: 'metalurgia-inteligente',
     title: 'Metalurgia Inteligente',
     message: 'Transformamos datos metalúrgicos en mayor recuperación.',
-    short: 'Laboratorio avanzado y ML para optimizar recuperación.',
+    short: 'Metalurgia, caracterización y analítica aplicada para optimizar el desempeño del proceso.',
     intro:
       'Integramos metalurgia, laboratorio avanzado y Machine Learning para optimizar la recuperación y el desempeño operacional.',
     subservices: [
@@ -208,7 +208,7 @@ export const services: Service[] = [
     slug: 'confiabilidad-inteligente',
     title: 'Confiabilidad Inteligente',
     message: 'Conectamos activos, datos y decisiones en tiempo real.',
-    short: 'IIoT, monitoreo remoto y analítica predictiva.',
+    short: 'Sensorización, monitoreo remoto y analítica predictiva para activos críticos.',
     intro:
       'Integramos sensorización inteligente, IIoT, monitoreo remoto y analítica predictiva para transformar datos operacionales en decisiones inteligentes y accionables. A través de modelos de Machine Learning, plataformas IoT y centros de confiabilidad remota, anticipamos anomalías, estimamos vida útil remanente (RUL) y optimizamos la continuidad operacional de activos críticos.',
     subservices: [
@@ -242,7 +242,7 @@ export const services: Service[] = [
     slug: 'ingenieria-digital',
     title: 'Ingeniería Digital',
     message: 'Digitalizamos la operación para acelerar las decisiones.',
-    short: 'Digitalización de operación y mantenimiento.',
+    short: 'Plataformas, manuales interactivos, 3D e integración digital para operación y mantenimiento.',
     intro:
       'Digitalizamos la operación y el mantenimiento mediante aplicaciones inteligentes y tecnologías inmersivas.',
     subservices: [
@@ -269,7 +269,7 @@ export const services: Service[] = [
     slug: 'gestion-de-reparables-criticos',
     title: 'Gestión de Reparables Críticos',
     message: 'Gestionamos reparables como activos estratégicos.',
-    short: 'Disponibilidad, trazabilidad y QA/QC garantizados.',
+    short: 'QA/QC, trazabilidad y gestión técnica de reparables críticos.',
     intro:
       'Integramos gestión comercial, QA/QC y control técnico para asegurar disponibilidad, trazabilidad y continuidad operacional.',
     subservices: [
@@ -312,7 +312,7 @@ export type NavItem = {
 export const nav: NavItem[] = [
   { label: 'Nosotros', href: '/nosotros' },
   {
-    label: 'Servicios',
+    label: 'Soluciones Estratégicas',
     href: '/servicios',
     children: services.map((s) => ({ label: s.title, href: `/servicios/${s.slug}` })),
   },

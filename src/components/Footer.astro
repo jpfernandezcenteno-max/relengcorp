@@ -15,8 +15,7 @@ const year = new Date().getFullYear();
         <Fragment set:html={logoSvg} />
       </a>
       <p class="site-footer__desc">
-        Soluciones integrales de confiabilidad, mantenimiento predictivo y transformación
-        digital para la industria minera e industrial.
+        Ingeniería Inteligente para Operaciones Críticas: integridad, predictivo, confiabilidad, metalurgia, digitalización, monitoreo inteligente y gestión de reparables.
       </p>
       <ul class="site-footer__certs" aria-label="Certificaciones">
         {certifications.map((c) => (
@@ -47,9 +46,9 @@ const year = new Date().getFullYear();
       </ul>
     </div>
 
-    <!-- Servicios -->
+    <!-- Soluciones Estratégicas -->
     <details class="site-footer__col footer-accordion" open>
-      <summary class="site-footer__title">Servicios</summary>
+      <summary class="site-footer__title">Soluciones Estratégicas</summary>
       <ul>
         {services.map((s) => (
           <li><a href={`/servicios/${s.slug}`}>{s.title}</a></li>
