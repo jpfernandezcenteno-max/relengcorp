@@ -16,6 +16,141 @@ export function getStaticPaths() {
 }
 
 const { service } = Astro.props;
+// Textos exclusivos de esta landing; los datos compartidos conservan las opciones y fichas del formulario.
+const integrityCopy = service.slug === 'integridad-estructural' ? {
+  tagline: 'Conocer el estado real. Controlar el riesgo. Proteger la continuidad.',
+  intro: 'Integramos ingeniería especializada, END avanzado, monitoreo estructural y modelamiento para detectar degradación, evaluar condición y sustentar decisiones sobre activos críticos.',
+  description: 'Ingeniería, END avanzado, UTPA, molinos, tuberías, recipientes, escaneo 3D y evaluación de integridad para activos críticos.',
+  subservices: [
+    { name: 'Evaluación de Integridad Estructural', slogan: 'Determinamos condición, mecanismos de daño y riesgo para sustentar decisiones de intervención.' },
+    { name: 'END / NDT Avanzado de Activos Críticos', slogan: 'Aplicamos técnicas avanzadas para detectar discontinuidades, degradación y pérdida de integridad.' },
+    { name: 'Medición de Elongación de Pernos de Molinos', slogan: 'Verificamos elongación y uniformidad de carga en uniones críticas.' },
+    { name: 'Auditoría de Ajuste de Pernos de Molinos', slogan: 'Revisamos método, secuencia y condición de ajuste para controlar riesgo de aflojamiento o sobrecarga.' },
+    { name: 'Auditoría de Calibración de Herramientas de Ajuste', slogan: 'Verificamos trazabilidad y desempeño de las herramientas utilizadas en el ajuste.' },
+    { name: 'Inspección UTPA de Uniones Bridadas', slogan: 'Evaluamos discontinuidades y condición interna de uniones críticas mediante Phased Array.' },
+    { name: 'Inspección Integral de Liners de Molinos', slogan: 'Integramos condición, desgaste y evidencia dimensional para planificar intervención.' },
+    { name: 'Gestión de Revestimientos', slogan: 'Seguimos condición y desgaste para optimizar vida útil y planificación de cambio.' },
+    { name: 'Certificación de Tanques y Recipientes a Presión', slogan: 'Evaluamos condición e integridad conforme al alcance técnico y normativa aplicable.' },
+    { name: 'Integridad y Certificación de Tuberías de Relaves', slogan: 'Evaluamos espesores, daño y condición para sustentar continuidad segura.' },
+    { name: 'Escaneo Láser 3D', slogan: 'Capturamos geometría real para control dimensional, seguimiento e ingeniería.' },
+    { name: 'END / NDT en Paradas de Planta', slogan: 'Ejecutamos campañas de inspección focalizadas en ventanas críticas de mantenimiento.' },
+  ],
+  benefits: [
+    { title: 'Conocer el estado real', text: 'determinar condición, degradación y criticidad mediante evidencia técnica.' },
+    { title: 'Controlar el riesgo', text: 'identificar mecanismos de daño antes de afectar seguridad o continuidad.' },
+    { title: 'Sustentar decisiones', text: 'transformar inspección, medición y modelamiento en criterios de intervención.' },
+    { title: 'Proteger continuidad', text: 'priorizar acciones para extender vida útil y reducir paradas no planificadas.' },
+  ],
+} : undefined;
+const predictiveCopy = service.slug === 'monitoreo-mantenimiento-predictivo' ? {
+  tagline: 'No reaccionamos ante las fallas. Las anticipamos.',
+  intro: 'Integramos análisis vibracional, termografía, alineamiento, lubricación y diagnóstico especializado para detectar desviaciones tempranas, comprender modos de falla y sostener la disponibilidad de activos críticos.',
+  description: 'Análisis vibracional, termografía, lubricación, alineamiento, diagnóstico y predictivo eléctrico para anticipar fallas en activos críticos.',
+  subservices: [
+    { name: 'Monitoreo de Condición', slogan: 'Vibraciones, termografía y otras variables para identificar desviaciones tempranas.' },
+    { name: 'Mantenimiento Predictivo', slogan: 'Integramos mediciones y diagnóstico para definir acciones antes de la pérdida funcional.' },
+    { name: 'Mantenimiento Predictivo Eléctrico', slogan: 'Evaluamos variables eléctricas y condición para detectar fallas incipientes en sistemas y activos.' },
+    { name: 'Gestión de Lubricación', slogan: 'Controlamos condición del lubricante, contaminación y prácticas que influyen en desgaste y vida útil.' },
+    { name: 'Diagnóstico Integrado y Analítica Predictiva', slogan: 'Combinamos tendencias, patrones y modelos analíticos como soporte al diagnóstico cuando los datos lo justifican.' },
+  ],
+  benefits: [
+    { title: 'Detección temprana', text: '' },
+    { title: 'Diagnóstico confiable', text: '' },
+    { title: 'Intervención oportuna', text: '' },
+    { title: 'Mayor disponibilidad', text: '' },
+  ],
+} : undefined;
+const reliabilityCopy = service.slug === 'ingenieria-de-confiabilidad' ? {
+  tagline: 'Confiabilidad estratégica para activos críticos.',
+  intro: 'Convertimos datos, riesgo y estrategia en decisiones de confiabilidad y continuidad operacional. Integramos análisis cuantitativo, estrategia de activos, Operational Readiness y optimización para sustentar decisiones técnicas, operacionales y económicas.',
+  description: 'RCM, RCFA, RAM, criticidad, riesgo, simulación, estrategias de mantenimiento y Operational Readiness para activos y sistemas críticos.',
+  subservices: [
+    { name: 'Estrategias de Mantenimiento', slogan: 'Definir qué mantener, cómo, cuándo y con qué criterio.' },
+    { name: 'Operational Readiness', slogan: 'Preparación integral de organización, personas, procesos, información y activos para una puesta en marcha segura, estable y sostenible.' },
+    { name: 'Ingeniería de Confiabilidad', slogan: 'Modelar comportamiento, fallas y desempeño para sustentar decisiones.' },
+    { name: 'Análisis de Criticidad', slogan: 'Priorizar activos y recursos según riesgo e impacto operacional.' },
+    { name: 'RCM / RCFA', slogan: 'Diseñar estrategias y aprender sistemáticamente de las fallas.' },
+    { name: 'RAM y Simulación', slogan: 'Cuantificar confiabilidad, disponibilidad y mantenibilidad del sistema y evaluar escenarios antes de decidir.' },
+    { name: 'Gestión del Riesgo', slogan: 'Convertir probabilidad y consecuencia en prioridades de intervención.' },
+    { name: 'Optimización Operacional', slogan: 'Evaluar escenarios y mejorar desempeño, costos y continuidad.' },
+  ],
+  benefits: [
+    { title: 'Reducir incertidumbre', text: '' },
+    { title: 'Priorizar correctamente', text: '' },
+    { title: 'Optimizar estrategias', text: '' },
+    { title: 'Simular antes de decidir', text: '' },
+  ],
+} : undefined;
+const metallurgyCopy = service.slug === 'metalurgia-inteligente' ? {
+  tagline: 'Transformamos datos metalúrgicos en decisiones de proceso.',
+  intro: 'Integramos conocimiento metalúrgico, caracterización especializada, laboratorio y analítica de datos para comprender el comportamiento del mineral y apoyar decisiones orientadas a recuperación, estabilidad y desempeño operacional.',
+  description: 'Operaciones metalúrgicas, laboratorio, caracterización y analítica aplicada para comprender el mineral y optimizar el desempeño del proceso.',
+  subservices: [
+    { name: 'Operaciones Metalúrgicas', slogan: 'Muestreo, preparación y evaluación de variables asociadas al comportamiento del proceso.' },
+    { name: 'Laboratorio Especializado', slogan: 'Ensayos y análisis orientados a caracterizar materiales y sustentar decisiones metalúrgicas.' },
+    { name: 'Caracterización Avanzada', slogan: 'Identificación y comprensión de propiedades, fases y características relevantes del mineral o material.' },
+    { name: 'Analítica Metalúrgica', slogan: 'Integramos análisis estadístico y modelos de Machine Learning cuando la disponibilidad y calidad de datos permiten generar valor.' },
+  ],
+  benefits: [
+    { title: 'Mayor conocimiento del mineral', text: '' },
+    { title: 'Mejor control del proceso', text: '' },
+    { title: 'Decisiones sustentadas', text: '' },
+    { title: 'Optimización del desempeño', text: '' },
+  ],
+} : undefined;
+const intelligentCopy = service.slug === 'confiabilidad-inteligente' ? {
+  tagline: 'Conectamos datos. Anticipamos decisiones.',
+  intro: 'Integramos sensorización remota, conectividad industrial, plataformas IoT y analítica predictiva para comprender el comportamiento de activos críticos, detectar anomalías y anticipar decisiones de mantenimiento y operación.',
+  description: 'Sensorización remota, IIoT, monitoreo remoto, analítica multivariable, anomalías, RUL y centros de confiabilidad para activos críticos.',
+  subservices: [
+    { name: 'Sensorización Remota', slogan: 'Captura continua de variables críticas del activo y configuración de puntos de medición.' },
+    { name: 'Centro de Confiabilidad Remota', slogan: 'Ingeniería especializada para convertir información remota en decisiones y acciones.' },
+    { name: 'Gemelo Digital de Confiabilidad', slogan: 'Su activo digital antes de intervenir el real.' },
+    { name: 'Analítica Predictiva / Modelos ML', slogan: 'Anomalías y estimaciones de RUL solo cuando exista historial, degradación observable y calidad de datos suficiente.' },
+    { name: 'Plataforma IoT', slogan: 'Todo conectado. Todo visible.' },
+    { name: 'Analítica Multivariable', slogan: 'Transformamos datos complejos en decisiones inteligentes.' },
+  ],
+  benefits: [
+    { title: 'Visibilidad continua', text: '' },
+    { title: 'Detección anticipada', text: '' },
+    { title: 'Contexto operacional', text: '' },
+    { title: 'Decisiones accionables', text: '' },
+  ],
+} : undefined;
+const digitalCopy = service.slug === 'ingenieria-digital' ? {
+  tagline: 'La información correcta, en el momento exacto.',
+  intro: 'Transformamos información técnica, procesos y conocimiento operacional en herramientas digitales interactivas que facilitan la consulta, comprensión, capacitación y ejecución segura de operación y mantenimiento.',
+  description: 'Digital Portal, manuales interactivos, plantas 3D, P&ID/PFD interactivos, aplicaciones e integración digital para operación y mantenimiento.',
+  subservices: [
+    { name: 'Aplicaciones y Contenidos Digitales', slogan: 'P&ID/PFD interactivos, animaciones, videos, despieces y recursos digitales para operación y mantenimiento.' },
+    { name: 'Manuales Interactivos de Operación y Mantenimiento', slogan: 'Información crítica disponible cuando más se necesita.' },
+    { name: 'Digital Portal y Plantas Digitales 3D', slogan: 'Integramos navegación, gestión documental, objetos técnicos y modelos 3D vinculados a información operacional.' },
+    { name: 'Aplicaciones con Tecnología RA / RV / RX', slogan: 'La ingeniería inmersiva ya está aquí.' },
+    { name: 'Integración y Gestión de Información', slogan: 'Organizamos y conectamos documentación y datos para disponer de información técnica cuando se necesita.' },
+  ],
+  benefits: [
+    { title: 'Información accesible', text: '' },
+    { title: 'Comprensión operacional', text: '' },
+    { title: 'Conocimiento conectado', text: '' },
+    { title: 'Mejor transferencia de conocimiento', text: '' },
+  ],
+} : undefined;
+const repairablesCopy = service.slug === 'gestion-de-reparables-criticos' ? {
+  tagline: 'Controlamos calidad. Aseguramos trazabilidad. Reducimos recurrencias.',
+  intro: 'Integramos gestión comercial, inspección QA/QC y control técnico del proceso de reparación para mejorar trazabilidad, calidad, tiempos de respuesta y disponibilidad de reparables críticos.',
+  description: 'Gestión comercial, QA/QC, control dimensional, END, trazabilidad, proveedores y liberación técnica de reparables críticos.',
+  subservices: [
+    { name: 'Gestión Comercial de Reparables', slogan: 'Gestionamos el ciclo del reparable desde la planificación y coordinación hasta su retorno a operación, asegurando seguimiento, trazabilidad, control documental y gestión de hitos con talleres y proveedores.' },
+    { name: 'QA/QC de Reparables Críticos', slogan: 'Reparaciones verificadas antes de volver a producir. Supervisamos técnicamente el proceso de reparación mediante inspección, control dimensional, END, verificación de procedimientos, pruebas y criterios de liberación para reducir desviaciones y reincidencias.' },
+  ],
+  benefits: [
+    { title: 'Controlar la calidad', text: '' },
+    { title: 'Asegurar trazabilidad', text: '' },
+    { title: 'Reducir reincidencias', text: '' },
+    { title: 'Optimizar tiempos y costos', text: '' },
+  ],
+} : undefined;
+const pageCopy = integrityCopy ?? predictiveCopy ?? reliabilityCopy ?? metallurgyCopy ?? intelligentCopy ?? digitalCopy ?? repairablesCopy;
 const gallery = ((serviceImages as Record<string, string[]>)[service.slug] ?? [])
   .map((p) => servicioImg(service.slug, p.split('/').pop()!));
 
@@ -30,7 +165,7 @@ function seededInt(seed: string, min: number, max: number): number {
 const serviciosCount = seededInt(service.slug, 70, 150);
 
 // Beneficios (4, como el Figma). Contenido real de Relengcorp.
-const benefits = [
+const benefits = pageCopy?.benefits ?? [
   { title: 'Reducción de riesgos', text: 'Menos paradas no planificadas y mayor seguridad en la operación.' },
   { title: 'Mayor disponibilidad', text: 'Más vida útil y continuidad operacional de tus activos críticos.' },
   { title: 'Inteligencia aplicada', text: 'Convertimos datos de condición en decisiones accionables.' },
@@ -79,16 +214,19 @@ const schema = {
 };
 ---
 
-<BaseLayout title={service.title} description={service.short} schema={schema}>
+<BaseLayout title={service.title} description={pageCopy?.description ?? service.short} schema={schema}>
   <!-- ===== HERO oscuro: captura de email + stats + imagen ===== -->
   <section class="svc-hero">
     <div class="svc-hero__bg" aria-hidden="true"><div class="svc-hero__glow"></div></div>
     <div class="container svc-hero__grid">
       <div class="svc-hero__content">
+        {service.slug === 'integridad-estructural' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · INTEGRIDAD ESTRUCTURAL</p>
+        )}
         <h1 class="h-xl" data-reveal>{service.title}</h1>
-        <p class="eyebrow" data-reveal>{service.short}</p>
+        <p class="eyebrow" data-reveal>{pageCopy?.tagline ?? service.short}</p>
 
-        <p class="svc-hero__intro text-m" data-reveal>{service.intro}</p>
+        <p class="svc-hero__intro text-m" data-reveal>{pageCopy?.intro ?? service.intro}</p>
 
         <dl class="svc-stats" data-reveal>
           <div class="svc-stat">
@@ -119,7 +257,7 @@ const schema = {
         <h2 class="h-l">{service.message}</h2>
       </div>
       <ul class="svc-subservices__grid">
-        {service.subservices.map((sub, i) => (
+        {(pageCopy?.subservices ?? service.subservices).map((sub, i) => (
           <li class="svc-sub-card" data-reveal>
             <span class="svc-sub-card__num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
             <div class="svc-sub-card__body">
@@ -163,7 +301,7 @@ const schema = {
         {benefits.map((b) => (
           <article class="svc-benefit-card" data-reveal>
             <span class="svc-benefit-card__icon"><UiIcon name="check-circle" size={24} /></span>
-            <p><strong>{b.title}:</strong> {b.text}</p>
+            <p><strong>{b.title}{b.text ? ':' : ''}</strong> {b.text}</p>
           </article>
         ))}
       </div>
