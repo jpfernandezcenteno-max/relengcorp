@@ -2,7 +2,7 @@
 /* ============================================================
    CONTACT FORM — formulario reutilizable con validación.
    variant:
-     - 'contact' : Nombre, Email, Teléfono, Empresa, Mensaje
+     - 'contact' : Nombre, Email, Teléfono, Empresa, País, Mensaje
      - 'service' : captación de lead (+ descarga de brochure al enviar)
      - 'job'     : postulación (Nombre, Email, Teléfono, Mensaje, CV)
    NOTA backend: el envío real se conecta cuando se defina hosting/correo.
@@ -97,6 +97,45 @@ const subOptions = showSubservices
       <div class="field">
         <label for="cf-company">Empresa</label>
         <input type="text" id="cf-company" name="empresa" autocomplete="organization" />
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+
+    {variant === 'contact' && (
+      <div class="field">
+        <label for="cf-country">País</label>
+        <input type="text" id="cf-country" name="pais" autocomplete="country-name" />
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+
+    {variant === 'contact' && (
+      <div class="field">
+        <label for="cf-solution-interest">Solución de interés</label>
+        <select id="cf-solution-interest" name="solucion_interes">
+          <option value="" selected></option>
+          <option value="Integridad Estructural">Integridad Estructural</option>
+          <option value="Monitoreo y Mantenimiento Predictivo">Monitoreo y Mantenimiento Predictivo</option>
+          <option value="Ingeniería de Confiabilidad">Ingeniería de Confiabilidad</option>
+          <option value="Metalurgia Inteligente">Metalurgia Inteligente</option>
+          <option value="Confiabilidad Inteligente">Confiabilidad Inteligente</option>
+          <option value="Ingeniería Digital">Ingeniería Digital</option>
+          <option value="Gestión de Reparables Críticos">Gestión de Reparables Críticos</option>
+          <option value="No estoy seguro / Otro desafío">No estoy seguro / Otro desafío</option>
+        </select>
+        <p class="field__error" data-error></p>
+      </div>
+    )}
+
+    {variant === 'job' && (
+      <div class="field">
+        <label for="cf-area-interest">Área/Solución de interés</label>
+        <input type="text" id="cf-area-interest" name="area_interes" />
+        <p class="field__error" data-error></p>
+      </div>
+      <div class="field">
+        <label for="cf-city-country">Ciudad/País</label>
+        <input type="text" id="cf-city-country" name="ciudad_pais" />
         <p class="field__error" data-error></p>
       </div>
     )}
