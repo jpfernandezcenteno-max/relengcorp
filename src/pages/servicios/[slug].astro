@@ -223,11 +223,30 @@ const schema = {
         {service.slug === 'integridad-estructural' && (
           <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · INTEGRIDAD ESTRUCTURAL</p>
         )}
+        {service.slug === 'gestion-de-reparables-criticos' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · GESTIÓN DE REPARABLES CRÍTICOS</p>
+        )}
+        {service.slug === 'ingenieria-digital' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · INGENIERÍA DIGITAL</p>
+        )}
+        {service.slug === 'confiabilidad-inteligente' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · CONFIABILIDAD INTELIGENTE</p>
+        )}
+        {service.slug === 'metalurgia-inteligente' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · METALURGIA INTELIGENTE</p>
+        )}
+        {service.slug === 'ingenieria-de-confiabilidad' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · INGENIERÍA DE CONFIABILIDAD</p>
+        )}
+        {service.slug === 'monitoreo-mantenimiento-predictivo' && (
+          <p class="eyebrow" data-reveal>SOLUCIÓN ESTRATÉGICA · MONCON Y MANTENIMIENTO PREDICTIVO</p>
+        )}
         <h1 class="h-xl" data-reveal>{service.title}</h1>
         <p class="eyebrow" data-reveal>{pageCopy?.tagline ?? service.short}</p>
 
         <p class="svc-hero__intro text-m" data-reveal>{pageCopy?.intro ?? service.intro}</p>
 
+        {service.slug !== 'gestion-de-reparables-criticos' && (
         <dl class="svc-stats" data-reveal>
           <div class="svc-stat">
             <dt class="svc-stat__value">{serviciosCount}+</dt>
@@ -241,6 +260,7 @@ const schema = {
             <dd class="svc-stat__label text-s">En ejecución</dd>
           </div>
         </dl>
+        )}
       </div>
 
       <figure class="svc-hero__media zoom-img" data-reveal>
@@ -255,6 +275,9 @@ const schema = {
       <div class="section-head" data-reveal>
         <p class="eyebrow">Lo que hacemos</p>
         <h2 class="h-l">{service.message}</h2>
+        {service.slug === 'confiabilidad-inteligente' && (
+          <p class="text-m">Relengcorp es integrador oficial de WEG Digital para Perú y Chile.</p>
+        )}
       </div>
       <ul class="svc-subservices__grid">
         {(pageCopy?.subservices ?? service.subservices).map((sub, i) => (
@@ -323,7 +346,7 @@ const schema = {
         />
       </div>
       <figure class="svc-features__media zoom-img" data-reveal>
-        <Image class="svc-media-img" style="aspect-ratio:4/5" src={gallery[1] ?? gallery[0]} alt={`${service.title} — detalle técnico`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="lazy" />
+        <Image class="svc-media-img" style="aspect-ratio:4/5" src={service.slug === 'gestion-de-reparables-criticos' ? gallery[0] : (gallery[1] ?? gallery[0])} alt={`${service.title} — detalle técnico`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="lazy" />
       </figure>
     </div>
   </section>
