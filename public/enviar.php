@@ -2,13 +2,12 @@
 /* ============================================================
    ENVÍO DE FORMULARIOS — Relengcorp
    Recibe el POST de los formularios (contacto / servicio / postulación),
-   valida y envía el correo a comercial@relengcorp.com con PHP mail().
+   valida y envía el correo a Recursos Humanos (job) o Comercial con PHP mail().
    Requiere hosting con PHP (Apache/cPanel). No funciona en Vercel.
    ============================================================ */
 
 header('Content-Type: application/json; charset=utf-8');
 
-$DEST = 'comercial@relengcorp.com';        // destino de los leads
 $FROM = 'comercial@relengcorp.com';        // remitente del dominio (SPF-friendly)
 
 function out($ok, $error = null) {
@@ -36,6 +35,9 @@ $mensaje     = val('mensaje');
 $servicio    = val('servicio');
 $subservicio = val('subservicio');
 $variant     = val('variant') ?: 'contact';
+$DEST = $variant === 'job'
+  ? 'recursoshumanos@relengcorp.com'
+  : 'comercial@relengcorp.com';
 $acepta      = !empty($_POST['acepta_politica']);
 
 // Validación mínima
@@ -68,7 +70,7 @@ $l[] = "Teléfono: $telefono";
 if ($empresa !== '')     $l[] = "Empresa: $empresa";
 if ($variant === 'contact' && $pais !== '') $l[] = "País: $pais";
 if ($variant === 'contact' && $solucion_interes !== '') $l[] = "Solución de interés: $solucion_interes";
-if ($variant === 'job' && $area_interes !== '') $l[] = "Área/Solución de interés: $area_interes";
+if ($variant === 'job' && $area_interes !== '') $l[] = "Profesión/Ocupación: $area_interes";
 if ($variant === 'job' && $ciudad_pais !== '') $l[] = "Ciudad/País: $ciudad_pais";
 if ($mensaje !== '')     $l[] = "Mensaje:\n$mensaje";
 $l[] = '';

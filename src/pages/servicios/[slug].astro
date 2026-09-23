@@ -338,10 +338,9 @@ const schema = {
         <ContactForm
           variant="service"
           serviceName={service.title}
-          serviceSlug={service.slug}
           subservices={service.subservices}
           title="Solicita más información"
-          description="Elige un sub-servicio y déjanos tus datos: recibirás su ficha técnica y un especialista te contactará."
+          description={`Si deseas mayor información sobre ${service.title}, déjanos tus datos, recibirás su ficha técnica y un especialista te contactará.`}
           submitLabel="Enviar solicitud"
         />
       </div>
