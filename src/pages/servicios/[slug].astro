@@ -264,7 +264,7 @@ const schema = {
       </div>
 
       <figure class="svc-hero__media zoom-img" data-reveal>
-        <Image class="svc-media-img" style="aspect-ratio:1/1" src={gallery[0]} alt={`${service.title} en operación`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="eager" fetchpriority="high" />
+        <Image class="svc-media-img" style="aspect-ratio:1/1" src={service.slug === 'monitoreo-mantenimiento-predictivo' ? servicioImg(service.slug, '07.webp') : gallery[0]} alt={`${service.title} en operación`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="eager" fetchpriority="high" />
       </figure>
     </div>
   </section>
