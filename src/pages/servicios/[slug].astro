@@ -151,6 +151,7 @@ const repairablesCopy = service.slug === 'gestion-de-reparables-criticos' ? {
   ],
 } : undefined;
 const pageCopy = integrityCopy ?? predictiveCopy ?? reliabilityCopy ?? metallurgyCopy ?? intelligentCopy ?? digitalCopy ?? repairablesCopy;
+const digitalScreenshot = service.slug === 'ingenieria-digital' ? servicioImg(service.slug, '04.webp') : undefined;
 const gallery = ((serviceImages as Record<string, string[]>)[service.slug] ?? [])
   .map((p) => servicioImg(service.slug, p.split('/').pop()!));
 
@@ -345,7 +346,11 @@ const schema = {
         />
       </div>
       <figure class="svc-features__media zoom-img" data-reveal>
+        {digitalScreenshot ? (
+          <img class="svc-media-img svc-digital-detail" src={digitalScreenshot.src} width={digitalScreenshot.width} height={digitalScreenshot.height} alt={`${service.title} — detalle técnico`} loading="lazy" decoding="async" />
+        ) : (
         <Image class="svc-media-img" style="aspect-ratio:4/5" src={service.slug === 'gestion-de-reparables-criticos' ? gallery[0] : (gallery[1] ?? gallery[0])} alt={`${service.title} — detalle técnico`} widths={[400, 600, 800]} sizes="(max-width: 900px) 100vw, 45vw" quality={72} loading="lazy" />
+        )}
       </figure>
     </div>
   </section>
@@ -357,7 +362,11 @@ const schema = {
         <div class="svc-gallery__track">
           {gallery.map((src, i) => (
             <figure class="svc-gallery__item">
+              {digitalScreenshot && src === digitalScreenshot ? (
+                <img class="svc-media-img" style="aspect-ratio:4/3;object-fit:contain;background:#fff" src={src.src} width={src.width} height={src.height} alt={`${service.title} — foto ${i + 1}`} loading="lazy" decoding="async" />
+              ) : (
               <Image class="svc-media-img" style="aspect-ratio:4/3" src={src} alt={`${service.title} — foto ${i + 1}`} widths={[300, 450, 600]} sizes="(max-width: 620px) 80vw, 340px" quality={70} loading="lazy" />
+              )}
             </figure>
           ))}
         </div>
@@ -454,6 +463,8 @@ const schema = {
 
   .svc-hero__media { box-shadow: var(--shadow-5); }
   .svc-media-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  .svc-media-img.svc-digital-detail { height: auto; object-fit: contain; }
 
   /* ===== SUB-SERVICIOS ===== */
   .svc-subservices { background: var(--bg-subtle); }
